@@ -1,0 +1,71 @@
+# Table of contents
+# Learn more at https://jupyterbook.org/customize/toc.html
+format: jb-article
+root: intro
+title: 과목 소개 
+options:
+  numbered: true
+sections:
+- file: chapters/01/intro-course
+  title:  서론 
+  sections:
+  - file: chapters/01/intro-program
+    title: 선형대수의 기초 
+  - file: chapters/01/intro-stat
+    title: 통계학
+- file: chapters/02/intro-python
+  title: 파이선의 기초  
+  sections:
+  - file: chapters/02/basic-expression
+    title: 표현식과 변수
+  - file: chapters/02/data-processing-intro
+    title: 데이터의 처리
+  - file: chapters/02/data-processing-train-passenger
+    title: 고속열차 여객 수송자료
+  - file: chapters/02/data-processing-text
+    title: 어린 왕자
+- file: chapters/03/types
+  title: 자료의 형식
+  sections:
+  - file: chapters/03/numbers
+  - file: chapters/03/string
+  - file: chapters/03/array
+- file: chapters/04/dataframe
+  title: 데이터프레임
+  sections:
+  - file: chapters/04/dataframe-intro
+  - file: chapters/04/dataframe-change
+  - file: chapters/04/dataframe-summary
+  - file: chapters/04/dataframe-merge
+- file: chapters/05/data-intro
+  title: 분포와 확률
+  sections:
+  - file: chapters/05/data_distribution
+  - file: chapters/05/data_randomness
+  - file: chapters/05/data_random_experiment
+  - file: chapters/05/data_probability
+  - file: chapters/05/data_function
+- file: chapters/06/sampling-intro
+  title: 표본과 경험적 분포
+  sections:
+  - file: chapters/06/sample
+  - file: chapters/06/samplemeans
+  - file: chapters/06/estimator
+  - file: chapters/06/bootstrap
+- file: chapters/07/test-intro
+  title: 유의성 검정
+  sections:
+  - file: chapters/07/decision
+  - file: chapters/07/pvalue
+  - file: chapters/07/abtest
+- file: chapters/08/relation-intro
+  title: 관계와 예측
+  sections:
+  - file: chapters/08/correlation
+  - file: chapters/08/regression
+  - file: chapters/08/classification
+  - file: chapters/08/validation
+  
+  
+
+
