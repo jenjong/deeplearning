@@ -10,9 +10,13 @@ sections:
   title:  서론 
   sections:
   - file: chapters/01/intro-program
-    title: 선형대수의 기초 
+    title: 데이터의 시각화 
   - file: chapters/01/intro-stat
-    title: 통계학
+    title: 파이썬 환경구성
+  - file: chapters/01/intro-numpy
+    title: Numpy 리뷰  
+  - file: chapters/01/intro-pandas
+    title: Pandas 리뷰      
 - file: chapters/02/intro-python
   title: 파이선의 기초  
   sections:
