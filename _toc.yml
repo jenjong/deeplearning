@@ -16,7 +16,7 @@ sections:
   - file: chapters/01/intro-numpy
     title: Numpy 리뷰  
   - file: chapters/01/intro-pandas
-    title: Pandas 리뷰      
+    title: Pandas review      
 - file: chapters/02/intro-python
   title: 파이선의 기초  
   sections:
