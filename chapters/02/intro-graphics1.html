@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>2. 데이터의 시각화 &#8212; 데이터시각화</title>
+    <title>2. 그래픽 도구의 활용1 &#8212; 데이터시각화</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -53,7 +53,7 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
-    <link rel="next" title="2.3. Numpy 리뷰" href="region.html" />
+    <link rel="next" title="2.1. Numpy 리뷰" href="region.html" />
     <link rel="prev" title="1.4. Pandas 리뷰" href="../01/intro-pandas.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -159,17 +159,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="region.html">
-     2.3. 시각화 영역
+     2.1. 시각화 영역
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="axis.html">
-     2.4. 축의 조정과 텍스트
+     2.2. 축의 조정과 텍스트
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="attribute.html">
-     2.5. 그래픽 인자
+     2.3. 그래픽 인자
     </a>
    </li>
   </ul>
@@ -186,17 +186,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../03/legend.html">
-     3.3. 범례의 표시
+     3.1. 범례의 표시
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../03/density.html">
-     3.4. 밀도의 시각화
+     3.2. 밀도의 시각화
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../03/layout.html">
-     3.5. 레이아웃
+     3.3. 레이아웃
     </a>
    </li>
   </ul>
@@ -213,17 +213,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../04/anova.html">
-     4.3. 평균의 비교
+     4.1. 평균의 비교
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../04/hist.html">
-     4.4. 확률분포의 추정
+     4.2. 확률분포의 추정
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../04/regression.html">
-     4.5. 회귀분석과 시각화
+     4.3. 회귀분석과 시각화
     </a>
    </li>
   </ul>
@@ -240,17 +240,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../05/freq.html">
-     5.3. 빈도분석
+     5.1. 빈도분석
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../05/image.html">
-     5.4. 이미지 데이터의 시긱화
+     5.2. 이미지 데이터의 시긱화
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../05/3d_vis.html">
-     5.5. 3차원 데이터의 시각화
+     5.3. 3차원 데이터의 시각화
     </a>
    </li>
   </ul>
@@ -267,17 +267,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../06/sb.html">
-     6.3. seaborn 패키지의 소개
+     6.1. seaborn 패키지의 소개
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06/image_obj.html">
-     6.4. 그래픽 객체
+     6.2. 그래픽 객체
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../06/vis.html">
-     6.5. 시각화 방법
+     6.3. 시각화 방법
     </a>
    </li>
   </ul>
@@ -294,17 +294,17 @@ const thebe_selector_output = ".output, .cell_output"
   <ul>
    <li class="toctree-l2">
     <a class="reference internal" href="../07/grid.html">
-     7.3. 그리드 플롯
+     7.1. 그리드 플롯
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../07/multi.html">
-     7.4. 다중플롯 만들기
+     7.2. 다중플롯 만들기
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../07/attr.html">
-     7.5. 시각속성 변경
+     7.3. 시각속성 변경
     </a>
    </li>
   </ul>
@@ -591,70 +591,23 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
-<label for="__page-toc"
-  class="headerbtn headerbtn-page-toc"
-  
->
-  
-
-<span class="headerbtn__icon-container">
-  <i class="fas fa-list"></i>
-  </span>
-
-</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
-    <div class="tocsection onthispage pt-5 pb-3">
-        <i class="fas fa-list"></i> Contents
-    </div>
-    <nav id="bd-toc-nav" aria-label="Page">
-        <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   2.1. 데이터
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   2.2. 데이터 시각화
-  </a>
- </li>
-</ul>
-
-    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>데이터의 시각화</h1>
+                <h1>그래픽 도구의 활용1</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
-                        <div>
-                            <h2> Contents </h2>
-                        </div>
-                        <nav aria-label="Page">
-                            <ul class="visible nav section-nav flex-column">
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   2.1. 데이터
-  </a>
- </li>
- <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   2.2. 데이터 시각화
-  </a>
- </li>
-</ul>
-
-                        </nav>
                     </div>
                 </div>
             </div>
@@ -662,28 +615,9 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="id1">
-<h1><span class="section-number">2. </span>데이터의 시각화<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<section id="id2">
-<h2><span class="section-number">2.1. </span>데이터<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
-<p>흔히 생각하는 데이터는  <strong>디지털화된 자료</strong> 로 엑셀 스프레드시트에 나열된 숫자 자료들을 떠올리게 됩니다.  숫자 자료 외에도 세상에는 다양한 형태의 데이터들이 있습니다.
-데이터를 우리가 이해하는 방식에 따라 나누어보면 주소, 이름과 같은 텍스트 데이터, 사진을 저장한 이미지 데이터, 팔로우 관계를 요약 해놓은 그래프 데이터 등 다양한 형태의
-데이터들이 있습니다. 한편 어떤 확률 모형을 도입해서 분석할 것인지 선택의 관점에서 데이터들은 연속형, 이산형 데이터로 나누어 볼 수 있습니다.</p>
-<p>이렇게 다양한 형태의 데이터들의 그 자체로서 가지고 있는 의미나 유용항 정보를 직접 파악할 수 있는 경우는 드뭅니다. 많은 경우 데이터를 요약하여 어떤 의미를 파악하고자 하는 경우가 많은데
-이때 데이터의 요약방법으로 유용하게 사용할 수 있는 것이 바로 데이터 시각화 입니다.</p>
-</section>
-<section id="id3">
-<h2><span class="section-number">2.2. </span>데이터 시각화<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
-<p><strong>데이터 시각화는 예쁜 그림 이상입니다</strong></p>
-<p>사람들은 언어를 통하여 자신의 의사를 전달하고 타인의 생각을 이해하며 서로 소통합니다. 언어를 이용하여 상대방에 자신이 원하는 일을 시킬 수 있고 또한 언어를 통하여 자신의 생각과 수행한 일을 다른 사람에게 설명할 수 있습니다. 인간과 인간을 연결해주는 언어는 수 천 가지 종류가 있고(예를 들어 한국어, 영어, 일본어, 독일어 등) 언어를 표현하는 문자(writing system)와 문자들을 배열하는 규칙인 문법(grammar)이 있습니다. 예를 들어 우리는 영어를 사용하는 사람들과 소통하기 위하여 영어 단어를 외우고 문법을 익혀서 말하고 듣고 읽어서 의사를 전달하고 여러 가지 다양한 일을 수행합니다.</p>
-<p>처음에 언급했듯이 프로그래밍 언어는 컴퓨터와 소통하기 위해서 개발된 언어입니다. 프로그래밍 언어도 인간 사이의 언어와 같이 언어를 구성하는 단어도 있으며 문법도 있습니다. 인간 사이의 언어 소통에서 단어를 잘못 선택하거나 문법이 틀리면 소통이 어려운 것과 마찬가지로 컴퓨터와 소통하는 경우에도 선택된 프로그래밍 언어의 단어와 문법에 맞게 사용해야 오류 없이 소통할 수 있습니다. 더욱 재미있는 것은 모국어가 아닌 다른 언어를 배우고 나서 오해 사용하지 않으면 단어와 문법에 서툴러지는 것처럼 프로그래밍 언어도 오래 사용하지 않는다면 같은 현상이 발생합니다.</p>
-<p><strong>프로그래밍 언어(programming language)는 인간과 컴퓨터가 서로 소통하기 위한 언어입니다.</strong></p>
-<p>프로그래밍 언어도 인간의 언어와 마찬가지로 하나만 있는 것이 아닙니다. 가장 초기에 나온 <code class="docutils literal notranslate"><span class="pre">Fortran</span></code> 언어가 있고 그 이후에 <code class="docutils literal notranslate"><span class="pre">C</span></code>, <code class="docutils literal notranslate"><span class="pre">Lisp</span></code>, <code class="docutils literal notranslate"><span class="pre">JAVA</span></code>, <code class="docutils literal notranslate"><span class="pre">R</span></code> 등 매우 많은 언어가 개발되었습니다. 이렇게 많은 프로그래밍 언어들 중에 무엇을 배울지 선택하는 것은 어려운 일입니다. 하디만 앞에서 언급했듯이 프로그래밍 언어는 인간의 언어와 매우 유사한 경향을 가지고 있습니다. 즉, 가장 많이 사용되는 언어를 배우면 여러 면에서 편리한 것처럼 프로그래밍 언어도 마찬가지입니다.</p>
-<p>파이썬(python)은 1991년에 만들어진 비교적 역사가 짧은 언어이지만 최근 기계학습과 인공지능 분야에서 가장 활발하게 사용되는 범용 프로그래밍 언어(general-purpose programming langauge)입니다. 범용 언어라고 불리는 이유는 특정한 목적이 아닌 컴퓨터기 이용되는 전 분야에 걸쳐서 사용될 수 있기 때문입니다. 참고로 HTML, PHP와 같은 프로그래밍 언어는 은 웹페이지를 만드는 경우 주로 사용하려고 만든 특별한 목적을 가진 언어입니다.</p>
-<p>앞에서 말했듯이 언어는 꾸준하게 사용하지 않으면 소통 능력이 떨어지게 됩니다. 여러분이 이 과목을 통하여 파이썬의 기초를 배우게 되지만 꾸준하게 사용하지 않는 다면 소통 능력이 떨어지게 되는 것을 기억하세요.</p>
-<p>이제 우리는 현재 가장 널리 사용되고 있는 파이썬 언어를 배우고 이를 통해서 데이터를 다루는 기술을 익혀보려고 합니다.</p>
-<p>본 강의는 파이썬 언어 버젼 3.8을 이용하여 프로그래밍 언어에 대한 기초를 배울 것입니다. 파이션 언어에 대하여 더 자세히 알고 싶다면 대한 <a class="reference external" href="https://docs.python.org/ko/3.8/tutorial/index.html">온라인 파이썬자습서</a>를 참조하세요.</p>
-</section>
+  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+<h1><span class="section-number">2. </span>그래픽 도구의 활용1<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<p>본 강의는 파이썬 언어 버젼 3.8을 이용하여 프로그래밍 언어에 대한 기초를 배울 것입니다.</p>
 <div class="toctree-wrapper compound">
 </div>
 </section>
@@ -725,7 +659,7 @@ title="Print to PDF"
     <a class='right-next' id="next-link" href="region.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title"><span class="section-number">2.3. </span>Numpy 리뷰</p>
+        <p class="prev-next-title"><span class="section-number">2.1. </span>Numpy 리뷰</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
