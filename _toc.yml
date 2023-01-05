@@ -10,66 +10,138 @@ sections:
   title:  서론 
   sections:
   - file: chapters/01/intro-program
-    title: 데이터의 시각화다
-  - file: chapters/01/intro-stat
+    title: 데이터의 시각화
+  - file: chapters/01/intro-python
     title: 파이썬 환경구성
   - file: chapters/01/intro-numpy
     title: Numpy 리뷰  
   - file: chapters/01/intro-pandas
     title: Pandas review      
-- file: chapters/02/intro-python
-  title: 파이선의 기초  
-  sections:
-  - file: chapters/02/basic-expression
-    title: 표현식과 변수
-  - file: chapters/02/data-processing-intro
-    title: 데이터의 처리
-  - file: chapters/02/data-processing-train-passenger
-    title: 고속열차 여객 수송자료
-  - file: chapters/02/data-processing-text
-    title: 어린 왕자
-- file: chapters/03/types
-  title: 자료의 형식
-  sections:
-  - file: chapters/03/numbers
-  - file: chapters/03/string
-  - file: chapters/03/array
-- file: chapters/04/dataframe
-  title: 데이터프레임
-  sections:
-  - file: chapters/04/dataframe-intro
-  - file: chapters/04/dataframe-change
-  - file: chapters/04/dataframe-summary
-  - file: chapters/04/dataframe-merge
-- file: chapters/05/data-intro
-  title: 분포와 확률
-  sections:
-  - file: chapters/05/data_distribution
-  - file: chapters/05/data_randomness
-  - file: chapters/05/data_random_experiment
-  - file: chapters/05/data_probability
-  - file: chapters/05/data_function
-- file: chapters/06/sampling-intro
-  title: 표본과 경험적 분포
-  sections:
-  - file: chapters/06/sample
-  - file: chapters/06/samplemeans
-  - file: chapters/06/estimator
-  - file: chapters/06/bootstrap
-- file: chapters/07/test-intro
-  title: 유의성 검정
-  sections:
-  - file: chapters/07/decision
-  - file: chapters/07/pvalue
-  - file: chapters/07/abtest
-- file: chapters/08/relation-intro
-  title: 관계와 예측
-  sections:
-  - file: chapters/08/correlation
-  - file: chapters/08/regression
-  - file: chapters/08/classification
-  - file: chapters/08/validation
-  
-  
 
+- file: chapters/02/intro-graphics1
+  title: 그래픽 도구의 활용1
+  sections:
+  - file: chapters/02/region
+    title: 시각화 영역
+  - file: chapters/02/axis
+    title: 축의 조정과 텍스트
+  - file: chapters/02/attribute
+    title: 그래픽 인자
+
+- file: chapters/03/intro-graphics2
+  title: 그래픽 도구의 활용2
+  sections:
+  - file: chapters/03/legend
+    title: 범례의 표시  
+  - file: chapters/03/density
+    title: 밀도의 시각화    
+  - file: chapters/03/layout
+
+    title: 레이아웃  
+
+- file: chapters/04/intro-basic
+  title: 기초통계량과 시각화
+  sections:
+  - file: chapters/04/anova
+    title: 평균의 비교  
+  - file: chapters/04/hist
+    title: 확률분포의 추정  
+  - file: chapters/04/regression
+    title: 회귀분석과 시각화  
+
+
+- file: chapters/05/intro-mpl
+  title: matplotlib
+  sections:
+  - file: chapters/05/freq
+    title: 빈도분석  
+  - file: chapters/05/image
+    title: 이미지 데이터의 시긱화  
+  - file: chapters/05/3d_vis
+    title: 3차원 데이터의 시각화
+
+- file: chapters/06/intro-sb1
+  title: seaborn을 활용한 시각화1
+  sections:
+  - file: chapters/06/sb
+    title: seaborn 패키지의 소개  
+  - file: chapters/06/image_obj
+    title: 그래픽 객체
+  - file: chapters/06/vis
+    title: 시각화 방법
+
+
+- file: chapters/07/intro-sb2
+  title: seaborn을 활용한 시각화2
+  sections:
+  - file: chapters/07/grid
+    title: 그리드 플롯  
+  - file: chapters/07/multi
+    title: 다중플롯 만들기  
+  - file: chapters/07/attr
+    title: 시각속성 변경  
+
+- file: chapters/08/intro-pbl1
+  title: PBL1
+  sections:
+  - file: chapters/08/exercise1
+    title: 실습1
+  
+sections:
+- file: chapters/09/intro-mva
+  title:  다변량분석과 시각화
+  sections:
+  - file: chapters/09/pca
+    title: 주성분 분석의 기초
+  - file: chapters/09/svd
+    title: SVD
+  - file: chapters/09/pca_excercise
+    title: PCA 실습
+
+- file: chapters/10/intro-hd1
+  title: 고차원데이터의 시각화1
+  sections:
+  - file: chapters/10/curse
+    title: 차원의 저주
+  - file: chapters/10/k_pca
+    title: Kernel PCA
+  - file: chapters/10/k_pca_excercise
+    title: Kernel PCA 실습
+
+- file: chapters/11/intro-hd2
+  title: 고차원데이터의 시각화2
+  sections:
+  - file: chapters/11/nnet
+    title: 신경망 모형  
+  - file: chapters/11/mds
+    title: MDS
+  - file: chapters/11/sne
+    title: t-SNE  
+
+- file: chapters/12/intro-map1
+  title: 지도위에 시각화1
+  sections:
+  - file: chapters/12/geo_intro
+    title: 지리정보 시각화 소개
+  - file: chapters/12/geopandas
+    title: geopandas의 기초
+  - file: chapters/12/crs
+    title: 데이터 구조와 좌표계
+
+
+- file: chapters/13/intro-map2
+  title: 지도위에 시각화2
+  sections:
+  - file: chapters/13/function1
+    title: 지리정보 함수1
+  - file: chapters/13/function2
+    title: 지리정보 함수2   
+  - file: chapters/13/map_vis
+    title: 지도 시각화    
+
+- file: chapters/14/intro-pbl2
+  title: PBL2
+  sections:
+  - file: chapters/14/exercise2
+    title: 실습2 
 
