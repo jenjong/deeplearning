@@ -17,7 +17,6 @@ sections:
     title: Numpy 리뷰  
   - file: chapters/01/intro-pandas
     title: Pandas review      
-
 - file: chapters/02/intro-graphics1
   title: 그래픽 도구의 활용1
   sections:
@@ -27,7 +26,6 @@ sections:
     title: 축의 조정과 텍스트
   - file: chapters/02/attribute
     title: 그래픽 인자
-
 - file: chapters/03/intro-graphics2
   title: 그래픽 도구의 활용2
   sections:
@@ -36,9 +34,7 @@ sections:
   - file: chapters/03/density
     title: 밀도의 시각화    
   - file: chapters/03/layout
-
     title: 레이아웃  
-
 - file: chapters/04/intro-basic
   title: 기초통계량과 시각화
   sections:
@@ -48,8 +44,6 @@ sections:
     title: 확률분포의 추정  
   - file: chapters/04/regression
     title: 회귀분석과 시각화  
-
-
 - file: chapters/05/intro-mpl
   title: matplotlib
   sections:
@@ -59,7 +53,6 @@ sections:
     title: 이미지 데이터의 시긱화  
   - file: chapters/05/3d_vis
     title: 3차원 데이터의 시각화
-
 - file: chapters/06/intro-sb1
   title: seaborn을 활용한 시각화1
   sections:
@@ -69,8 +62,6 @@ sections:
     title: 그래픽 객체
   - file: chapters/06/vis
     title: 시각화 방법
-
-
 - file: chapters/07/intro-sb2
   title: seaborn을 활용한 시각화2
   sections:
@@ -80,16 +71,13 @@ sections:
     title: 다중플롯 만들기  
   - file: chapters/07/attr
     title: 시각속성 변경  
-
 - file: chapters/08/intro-pbl1
   title: PBL1
   sections:
   - file: chapters/08/exercise1
     title: 실습1
-  
-sections:
 - file: chapters/09/intro-mva
-  title:  다변량분석과 시각화
+  title: 다변량분석과 시각화
   sections:
   - file: chapters/09/pca
     title: 주성분 분석의 기초
@@ -97,7 +85,6 @@ sections:
     title: SVD
   - file: chapters/09/pca_excercise
     title: PCA 실습
-
 - file: chapters/10/intro-hd1
   title: 고차원데이터의 시각화1
   sections:
@@ -107,7 +94,6 @@ sections:
     title: Kernel PCA
   - file: chapters/10/k_pca_excercise
     title: Kernel PCA 실습
-
 - file: chapters/11/intro-hd2
   title: 고차원데이터의 시각화2
   sections:
@@ -117,7 +103,6 @@ sections:
     title: MDS
   - file: chapters/11/sne
     title: t-SNE  
-
 - file: chapters/12/intro-map1
   title: 지도위에 시각화1
   sections:
@@ -127,8 +112,6 @@ sections:
     title: geopandas의 기초
   - file: chapters/12/crs
     title: 데이터 구조와 좌표계
-
-
 - file: chapters/13/intro-map2
   title: 지도위에 시각화2
   sections:
@@ -138,7 +121,6 @@ sections:
     title: 지리정보 함수2   
   - file: chapters/13/map_vis
     title: 지도 시각화    
-
 - file: chapters/14/intro-pbl2
   title: PBL2
   sections:
