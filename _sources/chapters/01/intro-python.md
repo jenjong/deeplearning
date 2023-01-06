@@ -18,13 +18,13 @@
 
         
 <br/><br/>
-    - Anaconda 설치 경로의 확인:
+    - Anaconda 설치 경로의 확인
         폴더의 경로창에 '%userprofile%\anaconda3'를 입력
 
         ![설치경로확인](./image/path.png)
     
 
-    환경변수를 설정:
+    - 환경변수를 설정:
 
         (1) %userprofile% 의미
             %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 'test'인 경우 %userprofile%은 'c:\users\test' 의 위치를 의미한다.
