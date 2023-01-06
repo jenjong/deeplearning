@@ -51,8 +51,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="1.3. Numpy 리뷰" href="intro-numpy.html" />
@@ -616,13 +614,18 @@ title="Print to PDF"
     <nav id="bd-toc-nav" aria-label="Page">
         <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   1.2.1. 분석과 예측
+  <a class="reference internal nav-link" href="#anaconda">
+   1.2.1. Anaconda의 설치
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   1.2.2. 빅데이터와 데이터 과학
+  <a class="reference internal nav-link" href="#id2">
+   1.2.2. 가상환경과 파이썬의 실행
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vscode">
+   1.2.3. vscode를 이용한 파이썬 실행
   </a>
  </li>
 </ul>
@@ -645,13 +648,18 @@ title="Print to PDF"
                         <nav aria-label="Page">
                             <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id2">
-   1.2.1. 분석과 예측
+  <a class="reference internal nav-link" href="#anaconda">
+   1.2.1. Anaconda의 설치
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#id3">
-   1.2.2. 빅데이터와 데이터 과학
+  <a class="reference internal nav-link" href="#id2">
+   1.2.2. 가상환경과 파이썬의 실행
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#vscode">
+   1.2.3. vscode를 이용한 파이썬 실행
   </a>
  </li>
 </ul>
@@ -666,21 +674,70 @@ title="Print to PDF"
                 
   <section id="id1">
 <h1><span class="section-number">1.2. </span>파이썬 환경구성<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<section id="id2">
-<h2><span class="section-number">1.2.1. </span>분석과 예측<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
-<p>이제 데이터를 이용하는 목적을 생각해 봅시다. 앞에서 데이터를 분석한다고 했는데 일단 분석을 왜 할까요? 또 분석은 무슨 의미일까요? 일단 분석의 의미를 정확하고 명료하게 설명할 수는 없다면 왜 분석하는지
-생각해 봅시다.</p>
-<p>많은 분야에서 데이터를 분석하는 가장 궁극적인 목적은 **예측(prediction)**입니다. 예를 들어 우리는 기상청에서 아주 많는 기상 자료를 분석하고 있는 사실을 알고 있습니다. 왜 분석할까요? 가장 중요한 목적은 일기 예보이며 예보의 의미는 예측입니다.</p>
-<p>이 과목에서 여러분은 예측을 수행하기 위한 분석의 기초를 배울 것입니다. 분석은 예측하려는 변수(y)와 이에 영향을 미치는 변수들(x)의 인과관계를  **모형(models)**으로 만드는 작업입니다. 우리가 흔히 다음과 같은 식으로 모형을 표현합니다.</p>
-<div class="math notranslate nohighlight">
-\[ y \approx f(x) \]</div>
-<p>예측은 실제 결과와 틀릴 수도 있습니다. 어떤 예측은 아주 잘 맞을 수도 있습니다. 예를 들어 요즘은 대부분의 주차장에서 차량번호를 인식하는 장치를 사용하는데 기본적으로 번호판을 디지털 데이터로 만들어서 차량의 번호를 예측하는 컴퓨터 프로그램을 이용합니다. 내일 비가 얼마나 어디에 올지는 어려운 예측이지만 태풍의 경로와 강도에 대한 예측은 상당히 정확합니다. 기상청도 우리가 여러 매체에서 보았듯이 방대한 기상 자료를 슈퍼컴퓨터로 분석하여 예측을 수행합니다.</p>
-<p>우리는 이 과목에서 통계학을 통하여 예측에 사용될 수 있는 모형을 만드는 기초적인 방법을 배우고 더 나아가서 <strong>예측의 불확실성</strong>에 대한 기초적인 주제를 다룰 것입니다.</p>
+<!-- 1-1 -->
+<section id="anaconda">
+<h2><span class="section-number">1.2.1. </span>Anaconda의 설치<a class="headerlink" href="#anaconda" title="Permalink to this headline">#</a></h2>
+<ol class="simple">
+<li><p>Anaconda의 설치 방법</p></li>
+</ol>
+<ul class="simple">
+<li><p>Window</p></li>
+</ul>
+<p>그림  Anaconda 다운로드 사이트 (<a class="reference external" href="https://www.anaconda.com/">https://www.anaconda.com/</a>)</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Anaconda 설치 경로의 확인:
+
+환경변수를 설정:
+</pre></div>
+</div>
+<p>(1) %userprofile% 의미
+(2) path 설정 찾아가기
+(3) path에 %userprofile%\anaconda3
+%userprofile%\anaconda3\library
+%userprofile%\anaconda3\scripts
+설정하기</p>
+<ul class="simple">
+<li><p>Mac
+특별한 설정 필요 없음</p></li>
+</ul>
 </section>
-<section id="id3">
-<h2><span class="section-number">1.2.2. </span>빅데이터와 데이터 과학<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
-<p>최근에는 과거와 비교할 수 없는 양의 자료가 저장되고 있습니다. 빅데이터에 대한 기술과 연구는 여러 측면에서 다양한 주제로 접근할 수 있습니다. 기술적으로 데이터가 너무 커서 하나의 저장공간에 저장하거나 처리할 수 없는 경우 이를 해결할 방법을 연구하는 것도 중요한 주제입니다. 아마존과 네이버의 기술자들은 이러한 빅데이터의 저장과 처리 기술에 대하여 고민할 것입니다.</p>
-<p>우리는 이 과목에서 빅데이터를 데이터 과학자의 측면에서 볼 것입니다. 데이터 과학은 앞에서 언급한 데이터를 이용하여 예측하는 방법을 연구하는 분야입니다. 따라서 빅데이터도 다른 작은 데이터와 같이 예측을 위한 도구로 생각할 것입니다. 우리가 이 과목에서 배우는 데이터의 처리 기술과 모형을 통한 예측 방법은 빅데이터를 포함한 모든 데이터에 적용할 수 있는 기초입니다.</p>
+<section id="id2">
+<h2><span class="section-number">1.2.2. </span>가상환경과 파이썬의 실행<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>anaconda의 실행
+(1) anaconda 실행하기
+(2) python 실행하기 및 python 버전 확인하기
+(3) python에서 계산기 기능 이용해보기
+(4) python 종료하기: exit()</p>
+<ol class="simple">
+<li><p>python 위에서 명령과 shell 명령의 구분
+(1) shell 위에서 계산 시도해보기
+(2) dir (window) 명령, ls (mac) 명령
+(3) cd 명령과 파일경로의 이해</p></li>
+<li><p>가상환경의 설치와 삭제
+(1) conda create –n test python=3.8
+(2) conda info
+(3) conda activate, 파이썬 실행 및 버전확인, conda deactivate
+(4) 가상환경내 ipykernel의 설치
+(5) conda remove env –n test</p></li>
+</ol>
+</section>
+<section id="vscode">
+<h2><span class="section-number">1.2.3. </span>vscode를 이용한 파이썬 실행<a class="headerlink" href="#vscode" title="Permalink to this headline">#</a></h2>
+<p>vscode 설치하기
+(1) vscode 다운로드</p>
+<p>그림  	다운로드 사이트(<a class="reference external" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>)</p>
+<p>(2) vscode의 실행 및 확장(extension)설치</p>
+<ul class="simple">
+<li><p>python</p></li>
+<li><p>code runner</p></li>
+<li><p>remote –ssh</p></li>
+</ul>
+<ol class="simple">
+<li><p>vscode를 통한 anaconda  파이썬 실행
+(1) 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
+(2) 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
+(3) 새파일 만들기 (확장자 py로)
+(4) 계산기 코드 작성후 shirt+enter</p></li>
+</ol>
 </section>
 </section>
 
