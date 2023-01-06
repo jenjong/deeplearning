@@ -8,7 +8,7 @@
 
 1. Anaconda의 설치 방법 (window)
 
-    - Anaconda 다운로드 사이트 (https://www.anaconda.com/):
+    - Anaconda 다운로드 사이트 (https://www.anaconda.com/)
         운영체제에 맞는 파일을 다운로드 받고 설치한다. 
 
         <figure>
