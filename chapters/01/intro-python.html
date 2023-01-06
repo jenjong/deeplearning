@@ -698,8 +698,8 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 </li>
 <li><p>환경변수를 설정</p>
 <ul class="simple">
-<li><p><strong>%userprofile%</strong> 의미</p>
-</li>
+<li><p><strong>%userprofile%</strong> 의미
+<em>%userprofile%</em> 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환합니다. 예를 들어 윈도우에 로그인한 사용자의 이름이 <strong>test</strong> 인 경우 *%userprofile%*은 <strong>c:\users\test</strong> 의 위치를 의미합니다.</p></li>
 <li><p>path 설정 찾아가기</p>
 <ul>
 <li><p>내PC</p></li>
@@ -712,9 +712,9 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 </li>
 <li><p>아래의 path 추가</p>
 <ul>
-<li></li>
-<li></li>
-<li></li>
+<li><p><em>%userprofile%\anaconda3</em></p></li>
+<li><p><em>%userprofile%\anaconda3\library</em></p></li>
+<li><p><em>%userprofile%\anaconda3\scripts</em></p></li>
 </ul>
 </li>
 </ul>
@@ -756,7 +756,8 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 </li>
 <li><p>가상환경의 설치와 삭제</p>
 <ul class="simple">
-<li><p>conda create –n test python=3.8</p></li>
+<li><p>conda create –n test python=3.8
+conda 환경을 test 라는 가상환경 내에 python 3.8 을 설치한다.</p></li>
 <li><p>conda info</p></li>
 <li><p>conda activate, 파이썬 실행 및 버전확인, conda deactivate</p></li>
 <li><p>가상환경내 ipykernel의 설치</p></li>
@@ -784,7 +785,7 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 <li><p>vscode를 통한 anaconda  파이썬 실행</p>
 <ul class="simple">
 <li><p>가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)</p></li>
-<li><p>쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크</p></li>
+<li><p>쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크)</p></li>
 <li><p>새파일 만들기 (확장자 py로)</p></li>
 <li><p>계산기 코드 작성후 shirt+enter</p></li>
 </ul>

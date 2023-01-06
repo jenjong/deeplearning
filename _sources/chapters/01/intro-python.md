@@ -23,7 +23,7 @@
     
     - 환경변수를 설정
         + **%userprofile%** 의미
-            %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 **test** 인 경우 %userprofile%은 **c:\users\test** 의 위치를 의미한다.
+            *%userprofile%* 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환합니다. 예를 들어 윈도우에 로그인한 사용자의 이름이 **test** 인 경우 *%userprofile%*은 **c:\users\test** 의 위치를 의미합니다.
         + path 설정 찾아가기
             - 내PC
             - 속성
@@ -32,9 +32,9 @@
             - 사용자변수의 path 선택 후 편집 버튼 클릭
             - 새로만들기 클릭
         + 아래의 path 추가
-            - %userprofile%\anaconda3
-            - %userprofile%\anaconda3\library
-            - %userprofile%\anaconda3\scripts
+            - *%userprofile%\anaconda3*
+            - *%userprofile%\anaconda3\library*
+            - *%userprofile%\anaconda3\scripts*
 
 2. Anaconda의 설치 방법 (Mac)
     - Anaconda 다운로드 사이트 (https://www.anaconda.com/)
@@ -59,6 +59,7 @@
 
 3. 가상환경의 설치와 삭제
     - conda create –n test python=3.8
+        conda 환경을 test 라는 가상환경 내에 python 3.8 을 설치한다.
     - conda info 
     - conda activate, 파이썬 실행 및 버전확인, conda deactivate
     - 가상환경내 ipykernel의 설치    
@@ -78,6 +79,6 @@
 
 2. vscode를 통한 anaconda  파이썬 실행 
     - 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
-    - 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
+    - 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크)
     - 새파일 만들기 (확장자 py로)
     - 계산기 코드 작성후 shirt+enter
