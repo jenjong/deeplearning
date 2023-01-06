@@ -4,22 +4,28 @@
 ### Anaconda의 설치
 
 1. Anaconda의 설치 방법
-- Window
 
-그림  Anaconda 다운로드 사이트 (https://www.anaconda.com/)
+    Window
+
+    Anaconda 다운로드 사이트 (https://www.anaconda.com/)
+
+
 
     Anaconda 설치 경로의 확인:
 
     환경변수를 설정:
-(1) %userprofile% 의미
-(2) path 설정 찾아가기
-(3) path에 %userprofile%\anaconda3
-           %userprofile%\anaconda3\library
-           %userprofile%\anaconda3\scripts
-설정하기
 
-- Mac
-특별한 설정 필요 없음
+    (1) %userprofile% 의미
+
+    (2) path 설정 찾아가기
+
+    (3) path
+        - %userprofile%\anaconda3
+        - %userprofile%\anaconda3\library
+        - %userprofile%\anaconda3\scripts
+
+
+    Mac: 특별한 설정 필요 없음
 
 
 ### 가상환경과 파이썬의 실행
