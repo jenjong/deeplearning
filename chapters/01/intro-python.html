@@ -690,15 +690,16 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 <p><img alt="" src="../../_images/install.png" /></p>
   <center>    (아나콘다설치화면) </center>
 </li>
-<li><p>Anaconda 설치 경로의 확인</p>
-<p>폴더의 경로창에 <strong>%userprofile%\anaconda3</strong>를 입력하세요. anaconda3 설치시 특별히 폴더변경을 하지
+<li><p>Anaconda 설치 경로의 확인
+폴더의 경로창에 <strong>%userprofile%\anaconda3</strong>를 입력하세요. anaconda3 설치시 특별히 폴더변경을 하지
 않았다면 anaconda3가 설치된 폴더로 이동할 수 있습니다.</p>
 <p><img alt="" src="../../_images/path.png" /></p>
   <center>    (설치경로) </center>
 </li>
 <li><p>환경변수를 설정</p>
 <ul class="simple">
-<li></li>
+<li><p><strong>%userprofile%</strong> 의미</p>
+</li>
 <li><p>path 설정 찾아가기</p>
 <ul>
 <li><p>내PC</p></li>
@@ -753,30 +754,41 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
 <li><p>cd 명령과 파일경로의 이해</p></li>
 </ul>
 </li>
-<li><p>가상환경의 설치와 삭제
-(1) conda create –n test python=3.8
-(2) conda info
-(3) conda activate, 파이썬 실행 및 버전확인, conda deactivate
-(4) 가상환경내 ipykernel의 설치
-(5) conda remove env –n test</p></li>
+<li><p>가상환경의 설치와 삭제</p>
+<ul class="simple">
+<li><p>conda create –n test python=3.8</p></li>
+<li><p>conda info</p></li>
+<li><p>conda activate, 파이썬 실행 및 버전확인, conda deactivate</p></li>
+<li><p>가상환경내 ipykernel의 설치</p></li>
+<li><p>conda remove env –n test</p></li>
+</ul>
+</li>
 </ol>
 </section>
 <section id="vscode">
 <h2><span class="section-number">1.2.3. </span>vscode를 이용한 파이썬 실행<a class="headerlink" href="#vscode" title="Permalink to this headline">#</a></h2>
-<ol>
+<ol class="simple">
 <li><p>vscode 설치하기
-(1) vscode 다운로드
+-vscode 다운로드
 다운로드 사이트(<a class="reference external" href="https://code.visualstudio.com/">https://code.visualstudio.com/</a>)</p>
-<p>(2) vscode의 실행 및 확장(extension)설치
-- python
-- code runner
-- remote –ssh</p>
+<ul class="simple">
+<li><p>vscode의 실행 및 확장(extension)설치</p>
+<ul>
+<li><p>python</p></li>
+<li><p>code runner</p></li>
+<li><p>remote –ssh</p></li>
+</ul>
 </li>
-<li><p>vscode를 통한 anaconda  파이썬 실행
-(1) 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
-(2) 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
-(3) 새파일 만들기 (확장자 py로)
-(4) 계산기 코드 작성후 shirt+enter</p></li>
+</ul>
+</li>
+<li><p>vscode를 통한 anaconda  파이썬 실행</p>
+<ul class="simple">
+<li><p>가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)</p></li>
+<li><p>쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크</p></li>
+<li><p>새파일 만들기 (확장자 py로)</p></li>
+<li><p>계산기 코드 작성후 shirt+enter</p></li>
+</ul>
+</li>
 </ol>
 </section>
 </section>
