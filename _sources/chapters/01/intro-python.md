@@ -11,7 +11,7 @@
     - Anaconda 다운로드 사이트 (https://www.anaconda.com/)
         운영체제에 맞는 파일을 다운로드 받고 설치한다. 
         
-        ![설치경로확인](./image/install.png)
+        ![](./image/install.png)
         아나콘다설치화면
 
         
@@ -19,18 +19,23 @@
     - Anaconda 설치 경로의 확인
         폴더의 경로창에 '%userprofile%\anaconda3'를 입력
 
-        ![설치경로확인](./image/path.png)
+        ![](./image/path.png)
     
-
+<br/><br/>
     - 환경변수를 설정
 
         (1) %userprofile% 의미
-            %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 'test'인 경우 %userprofile%은 'c:\users\test' 의 위치를 의미한다.
+            %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 *test* 인 경우 %userprofile%은 *c:\users\test* 의 위치를 의미한다.
 
         (2) path 설정 찾아가기
+            - 내PC
+            - 속성
+            - 고급시스템설정
+            - 환경변수
+            - 사용자변수의 path 선택 후 편집 버튼 클릭
+            - 새로만들기 클릭
 
-
-        (3) path
+        (3) 아래의 path 추가
             - %userprofile%\anaconda3
             - %userprofile%\anaconda3\library
             - %userprofile%\anaconda3\scripts
@@ -60,32 +65,31 @@
     (4) python 종료하기: exit()
 
 2. python 위에서 명령과 shell 명령의 구분 
-(1) shell 위에서 계산 시도해보기
-(2) dir (window) 명령, ls (mac) 명령
-(3) cd 명령과 파일경로의 이해
+    (1) shell 위에서 계산 시도해보기
+    (2) dir (window) 명령, ls (mac) 명령
+    (3) cd 명령과 파일경로의 이해
 
 3. 가상환경의 설치와 삭제
-(1) conda create –n test python=3.8
-(2) conda info 
-(3) conda activate, 파이썬 실행 및 버전확인, conda deactivate
-(4) 가상환경내 ipykernel의 설치
-(5) conda remove env –n test
+    (1) conda create –n test python=3.8
+    (2) conda info 
+    (3) conda activate, 파이썬 실행 및 버전확인, conda deactivate
+    (4) 가상환경내 ipykernel의 설치
+    (5) conda remove env –n test
 
 
 ### vscode를 이용한 파이썬 실행
 
-vscode 설치하기
-(1) vscode 다운로드
+1. vscode 설치하기
+    (1) vscode 다운로드
+        다운로드 사이트(https://code.visualstudio.com/) 
 
-그림  	다운로드 사이트(https://code.visualstudio.com/)
-
-(2) vscode의 실행 및 확장(extension)설치
-- python
-- code runner
-- remote –ssh
+    (2) vscode의 실행 및 확장(extension)설치
+        - python
+        - code runner
+        - remote –ssh
 
 2. vscode를 통한 anaconda  파이썬 실행 
-(1) 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
-(2) 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
-(3) 새파일 만들기 (확장자 py로)
-(4) 계산기 코드 작성후 shirt+enter
+    (1) 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
+    (2) 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
+    (3) 새파일 만들기 (확장자 py로)
+    (4) 계산기 코드 작성후 shirt+enter
