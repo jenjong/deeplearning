@@ -8,21 +8,18 @@
 Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 난 패키지가 있을 경우에 가상환경만 새로 설치하면 되기 때문에 전체 시스템을 수정해야하는 수고를 덜 수 있다.
 
 1. Anaconda의 설치 방법 (window)
-
     - Anaconda 다운로드 사이트 (https://www.anaconda.com/)
         운영체제에 맞는 파일을 다운로드 받고 설치한다. 
         
         ![](./image/install.png)
-        아나콘다설치화면
-
-<br/><br/>        
+    <center>    아나콘다설치화면 </center>
+    <br/><br/>        
     - Anaconda 설치 경로의 확인
 
         폴더의 경로창에 *%userprofile%\anaconda3*를 입력
 
         ![](./image/path.png)
-    
-<br/><br/>
+    <br/><br/>
     - 환경변수를 설정
         (1) %userprofile% 의미
             %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 *test* 인 경우 %userprofile%은 *c:\users\test* 의 위치를 의미한다.
@@ -37,7 +34,6 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
             - %userprofile%\anaconda3
             - %userprofile%\anaconda3\library
             - %userprofile%\anaconda3\scripts
-
 
 2. Anaconda의 설치 방법 (Mac)
     - Anaconda 다운로드 사이트 (https://www.anaconda.com/)
