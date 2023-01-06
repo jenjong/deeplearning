@@ -15,18 +15,17 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
         ![](./image/install.png)
         아나콘다설치화면
 
-        
+<br/><br/>        
     - Anaconda 설치 경로의 확인
-        폴더의 경로창에 '%userprofile%\anaconda3'를 입력
+
+        폴더의 경로창에 *%userprofile%\anaconda3*를 입력
 
         ![](./image/path.png)
     
 <br/><br/>
     - 환경변수를 설정
-
         (1) %userprofile% 의미
             %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 *test* 인 경우 %userprofile%은 *c:\users\test* 의 위치를 의미한다.
-
         (2) path 설정 찾아가기
             - 내PC
             - 속성
@@ -34,7 +33,6 @@ Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 
             - 환경변수
             - 사용자변수의 path 선택 후 편집 버튼 클릭
             - 새로만들기 클릭
-
         (3) 아래의 path 추가
             - %userprofile%\anaconda3
             - %userprofile%\anaconda3\library
