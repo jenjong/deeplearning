@@ -11,7 +11,10 @@
     - Anaconda 다운로드 사이트 (https://www.anaconda.com/):
         운영체제에 맞는 파일을 다운로드 받고 설치한다. 
 
-        ![다운로드사이트](./image/install.png "Anaconda 다운로드 사이트")
+        <figure>
+            <img src="./image/install.png" title="하얀 강아지">    
+        <figcaption>하얀 강아지</figcaption>
+        </figure>
 
         
 <br/><br/>
