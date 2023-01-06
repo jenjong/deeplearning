@@ -4,7 +4,7 @@
 ### Anaconda의 설치
 
     Anaconda는 머신러닝이나 데이터 분석 등에 사용하는 여러가지 패키지가 기본적으로 포함되어있는 파이썬 배포판입니다. 여러가지 파이썬에서 사용할 수 있는 패키지들을 설치할 때 패키지간 의존성을 관리 해주며, 가상환경을 만들어 패키지들을 해당 가상환경에서만 사용할 수 있도록 제한해줍니다. 
-    
+
     Anaconda를 사용하면 패키지간 충돌을 줄일 수 있으며, 충돌이 난 패키지가 있을 경우에 가상환경만 새로 설치하면 되기 때문에 전체 시스템을 수정해야하는 수고를 덜 수 있습니다. 잘 사용하고 있던 개발환경이 새로운 패키지를 설치한 후 작동하지 않는 상황을 상상해보십시오. 
 
 1. Anaconda의 설치 방법 (window)
@@ -15,7 +15,6 @@
         <center>    (아나콘다설치화면) </center>
    
     - Anaconda 설치 경로의 확인
-
         폴더의 경로창에 **%userprofile%\anaconda3**를 입력하세요. anaconda3 설치시 특별히 폴더변경을 하지 
         않았다면 anaconda3가 설치된 폴더로 이동할 수 있습니다. 
 
@@ -23,8 +22,8 @@
         <center>    (설치경로) </center>
     
     - 환경변수를 설정
-        + %userprofile% 의미
-            %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 *test* 인 경우 %userprofile%은 *c:\users\test* 의 위치를 의미한다.
+        + **%userprofile%** 의미
+            %userprofile% 는 윈도우 상에 현재 로그인된 사용자의 바탕화면, 문서, 비디오등 개인화된 폴더의 위치를 반환한다. 예를 들어 윈도우에 로그인한 사용자의 이름이 **test** 인 경우 %userprofile%은 **c:\users\test** 의 위치를 의미한다.
         + path 설정 찾아가기
             - 내PC
             - 속성
@@ -59,26 +58,26 @@
     - cd 명령과 파일경로의 이해
 
 3. 가상환경의 설치와 삭제
-    (1) conda create –n test python=3.8
-    (2) conda info 
-    (3) conda activate, 파이썬 실행 및 버전확인, conda deactivate
-    (4) 가상환경내 ipykernel의 설치
-    (5) conda remove env –n test
+    - conda create –n test python=3.8
+    - conda info 
+    - conda activate, 파이썬 실행 및 버전확인, conda deactivate
+    - 가상환경내 ipykernel의 설치    
+    - conda remove env –n test
 
 
 ### vscode를 이용한 파이썬 실행
 
 1. vscode 설치하기
-    (1) vscode 다운로드
+    -vscode 다운로드
         다운로드 사이트(https://code.visualstudio.com/) 
 
-    (2) vscode의 실행 및 확장(extension)설치
-        - python
-        - code runner
-        - remote –ssh
+    - vscode의 실행 및 확장(extension)설치
+        + python
+        + code runner
+        + remote –ssh
 
 2. vscode를 통한 anaconda  파이썬 실행 
-    (1) 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
-    (2) 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
-    (3) 새파일 만들기 (확장자 py로)
-    (4) 계산기 코드 작성후 shirt+enter
+    - 가상환경의 선택 (shirf+ctrl+p → Python: select interpreter)
+    - 쥬피터 단축키 설정 (ctrl+, → extension(설정) → jupyter → send selection to interactive window 에 체크
+    - 새파일 만들기 (확장자 py로)
+    - 계산기 코드 작성후 shirt+enter
