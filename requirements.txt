@@ -1,6 +1,6 @@
 jupyter-book
 matplotlib
+cv2
 numpy
 pandas
 pandas_profiling
-cv2
