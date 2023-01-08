@@ -878,13 +878,118 @@ numpy.array
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">url</span> <span class="o">=</span><span class="s2">&quot;https://ilovedata.github.io/teaching/bigdata2/data/train-data-01.csv&quot;</span>
-<span class="n">train_raw_data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 </pre></div>
 </div>
 </div>
 </div>
-<p><img alt="excel" src="../../_images/excel-file.png" /></p>
+<p>리스트로부터 DataFrame 생성하기</p>
+<ul class="simple">
+<li><p>리스트를 배열에 맞게 쓴다. 대부분 이차원 테이블형식의 데이터를 다루게 되므로 아래 예제와 같은 형태의 리스트를 입력하게 될 것이다.</p></li>
+<li><p>열의 이름을 입력하기 위해서 <strong>columns</strong> 옵션에 문자열 리스트를 입력한다. 문자열 입력값이 없는 경우에는 0부터 시작하는 번호가 입력된다</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">],[</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;col1&#39;</span><span class="p">,</span> <span class="s1">&#39;col2&#39;</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   col1  col2
+0     1     2
+1     2     3
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path</span> <span class="o">=</span> <span class="s2">&quot;C:/Users/User/Desktop/1인가구_시각화_교육용/1인가구_지수.csv&quot;</span>
+<span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path</span><span class="p">,</span> <span class="n">encoding</span><span class="o">=</span><span class="s1">&#39;cp949&#39;</span><span class="p">)</span>
+
+<span class="c1"># 생성하기 csv</span>
+<span class="c1">#data = pd.read_excel(&#39;1인가구.xlsx&#39;, 0)</span>
+
+<span class="c1"># 열이름 변경하기</span>
+<span class="n">a</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="s1">&#39;col2-1&#39;</span> <span class="c1">#  error</span>
+<span class="n">a</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s1">&#39;col2-1&#39;</span><span class="p">})</span>
+<span class="n">a</span>
+<span class="c1"># Tips! inplace </span>
+<span class="n">a</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="n">a</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="mi">1</span><span class="p">]:</span> <span class="s1">&#39;col2-1&#39;</span><span class="p">},</span> <span class="n">inplace</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="n">a</span>
+
+<span class="c1"># 참조 및 추출</span>
+<span class="n">a</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span>
+<span class="n">a</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">,:]</span> <span class="o">=</span> <span class="p">[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]</span>
+<span class="n">a</span>
+
+<span class="n">a</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="p">[</span><span class="kc">True</span><span class="p">,</span> <span class="kc">False</span><span class="p">]]</span>
+<span class="n">a</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span> <span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+
+<span class="c1"># 데이터의  추가</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span>
+<span class="c1"># why? 열 이름을 이용하여 병합하기 때문임 </span>
+
+<span class="c1"># note 1</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span> <span class="n">a</span><span class="p">,</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">]])</span> <span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># note 2</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]])</span>
+<span class="n">b</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+<span class="c1"># note 2-1</span>
+<span class="n">b</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">columns</span><span class="p">)</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># 실패한 append 를 다음과 같이 병합</span>
+<span class="n">a</span><span class="o">.</span><span class="n">append</span><span class="p">(</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">10</span><span class="p">,</span><span class="mi">20</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">a</span><span class="o">.</span><span class="n">columns</span><span class="p">))</span>
+
+<span class="c1"># 다음과 같은 경우에 편리함. </span>
+<span class="n">b</span> <span class="o">=</span>  <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">([[</span><span class="mi">20</span><span class="p">,</span><span class="mi">10</span><span class="p">]],</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;col2&#39;</span><span class="p">,</span> <span class="s1">&#39;col1&#39;</span><span class="p">])</span>
+<span class="n">b</span>
+<span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">a</span><span class="p">,</span> <span class="n">b</span><span class="p">],</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="c1"># random </span>
+<span class="n">amat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">size</span>  <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">amat_pdf</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">amat</span><span class="p">)</span>
+<span class="n">v</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">):</span>
+    <span class="n">v</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="s2">&quot;v&quot;</span><span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">))</span>
+<span class="n">v</span>
+<span class="n">amat_pdf</span><span class="o">.</span><span class="n">columns</span> <span class="o">=</span> <span class="n">v</span>
+
+<span class="c1"># iterable객체 활용 tip</span>
+<span class="p">[</span><span class="s2">&quot;v&quot;</span><span class="o">+</span><span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="p">)]</span>
+
+<span class="c1"># 함수</span>
+<span class="n">data</span><span class="o">.</span><span class="n">head</span><span class="p">(</span><span class="n">n</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+<span class="n">data</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+<span class="n">data</span><span class="o">.</span><span class="n">columns</span>
+
+<span class="c1">#</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;1인가구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;1인가구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;1인가구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;1인가구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">quantile</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="c1">#</span>
+<span class="n">data</span><span class="o">.</span><span class="n">iloc</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;자치구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[</span><span class="s1">&#39;자치구&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="n">data</span><span class="p">[[</span><span class="s1">&#39;자치구&#39;</span><span class="p">,</span><span class="s1">&#39;행정동&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+
+
+<span class="c1"># 열의 선택</span>
+<span class="n">data</span><span class="p">[</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;자치구&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;강남구&#39;</span><span class="p">]</span>
+<span class="n">data</span><span class="p">[</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;자치구&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;강남구&#39;</span><span class="p">)</span> <span class="o">&amp;</span> <span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;행정동&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;개포1동&#39;</span><span class="p">)</span> <span class="p">]</span>
+<span class="c1"># 다음과 같은 실수</span>
+<span class="n">data</span><span class="p">[</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;자치구&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;강남구&#39;</span> <span class="o">&amp;</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;행정동&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;개포1동&#39;</span> <span class="p">]</span> <span class="c1"># error</span>
+</pre></div>
+</div>
+</div>
+</div>
 </section>
 </section>
 
