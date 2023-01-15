@@ -54,7 +54,7 @@ const thebe_selector_output = ".output, .cell_output"
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4.3. 회귀분석과 시각화" href="regression.html" />
-    <link rel="prev" title="4.1. 평균의 비교" href="anova.html" />
+    <link rel="prev" title="4.1. 분산분석" href="anova.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -688,7 +688,290 @@ numpy.array
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>                         <span class="c1"># 4-1-2, 4-1-3</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>                  <span class="c1"># 4-1-2</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>               <span class="c1"># 4-1-2, 4-1-3, 4-2-1</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>       <span class="c1"># 4-1-1</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>  <span class="c1"># 4-1-1</span>
+<span class="kn">from</span> <span class="nn">statsmodels.distributions.empirical_distribution</span> <span class="kn">import</span> <span class="n">ECDF</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="kn">from</span> <span class="nn">scipy.stats</span> <span class="kn">import</span> <span class="n">norm</span><span class="p">,</span> <span class="n">chi2</span>
+<span class="kn">from</span> <span class="nn">scipy.special</span> <span class="kn">import</span> <span class="n">erf</span>                 <span class="c1"># 4-2-1</span>
+
+<span class="kn">from</span> <span class="nn">lifelines.datasets</span> <span class="kn">import</span> <span class="n">load_dd</span>
+<span class="kn">from</span> <span class="nn">lifelines</span> <span class="kn">import</span> <span class="n">KaplanMeierFitter</span>
+
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+<span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># load data</span>
+<span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;http://ranking.uos.ac.kr/class/VIS/data/&quot;</span> <span class="c1"># insert poison file path</span>
+<span class="n">poi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_file</span> <span class="o">+</span> <span class="s1">&#39;poison.csv&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>종속변수 time의 독립변수 poison에 대한 상자그림과 산점도</p></li>
+<li><p>pyplot 패키지의 활용</p></li>
+<li><p>poison에 따른 time의 평균과 분포는 어떤 차이를 보이는가?</p></li>
+</ul>
+<ul class="simple">
+<li><p>poison 변수의 값을 기준으로 데이터를 나누기 위해서 값을 확인해본다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>G1    16
+G2    16
+G3    16
+Name: poison, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>확인한 poison의 값을 이용하여 데이터를 나눈다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G1&#39;</span><span class="p">]</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G2&#39;</span><span class="p">]</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G3&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>그래픽 스타일을 ‘ggplot’으로 바꾸자</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="s1">&#39;G1&#39;</span><span class="p">,</span><span class="s1">&#39;G2&#39;</span><span class="p">,</span><span class="s1">&#39;G3&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Example: boxplot&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X: poison&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y: time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Y: time&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/hist_11_1.png" src="../../_images/hist_11_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;treat&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0     A
+1     A
+2     A
+3     A
+4     A
+5     A
+6     A
+7     A
+8     A
+9     A
+10    A
+11    A
+12    B
+13    B
+14    B
+15    B
+16    B
+17    B
+18    B
+19    B
+20    B
+21    B
+22    B
+23    B
+24    C
+25    C
+26    C
+27    C
+28    C
+29    C
+30    C
+31    C
+32    C
+33    C
+34    C
+35    C
+36    D
+37    D
+38    D
+39    D
+40    D
+41    D
+42    D
+43    D
+44    D
+45    D
+46    D
+47    D
+Name: treat, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G1&#39;</span><span class="p">]</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G2&#39;</span><span class="p">]</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G3&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># poison, treat에 따른 그룹 평균 비교</span>
+<span class="c1"># x축이 posion 일 때</span>
+<span class="n">xaxis_poison</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xaxis_poison</span><span class="p">,</span> <span class="n">df_summary_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># x축이 treat 일 때</span>
+<span class="n">xaxis_treat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xaxis_treat</span><span class="p">,</span> <span class="n">df_summary_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;treat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># pointplot 함수를 이용한 이원분산분석 시각화</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_poi</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span>                   <span class="c1"># X축 : 첫번째 독립변수 poison</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>                     <span class="c1"># Y축 : 반응변수 time</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;treat&#39;</span><span class="p">,</span>                  <span class="c1"># group : 두번째 독립변수 treat</span>
+    <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                   <span class="c1"># X축에 따라 group별 위치 구분</span>
+    <span class="n">markers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span> <span class="c1"># marker 표현</span>
+    <span class="n">capsize</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                  <span class="c1"># 상자그림 캡 사이즈</span>
+    <span class="n">errwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                   <span class="c1"># 상자그림 폭 사이즈</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;colorblind&#39;</span>          <span class="c1"># 색상 팔레트</span>
+    <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">##################################################</span>
+<span class="c1">################ 4-1-2. 분산분석의 시각화 ####################</span>
+<span class="c1">#############################################################</span>
+<span class="c1"># 종속변수 time의 독립변수 poison에 대한 상자그림과 산점도</span>
+<span class="c1"># seaborn(as sns) 패키지 활용</span>
+<span class="c1"># poison에 따른 time의 평균과 분포는 어떤 차이를 보이는가?</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">boxplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">poi</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#99c2a2&#39;</span><span class="p">)</span>
+<span class="n">ax</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">swarmplot</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s2">&quot;poison&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">poi</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#7d0013&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X : Poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Y : survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># residual(잔차)를 이용한 qqplot 그리기</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">one_way_anova</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Theoretical Quantiles&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># residual(잔차)를 이용한 histogram 그리기</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">one_way_anova</span><span class="o">.</span><span class="n">resid</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span> 
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1">#############################################################</span>
+<span class="c1">############ 4-1-3. 이원배치 분산분석과 시각화 ###############</span>
+<span class="c1">#############################################################</span>
+<span class="c1"># groupby를 이용한 독립변수별 여러개의 기초통계량 계산</span>
+<span class="n">df_mean</span> <span class="o">=</span> <span class="n">df_poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">df_std</span> <span class="o">=</span> <span class="n">df_poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">df_mean</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span>
+<span class="n">df_std</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span>
+<span class="n">df_summary_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_mean</span><span class="p">,</span> <span class="n">df_std</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">df_summary_1</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># groupby와 agg를 이용하여 효율적인 계산 가능</span>
+<span class="n">df_summary_2</span> <span class="o">=</span> <span class="n">df_poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">T</span>
+<span class="n">df_summary_2</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># poison, treat에 따른 그룹 평균 비교</span>
+<span class="c1"># x축이 posion 일 때</span>
+<span class="n">xaxis_poison</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xaxis_poison</span><span class="p">,</span> <span class="n">df_summary_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># x축이 treat 일 때</span>
+<span class="n">xaxis_treat</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="nb">range</span><span class="p">(</span><span class="mi">4</span><span class="p">)]</span><span class="o">*</span><span class="mi">3</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xaxis_treat</span><span class="p">,</span> <span class="n">df_summary_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;treat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+
+<span class="c1">#%%</span>
+<span class="c1"># pointplot 함수를 이용한 이원분산분석 시각화</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">pointplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">df_poi</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span>                   <span class="c1"># X축 : 첫번째 독립변수 poison</span>
+    <span class="n">y</span><span class="o">=</span><span class="s1">&#39;time&#39;</span><span class="p">,</span>                     <span class="c1"># Y축 : 반응변수 time</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s1">&#39;treat&#39;</span><span class="p">,</span>                  <span class="c1"># group : 두번째 독립변수 treat</span>
+    <span class="n">dodge</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>                   <span class="c1"># X축에 따라 group별 위치 구분</span>
+    <span class="n">markers</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;o&#39;</span><span class="p">,</span> <span class="s1">&#39;s&#39;</span><span class="p">,</span> <span class="s1">&#39;^&#39;</span><span class="p">,</span> <span class="s1">&#39;D&#39;</span><span class="p">],</span> <span class="c1"># marker 표현</span>
+    <span class="n">capsize</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span>                  <span class="c1"># 상자그림 캡 사이즈</span>
+    <span class="n">errwidth</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>                   <span class="c1"># 상자그림 폭 사이즈</span>
+    <span class="n">palette</span><span class="o">=</span><span class="s1">&#39;colorblind&#39;</span>          <span class="c1"># 색상 팔레트</span>
+    <span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -726,7 +1009,7 @@ numpy.array
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title"><span class="section-number">4.1. </span>평균의 비교</p>
+            <p class="prev-next-title"><span class="section-number">4.1. </span>분산분석</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="regression.html" title="next page">

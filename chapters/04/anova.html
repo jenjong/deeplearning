@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>4.1. 평균의 비교 &#8212; 데이터시각화</title>
+    <title>4.1. 분산분석 &#8212; 데이터시각화</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -650,7 +650,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>평균의 비교</h1>
+                <h1>분산분석</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -663,34 +663,1046 @@ title="Print to PDF"
               <div>
                 
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
-<h1><span class="section-number">4.1. </span>평균의 비교<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
+<h1><span class="section-number">4.1. </span>분산분석<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <!-- 4-1 -- >
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
-<ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
-</ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">from</span> <span class="nn">statsmodels.formula.api</span> <span class="kn">import</span> <span class="n">ols</span>       <span class="c1"># 4-1-1</span>
+<span class="kn">from</span> <span class="nn">statsmodels.stats.anova</span> <span class="kn">import</span> <span class="n">anova_lm</span>  <span class="c1"># 4-1-1</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pd</span><span class="o">.</span><span class="n">options</span><span class="o">.</span><span class="n">display</span><span class="o">.</span><span class="n">float_format</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">{:.4f}</span><span class="s1">&#39;</span><span class="o">.</span><span class="n">format</span>   <span class="c1"># 소수점 표현 setting</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>poison 데이터셋 load</p></li>
+<li><p>연속형 반응변수 : survival time</p></li>
+<li><p>명목형 설명변수 : treatment and poison</p></li>
+<li><p>경로를 설정하고 csv file 로드 후 dataframe 확인</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;http://ranking.uos.ac.kr/class/VIS/data/&quot;</span> <span class="c1"># insert poison file path</span>
+<span class="n">poi</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">path_file</span> <span class="o">+</span> <span class="s1">&#39;poison.csv&#39;</span><span class="p">)</span>
+<span class="n">poi</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>poison</th>
+      <th>treat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.3100</td>
+      <td>G1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.4500</td>
+      <td>G1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.4600</td>
+      <td>G1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.4300</td>
+      <td>G1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.3600</td>
+      <td>G2</td>
+      <td>A</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>데이터 설명</p>
+<ul>
+<li><p>three poisons and (b) four treatments. Each combination of the two factors is used for four animals. The allocation to animals is completely randomized.</p></li>
+<li><p>A data frame with 48 observations on the following 3 variables.</p>
+<ul>
+<li><p>poison type of poison (1, 2, or 3)</p></li>
+<li><p>treatment manner of treatment (1, 2, 3, or 4)</p></li>
+<li><p>time time until death (hours)</p></li>
+</ul>
+</li>
+<li><p>These data are also available from OzDASL, the Australian Data and Story Library (<a class="reference external" href="https://dasl.datadescription.com/">https://dasl.datadescription.com/</a>). (Note: The time measurements of the data at OzDASL are in units of tens of hours.)</p></li>
+</ul>
+</li>
+<li><p>데이터프레임의 기본정보 확인</p>
+<ul>
+<li><p>정보: info()</p></li>
+<li><p>데이터타입: dtypes</p></li>
+<li><p>요약통계량: describle(include =’all’)</p></li>
+<li><p>group_by를 활용한 기초통계량 구하기</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">info</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 48 entries, 0 to 47
+Data columns (total 3 columns):
+ #   Column  Non-Null Count  Dtype  
+---  ------  --------------  -----  
+ 0   time    48 non-null     float64
+ 1   poison  48 non-null     object 
+ 2   treat   48 non-null     object 
+dtypes: float64(1), object(2)
+memory usage: 1.2+ KB
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">dtypes</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>time      float64
+poison     object
+treat      object
+dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">describe</span><span class="p">(</span><span class="n">include</span><span class="o">=</span><span class="s1">&#39;all&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+      <th>poison</th>
+      <th>treat</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>count</th>
+      <td>48.0000</td>
+      <td>48</td>
+      <td>48</td>
+    </tr>
+    <tr>
+      <th>unique</th>
+      <td>NaN</td>
+      <td>3</td>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>top</th>
+      <td>NaN</td>
+      <td>G1</td>
+      <td>A</td>
+    </tr>
+    <tr>
+      <th>freq</th>
+      <td>NaN</td>
+      <td>16</td>
+      <td>12</td>
+    </tr>
+    <tr>
+      <th>mean</th>
+      <td>0.4794</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>std</th>
+      <td>0.2529</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>min</th>
+      <td>0.1800</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>25%</th>
+      <td>0.3000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>50%</th>
+      <td>0.4000</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>75%</th>
+      <td>0.6225</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>max</th>
+      <td>1.2400</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">count</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>poison</th>
+      <th>treat</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">G1</th>
+      <th>A</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G2</th>
+      <th>A</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G3</th>
+      <th>A</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>4</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>4</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>poison</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>G1</th>
+      <td>0.6175</td>
+    </tr>
+    <tr>
+      <th>G2</th>
+      <td>0.5444</td>
+    </tr>
+    <tr>
+      <th>G3</th>
+      <td>0.2762</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="n">by</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;treat&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>time</th>
+    </tr>
+    <tr>
+      <th>treat</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>A</th>
+      <td>0.3142</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.6767</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.3925</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.5342</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>statsmodels.formula.api 의 ols를 이용하여 일원분산분석 모형 적합</p></li>
+<li><p>statsmodels.stats.anova 의 anova_lm을 이용하여 분산분석 테이블 확인</p></li>
+<li><p>요인마다 제곱합(SS), 자유도(df)를 확인하고 F값과 p-value의 해석</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison&#39;</span><span class="p">,</span> <span class="n">df_poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_oneway</span> <span class="o">=</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">one_way_anova</span><span class="p">)</span>
+<span class="n">result_oneway</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>poison</th>
+      <td>2.0000</td>
+      <td>1.0330</td>
+      <td>0.5165</td>
+      <td>11.7860</td>
+      <td>0.0001</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>45.0000</td>
+      <td>1.9721</td>
+      <td>0.0438</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>일원분산분석과 마찬가지로 ols, anova_lm을 이용하여 이원분산분석 모형 적합</p></li>
+<li><p>분산분석 테이블을 이용하여 각 요인인 poison, treat에 따라서 집단간 반응변수의 평균의 차이가 있는지 확인</p></li>
+<li><p>poison * treat의 교호작용 확인</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison * treat&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_twoway</span> <span class="o">=</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">two_way_anova</span><span class="p">)</span>
+<span class="n">result_twoway</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>poison</th>
+      <td>2.0000</td>
+      <td>1.0330</td>
+      <td>0.5165</td>
+      <td>23.2217</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>treat</th>
+      <td>3.0000</td>
+      <td>0.9212</td>
+      <td>0.3071</td>
+      <td>13.8056</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>poison:treat</th>
+      <td>6.0000</td>
+      <td>0.2501</td>
+      <td>0.0417</td>
+      <td>1.8743</td>
+      <td>0.1123</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>36.0000</td>
+      <td>0.8007</td>
+      <td>0.0222</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>종속변수 time의 독립변수 poison에 대한 상자그림과 산점도</p></li>
+<li><p>pyplot 패키지의 활용</p></li>
+<li><p>poison에 따른 time의 평균과 분포는 어떤 차이를 보이는가?</p></li>
+</ul>
+<ul class="simple">
+<li><p>poison 변수의 값을 기준으로 데이터를 나누기 위해서 값을 확인해본다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>G1    16
+G2    16
+G3    16
+Name: poison, dtype: int64
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>확인한 poison의 값을 이용하여 데이터를 나눈다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x1</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G1&#39;</span><span class="p">]</span>
+<span class="n">x2</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G2&#39;</span><span class="p">]</span>
+<span class="n">x3</span> <span class="o">=</span> <span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">][</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;G3&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>그래픽 스타일을 ‘ggplot’으로 바꾸자</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">style</span><span class="o">.</span><span class="n">use</span><span class="p">(</span><span class="s1">&#39;ggplot&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">boxplot</span><span class="p">([</span><span class="n">x1</span><span class="p">,</span><span class="n">x2</span><span class="p">,</span><span class="n">x3</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xticks</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],[</span><span class="s1">&#39;G1&#39;</span><span class="p">,</span><span class="s1">&#39;G2&#39;</span><span class="p">,</span><span class="s1">&#39;G3&#39;</span><span class="p">])</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;Example: boxplot&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;X: poison&quot;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Y: time&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Y: time&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/anova_23_1.png" src="../../_images/anova_23_1.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>분산분석을 위한 기초통계량을 계산한다</p>
+<ul>
+<li><p>groupby 를 이용하여 평균과 분산을 계산한다.</p></li>
+<li><p>계산된 결과를 합쳐서 출력한다.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mean</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+<span class="n">std</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">mean</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;mean&#39;</span>
+<span class="n">std</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;std&#39;</span>
+<span class="n">summary_1</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">mean</span><span class="p">,</span> <span class="n">std</span><span class="p">],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">summary_1</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>poison</th>
+      <th>treat</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">G1</th>
+      <th>A</th>
+      <td>0.4125</td>
+      <td>0.0695</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.8800</td>
+      <td>0.1608</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.5675</td>
+      <td>0.1567</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.6100</td>
+      <td>0.1128</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G2</th>
+      <th>A</th>
+      <td>0.3200</td>
+      <td>0.0753</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.8150</td>
+      <td>0.3363</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.3750</td>
+      <td>0.0569</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.6675</td>
+      <td>0.2710</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G3</th>
+      <th>A</th>
+      <td>0.2100</td>
+      <td>0.0216</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.3350</td>
+      <td>0.0465</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.2350</td>
+      <td>0.0129</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.3250</td>
+      <td>0.0265</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<ul class="simple">
+<li><p>agg 함수를 이용하면 간단한 표현이 가능하다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">summary_2</span> <span class="o">=</span> <span class="n">poi</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;poison&#39;</span><span class="p">,</span> <span class="s1">&#39;treat&#39;</span><span class="p">])[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">agg</span><span class="p">([</span><span class="s1">&#39;mean&#39;</span><span class="p">,</span> <span class="s1">&#39;std&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">round</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span>
+<span class="n">summary_2</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th></th>
+      <th>mean</th>
+      <th>std</th>
+    </tr>
+    <tr>
+      <th>poison</th>
+      <th>treat</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th rowspan="4" valign="top">G1</th>
+      <th>A</th>
+      <td>0.4125</td>
+      <td>0.0695</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.8800</td>
+      <td>0.1608</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.5675</td>
+      <td>0.1567</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.6100</td>
+      <td>0.1128</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G2</th>
+      <th>A</th>
+      <td>0.3200</td>
+      <td>0.0753</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.8150</td>
+      <td>0.3363</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.3750</td>
+      <td>0.0569</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.6675</td>
+      <td>0.2710</td>
+    </tr>
+    <tr>
+      <th rowspan="4" valign="top">G3</th>
+      <th>A</th>
+      <td>0.2100</td>
+      <td>0.0216</td>
+    </tr>
+    <tr>
+      <th>B</th>
+      <td>0.3350</td>
+      <td>0.0465</td>
+    </tr>
+    <tr>
+      <th>C</th>
+      <td>0.2350</td>
+      <td>0.0129</td>
+    </tr>
+    <tr>
+      <th>D</th>
+      <td>0.3250</td>
+      <td>0.0265</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tmp</span><span class="o">=</span><span class="n">summary_2</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
+<span class="n">tmp</span><span class="p">[</span><span class="s1">&#39;poison&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">unique</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([&#39;G1&#39;, &#39;G2&#39;, &#39;G3&#39;], dtype=object)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">xaxis_poison</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">([</span><span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">2</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">*</span><span class="mi">3</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">xaxis_poison</span><span class="p">,</span> <span class="n">df_summary_2</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;mean&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">())</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;poison&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;survival time&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>위에서 적합해 놓은 one_way_anova에 anova 분석에서 residual 이 저장되어 있다. sklearn의 statmodel.qqplot() 함수를 이용하여 Q-Q plot을 그려보자.</p></li>
+<li><p>Q-Q 플롯은 표준정규분포의 이론적 분위수와 관측치의 분위수 값을 비교하여 분포의 꼬리의 두께, 분포의 대칭성등을 파악할 수 있는 시각화 도구다.</p>
+<ul>
+<li><p>y축: 표준화된 잔차</p></li>
+<li><p>x축: (데이터의 분위수에 대응되는) 표준정규분포의 Z-value</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">two_way_anova</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="n">std_res</span> <span class="o">=</span> <span class="n">res</span><span class="o">/</span><span class="n">two_way_anova</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">std_res</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Theoretical Quantiles&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/anova_31_0.png" src="../../_images/anova_31_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>time 변수를 1/time으로 분석하면 residual 에 대한 우리의 가정을 좀 더 신뢰할 수 있음.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="p">[</span><span class="s2">&quot;time_inv&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.555555555555555
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_way_anova_c</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time_inv ~ poison * treat&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result_twoway</span> <span class="o">=</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">two_way_anova_c</span><span class="p">)</span>
+<span class="n">result_twoway</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>poison</th>
+      <td>2.0000</td>
+      <td>34.8771</td>
+      <td>17.4386</td>
+      <td>72.6347</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>treat</th>
+      <td>3.0000</td>
+      <td>20.4143</td>
+      <td>6.8048</td>
+      <td>28.3431</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>poison:treat</th>
+      <td>6.0000</td>
+      <td>1.5708</td>
+      <td>0.2618</td>
+      <td>1.0904</td>
+      <td>0.3867</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>36.0000</td>
+      <td>8.6431</td>
+      <td>0.2401</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">res</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">two_way_anova_c</span><span class="o">.</span><span class="n">resid</span><span class="p">)</span>
+<span class="n">std_res</span> <span class="o">=</span> <span class="n">res</span><span class="o">/</span><span class="n">two_way_anova_c</span><span class="o">.</span><span class="n">resid</span><span class="o">.</span><span class="n">std</span><span class="p">()</span>
+<span class="n">sm</span><span class="o">.</span><span class="n">qqplot</span><span class="p">(</span><span class="n">std_res</span><span class="p">,</span> <span class="n">line</span><span class="o">=</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;Theoretical Quantiles&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Standardized Residuals&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/anova_36_0.png" src="../../_images/anova_36_0.png" />
+</div>
+</div>
+<ul class="simple">
+<li><p>잔차의 히스토그램 그리기</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">std_res</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="s1">&#39;auto&#39;</span><span class="p">,</span> <span class="n">histtype</span><span class="o">=</span><span class="s1">&#39;bar&#39;</span><span class="p">,</span> <span class="n">ec</span><span class="o">=</span><span class="s1">&#39;k&#39;</span><span class="p">)</span> 
+<span class="n">ax</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s1">&#39;Residuals&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s1">&#39;Frequency&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/anova_38_1.png" src="../../_images/anova_38_1.png" />
 </div>
 </div>
 </section>
