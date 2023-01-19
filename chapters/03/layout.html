@@ -164,12 +164,12 @@ const thebe_selector_output = ".output, .cell_output"
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../02/axis.html">
-     2.2. 축의 조정과 텍스트
+     2.3. 축의 조정과 텍스트
     </a>
    </li>
    <li class="toctree-l2">
     <a class="reference internal" href="../02/attribute.html">
-     2.3. 그래픽 인자
+     2.4. 그래픽 인자
     </a>
    </li>
   </ul>
@@ -638,12 +638,46 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numpy">
+   3.3.1. numpy의 설치
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   3.3.2. 벡터와 행렬의 생성
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   3.3.3. 벡터와 행렬의 형태 변환
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -655,6 +689,29 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#numpy">
+   3.3.1. numpy의 설치
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   3.3.2. 벡터와 행렬의 생성
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id3">
+   3.3.3. 벡터와 행렬의 형태 변환
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -662,30 +719,29 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="id1">
+  <section id="id1">
 <h1><span class="section-number">3.3. </span>그림 레이아웃<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<!-- 3-3 -->
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
+<section id="numpy">
+<h2><span class="section-number">3.3.1. </span>numpy의 설치<a class="headerlink" href="#numpy" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p>가상환경의 선택</p></li>
 <li><p>conda install numpy
 Anaconda 설치 경로의 확인:</p></li>
 </ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
+</section>
+<section id="id2">
+<h2><span class="section-number">3.3.2. </span>벡터와 행렬의 생성<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>numpy.array
 (1) 리스트를 이용한 벡터의 생성
 (2) numpy.zeros(), numpy.ones()
 (3) numpy.repeat()
 (4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
+(5) 대각행렬 생성하기 (numpy.diag())</p>
+</section>
+<section id="id3">
+<h2><span class="section-number">3.3.3. </span>벡터와 행렬의 형태 변환<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h2>
+<p>(1) shape 이해하기
+(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#3-3-1</span>
@@ -778,15 +834,16 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x25cd4ef3340&gt;]
 </pre></div>
 </div>
-<img alt="../../_images/layout_3_1.png" src="../../_images/layout_3_1.png" />
-<img alt="../../_images/layout_3_2.png" src="../../_images/layout_3_2.png" />
-<img alt="../../_images/layout_3_3.png" src="../../_images/layout_3_3.png" />
-<img alt="../../_images/layout_3_4.png" src="../../_images/layout_3_4.png" />
-<img alt="../../_images/layout_3_5.png" src="../../_images/layout_3_5.png" />
-<img alt="../../_images/layout_3_6.png" src="../../_images/layout_3_6.png" />
-<img alt="../../_images/layout_3_7.png" src="../../_images/layout_3_7.png" />
+<img alt="../../_images/layout_2_1.png" src="../../_images/layout_2_1.png" />
+<img alt="../../_images/layout_2_2.png" src="../../_images/layout_2_2.png" />
+<img alt="../../_images/layout_2_3.png" src="../../_images/layout_2_3.png" />
+<img alt="../../_images/layout_2_4.png" src="../../_images/layout_2_4.png" />
+<img alt="../../_images/layout_2_5.png" src="../../_images/layout_2_5.png" />
+<img alt="../../_images/layout_2_6.png" src="../../_images/layout_2_6.png" />
+<img alt="../../_images/layout_2_7.png" src="../../_images/layout_2_7.png" />
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
