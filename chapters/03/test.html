@@ -689,6 +689,39 @@ title="Print to PDF"
                 
   <div class="cell docutils container">
 <div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># 색상의 조정</span>
+<span class="kn">import</span> <span class="nn">matplotlib</span> <span class="k">as</span> <span class="nn">mpl</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.patches</span> <span class="k">as</span> <span class="nn">mpatches</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">from</span> <span class="nn">matplotlib.patches</span> <span class="kn">import</span> <span class="n">Rectangle</span>
+<span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">mcolors</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
+<span class="c1">#%%</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;red points (RGB)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/test_1_1.png" src="../../_images/test_1_1.png" />
+<img alt="../../_images/test_1_2.png" src="../../_images/test_1_2.png" />
+<img alt="../../_images/test_1_3.png" src="../../_images/test_1_3.png" />
+<img alt="../../_images/test_1_4.png" src="../../_images/test_1_4.png" />
+<img alt="../../_images/test_1_5.png" src="../../_images/test_1_5.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span>
 <span class="c1">#%%</span>
 <span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -719,11 +752,11 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;red points (RGB)&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/test_0_1.png" src="../../_images/test_0_1.png" />
-<img alt="../../_images/test_0_2.png" src="../../_images/test_0_2.png" />
-<img alt="../../_images/test_0_3.png" src="../../_images/test_0_3.png" />
-<img alt="../../_images/test_0_4.png" src="../../_images/test_0_4.png" />
-<img alt="../../_images/test_0_5.png" src="../../_images/test_0_5.png" />
+<img alt="../../_images/test_2_1.png" src="../../_images/test_2_1.png" />
+<img alt="../../_images/test_2_2.png" src="../../_images/test_2_2.png" />
+<img alt="../../_images/test_2_3.png" src="../../_images/test_2_3.png" />
+<img alt="../../_images/test_2_4.png" src="../../_images/test_2_4.png" />
+<img alt="../../_images/test_2_5.png" src="../../_images/test_2_5.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -781,10 +814,10 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x219165c6d90&gt;
 </pre></div>
 </div>
-<img alt="../../_images/test_1_1.png" src="../../_images/test_1_1.png" />
-<img alt="../../_images/test_1_2.png" src="../../_images/test_1_2.png" />
-<img alt="../../_images/test_1_3.png" src="../../_images/test_1_3.png" />
-<img alt="../../_images/test_1_4.png" src="../../_images/test_1_4.png" />
+<img alt="../../_images/test_3_1.png" src="../../_images/test_3_1.png" />
+<img alt="../../_images/test_3_2.png" src="../../_images/test_3_2.png" />
+<img alt="../../_images/test_3_3.png" src="../../_images/test_3_3.png" />
+<img alt="../../_images/test_3_4.png" src="../../_images/test_3_4.png" />
 </div>
 </div>
 
