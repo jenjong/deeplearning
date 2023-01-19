@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="5. matplotlib" href="../05/intro-mpl.html" />
@@ -666,16 +668,396 @@ title="Print to PDF"
 <h1><span class="section-number">4.3. </span>회귀분석과 시각화<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># (4-3)</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+<span class="kn">import</span> <span class="nn">statsmodels.api</span> <span class="k">as</span> <span class="nn">sm</span>
+</pre></div>
+</div>
+</div>
+</div>
+<ul class="simple">
+<li><p>보스턴 주택가격 데이터 설명</p>
+<ul>
+<li><p>The dataset contains a total of 506 cases.</p></li>
+<li><p>The data was originally published by Harrison, D. and Rubinfeld, D.L. `Hedonic prices and the demand for clean air’, J. Environ. Economics &amp; Management, vol.5, 81-102, 1978.</p></li>
+</ul>
+</li>
+<li><p>변수</p>
+<ul>
+<li><p>1개의 반응변수 y : Price</p></li>
+<li><p>4개의 설명변수 X : RM, NOX, AGE, LSTAT</p></li>
+<li><p>PRICE	: 주택 가격</p></li>
+<li><p>RM	: 주택 1가구당 평균 방의 개수</p></li>
+<li><p>NOX	: 10ppm 당 농축 일산화질소</p></li>
+<li><p>AGE	: 1940년 이전에 건축된 소유주택의 비율</p></li>
+<li><p>LSTAT : 하위계층의 비율(%)</p></li>
+</ul>
+</li>
+<li><p>데이터 특이사항</p>
+<ul>
+<li><p>Variable #14 seems to be censored at 50.00 (corresponding to a median price of <span class="math notranslate nohighlight">\(50,000); Censoring is suggested by the fact that the highest median price of exactly \)</span>50,000 is reported in 16 cases, while 15 cases have prices between <span class="math notranslate nohighlight">\(40,000 and \)</span>50,000, with prices rounded to the nearest hundred. Harrison and Rubinfeld do not mention any censoring.</p></li>
+</ul>
+</li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 보스턴 주택 가격 예제 데이터 로드</span>
+<span class="n">boston</span> <span class="o">=</span> <span class="n">load_boston</span><span class="p">()</span>
+<span class="n">boston_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">feature_names</span><span class="p">)</span>
+<span class="n">boston_df</span><span class="p">[</span><span class="s2">&quot;PRICE&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">boston</span><span class="o">.</span><span class="n">target</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\User\anaconda3\envs\tf2\lib\site-packages\sklearn\utils\deprecation.py:87: FutureWarning: Function load_boston is deprecated; `load_boston` is deprecated in 1.0 and will be removed in 1.2.
+
+    The Boston housing prices dataset has an ethical problem. You can refer to
+    the documentation of this function for further details.
+
+    The scikit-learn maintainers therefore strongly discourage the use of this
+    dataset unless the purpose of the code is to study and educate about
+    ethical issues in data science and machine learning.
+
+    In this special case, you can fetch the dataset from the original
+    source::
+
+        import pandas as pd
+        import numpy as np
+
+        data_url = &quot;http://lib.stat.cmu.edu/datasets/boston&quot;
+        raw_df = pd.read_csv(data_url, sep=&quot;\s+&quot;, skiprows=22, header=None)
+        data = np.hstack([raw_df.values[::2, :], raw_df.values[1::2, :2]])
+        target = raw_df.values[1::2, 2]
+
+    Alternative datasets include the California housing dataset (i.e.
+    :func:`~sklearn.datasets.fetch_california_housing`) and the Ames housing
+    dataset. You can load the datasets as follows::
+
+        from sklearn.datasets import fetch_california_housing
+        housing = fetch_california_housing()
+
+    for the California housing dataset and::
+
+        from sklearn.datasets import fetch_openml
+        housing = fetch_openml(name=&quot;house_prices&quot;, as_frame=True)
+
+    for the Ames housing dataset.
+  warnings.warn(msg, category=FutureWarning)
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">boston_df</span> <span class="o">=</span> <span class="n">boston_df</span><span class="p">[[</span><span class="s2">&quot;PRICE&quot;</span><span class="p">,</span> <span class="s2">&quot;RM&quot;</span><span class="p">,</span> <span class="s2">&quot;NOX&quot;</span><span class="p">,</span> <span class="s2">&quot;AGE&quot;</span><span class="p">,</span> <span class="s2">&quot;LSTAT&quot;</span><span class="p">]]</span>
+<span class="n">boston_df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="c1">#%%</span>
+<span class="c1"># 반응변수와 각 설명변수들의 히스토그램 확인</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;PRICE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;RM&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;RM&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;NOX&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;NOX&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;AGE&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;AGE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_4_0.png" src="../../_images/regression_4_0.png" />
+<img alt="../../_images/regression_4_1.png" src="../../_images/regression_4_1.png" />
+<img alt="../../_images/regression_4_2.png" src="../../_images/regression_4_2.png" />
+<img alt="../../_images/regression_4_3.png" src="../../_images/regression_4_3.png" />
+<img alt="../../_images/regression_4_4.png" src="../../_images/regression_4_4.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 좀 더 간단한 표현</span>
+<span class="n">boston_df</span><span class="o">.</span><span class="n">columns</span>
+<span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">col</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">boston_df</span><span class="o">.</span><span class="n">columns</span><span class="p">):</span>
+    <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplot</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="n">i</span> <span class="o">+</span> <span class="mi">1</span><span class="p">)</span>
+
+    <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="n">col</span><span class="p">],</span> <span class="n">bins</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="n">col</span><span class="p">)</span>
+    <span class="c1"># plt.ylabel(&#39;density&#39;)</span>
+
+    <span class="k">if</span> <span class="n">i</span><span class="o">==</span><span class="mi">0</span><span class="p">:</span>
+        <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;density&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_5_0.png" src="../../_images/regression_5_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># 다중회귀모형 적합</span>
+<span class="c1"># 적합된 결과의 회귀계수 테이블을 확인하여 계수의 유의성, 모형 적합도 등 확인</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;PRICE ~ RM+NOX+AGE+LSTAT&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">boston_df</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  PRICE   R-squared:                       0.641
+Model:                            OLS   Adj. R-squared:                  0.638
+Method:                 Least Squares   F-statistic:                     223.2
+Date:                Thu, 19 Jan 2023   Prob (F-statistic):          8.13e-110
+Time:                        20:10:27   Log-Likelihood:                -1581.4
+No. Observations:                 506   AIC:                             3173.
+Df Residuals:                     501   BIC:                             3194.
+Df Model:                           4                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept      0.5415      3.398      0.159      0.873      -6.134       7.217
+RM             4.9989      0.454     11.009      0.000       4.107       5.891
+NOX           -4.6426      3.246     -1.430      0.153     -11.019       1.734
+AGE            0.0205      0.014      1.489      0.137      -0.007       0.047
+LSTAT         -0.6522      0.055    -11.755      0.000      -0.761      -0.543
+==============================================================================
+Omnibus:                      144.315   Durbin-Watson:                   0.848
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              438.867
+Skew:                           1.343   Prob(JB):                     5.03e-96
+Kurtosis:                       6.688   Cond. No.                     1.19e+03
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+[2] The condition number is large, 1.19e+03. This might indicate that there are
+strong multicollinearity or other numerical problems.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># predict 함수를 이용하여 y_hat 적합값을 도출하고 </span>
+<span class="c1"># y_true과 함께 mse를 계산하라</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">boston_df</span><span class="o">.</span><span class="n">loc</span><span class="p">[:,</span> <span class="n">boston_df</span><span class="o">.</span><span class="n">columns</span> <span class="o">!=</span> <span class="s1">&#39;PRICE&#39;</span><span class="p">])</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">]</span>
+<span class="n">y_resi</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">-</span> <span class="n">y_hat</span>
+<span class="n">mse</span> <span class="o">=</span> <span class="nb">round</span><span class="p">((</span><span class="n">y_resi</span> <span class="o">**</span> <span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">mean</span><span class="p">(),</span> <span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">mse</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>30.349
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#############################################################</span>
+<span class="c1">############## 4-3-2. 회귀모형 직선의 시각화 #################</span>
+<span class="c1">#############################################################</span>
+<span class="c1"># 반응변수와 각 설명변수간의 산점도를 확인</span>
+<span class="c1"># 어떠한 상관관계가 있는지 확인</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;RM&#39;</span><span class="p">],</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;RM&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PRICE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PRICE and RM scatter plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_8_0.png" src="../../_images/regression_8_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;NOX&#39;</span><span class="p">],</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;NOX&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PRICE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PRICE and NOX scatter plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_9_0.png" src="../../_images/regression_9_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;AGE&#39;</span><span class="p">],</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;AGE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PRICE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PRICE and AGE scatter plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_10_0.png" src="../../_images/regression_10_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">],</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;LSTAT&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;PRICE&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;PRICE and and scatter plot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_11_0.png" src="../../_images/regression_11_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 모든 변수간의 산점도 행렬을 간단하게 시각화 &gt; pairplot 활용</span>
+<span class="c1"># 대각원소에서 각 변수의 히스토그램 확인</span>
+<span class="c1"># 반응변수 PRICE가 정규분포의 모양임을 확인</span>
+<span class="c1"># 4개의 각 설명변수가 반응변수와의 상관 관계를 대략적으로 확인</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 히트맵을 시각화하여 변수간의 상관계수 확인</span>
+<span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="n">g</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">pairplot</span><span class="p">(</span><span class="n">boston_df</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;reg&quot;</span><span class="p">,</span> <span class="n">plot_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">scatter_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">s</span><span class="o">=</span><span class="mi">2</span><span class="p">)))</span>
+<span class="n">g_heat</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">heatmap</span><span class="p">(</span><span class="n">boston_df</span><span class="o">.</span><span class="n">corr</span><span class="p">(),</span> <span class="n">annot</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/regression_13_0.png" src="../../_images/regression_13_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#############################################################</span>
+<span class="c1">################ 4-3-3. 잔차분석의 시각화 ####################</span>
+<span class="c1">#############################################################</span>
+<span class="c1"># 단순회귀분석 적합</span>
+<span class="c1"># 반응변수 y : Price(주택 가격)</span>
+<span class="c1"># 설명변수 X : RM(주택 1가구당 평균 방의 개수)</span>
+<span class="n">model</span> <span class="o">=</span> <span class="n">sm</span><span class="o">.</span><span class="n">OLS</span><span class="o">.</span><span class="n">from_formula</span><span class="p">(</span><span class="s2">&quot;PRICE ~ RM&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">boston_df</span><span class="p">)</span>
+<span class="n">result</span> <span class="o">=</span> <span class="n">model</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">result</span><span class="o">.</span><span class="n">summary</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                            OLS Regression Results                            
+==============================================================================
+Dep. Variable:                  PRICE   R-squared:                       0.484
+Model:                            OLS   Adj. R-squared:                  0.483
+Method:                 Least Squares   F-statistic:                     471.8
+Date:                Thu, 19 Jan 2023   Prob (F-statistic):           2.49e-74
+Time:                        20:13:47   Log-Likelihood:                -1673.1
+No. Observations:                 506   AIC:                             3350.
+Df Residuals:                     504   BIC:                             3359.
+Df Model:                           1                                         
+Covariance Type:            nonrobust                                         
+==============================================================================
+                 coef    std err          t      P&gt;|t|      [0.025      0.975]
+------------------------------------------------------------------------------
+Intercept    -34.6706      2.650    -13.084      0.000     -39.877     -29.465
+RM             9.1021      0.419     21.722      0.000       8.279       9.925
+==============================================================================
+Omnibus:                      102.585   Durbin-Watson:                   0.684
+Prob(Omnibus):                  0.000   Jarque-Bera (JB):              612.449
+Skew:                           0.726   Prob(JB):                    1.02e-133
+Kurtosis:                       8.190   Cond. No.                         58.4
+==============================================================================
+
+Notes:
+[1] Standard Errors assume that the covariance matrix of the errors is correctly specified.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># 잔차그림을 이용한 적합값(y_hat)과 잔차(y_resi)를 비교하여 모형의 선형성 확인</span>
+<span class="n">y_hat</span> <span class="o">=</span> <span class="n">result</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">boston_df</span><span class="p">)</span>
+<span class="n">y_true</span> <span class="o">=</span> <span class="n">boston_df</span><span class="p">[</span><span class="s1">&#39;PRICE&#39;</span><span class="p">]</span>
+<span class="n">y_resi</span> <span class="o">=</span> <span class="n">y_true</span> <span class="o">-</span> <span class="n">y_hat</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y_resi</span><span class="p">,</span> <span class="n">lowess</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span> <span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="n">y_hat</span><span class="o">.</span><span class="n">min</span><span class="p">(),</span> <span class="n">y_hat</span><span class="o">.</span><span class="n">max</span><span class="p">()],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;y_resi&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;y_resi&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/regression_15_1.png" src="../../_images/regression_15_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># qqplot을 이용한 정규성 확인</span>
+<span class="kn">import</span> <span class="nn">scipy.stats</span>
+<span class="n">standard_resi</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">zscore</span><span class="p">(</span><span class="n">y_resi</span><span class="p">)</span>
+<span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">y</span><span class="p">),</span> <span class="n">_</span> <span class="o">=</span> <span class="n">scipy</span><span class="o">.</span><span class="n">stats</span><span class="o">.</span><span class="n">probplot</span><span class="p">(</span><span class="n">standard_resi</span><span class="p">)</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span><span class="p">([</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">,</span> <span class="mi">3</span><span class="p">],</span> <span class="s1">&#39;--&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;grey&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[&lt;matplotlib.lines.Line2D at 0x1f9af156ca0&gt;]
+</pre></div>
+</div>
+<img alt="../../_images/regression_16_1.png" src="../../_images/regression_16_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># 잔차그림을 이용한 등분산성 검정</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">regplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="n">y_hat</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">abs</span><span class="p">(</span><span class="n">standard_resi</span><span class="p">)),</span> <span class="n">lowess</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">line_kws</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;color&#39;</span> <span class="p">:</span> <span class="s1">&#39;red&#39;</span><span class="p">})</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;y_hat&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;sqrt of standardized resid&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;sqrt of standardized resid&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/regression_17_1.png" src="../../_images/regression_17_1.png" />
 </div>
 </div>
 </section>
