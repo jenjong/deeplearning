@@ -6,4 +6,5 @@ pandas
 pandas_profiling
 scikit-learn
 lifelines
-statsmodels 
+statsmodels
+seaborn
