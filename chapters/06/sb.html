@@ -688,9 +688,426 @@ numpy.array
 <hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
+<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">get_dataset_names</span><span class="p">()</span>
+<span class="c1">#%%</span>
+<span class="n">rdata</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;diamonds&quot;</span><span class="p">)</span>
+<span class="c1"># %%</span>
+<span class="n">rdata</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>carat</th>
+      <th>cut</th>
+      <th>color</th>
+      <th>clarity</th>
+      <th>depth</th>
+      <th>table</th>
+      <th>price</th>
+      <th>x</th>
+      <th>y</th>
+      <th>z</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>0.23</td>
+      <td>Ideal</td>
+      <td>E</td>
+      <td>SI2</td>
+      <td>61.5</td>
+      <td>55.0</td>
+      <td>326</td>
+      <td>3.95</td>
+      <td>3.98</td>
+      <td>2.43</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>0.21</td>
+      <td>Premium</td>
+      <td>E</td>
+      <td>SI1</td>
+      <td>59.8</td>
+      <td>61.0</td>
+      <td>326</td>
+      <td>3.89</td>
+      <td>3.84</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>0.23</td>
+      <td>Good</td>
+      <td>E</td>
+      <td>VS1</td>
+      <td>56.9</td>
+      <td>65.0</td>
+      <td>327</td>
+      <td>4.05</td>
+      <td>4.07</td>
+      <td>2.31</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>0.29</td>
+      <td>Premium</td>
+      <td>I</td>
+      <td>VS2</td>
+      <td>62.4</td>
+      <td>58.0</td>
+      <td>334</td>
+      <td>4.20</td>
+      <td>4.23</td>
+      <td>2.63</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>0.31</td>
+      <td>Good</td>
+      <td>J</td>
+      <td>SI2</td>
+      <td>63.3</td>
+      <td>58.0</td>
+      <td>335</td>
+      <td>4.34</td>
+      <td>4.35</td>
+      <td>2.75</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#  변수에 대한 설명</span>
+<span class="c1">#%%</span>
+<span class="n">rdata</span><span class="o">.</span><span class="n">columns</span>
+<span class="n">rdata</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;color&#39;</span><span class="p">)[[</span><span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="s1">&#39;price&#39;</span><span class="p">]]</span><span class="o">.</span><span class="n">mean</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>carat</th>
+      <th>price</th>
+    </tr>
+    <tr>
+      <th>color</th>
+      <th></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>D</th>
+      <td>0.657795</td>
+      <td>3169.954096</td>
+    </tr>
+    <tr>
+      <th>E</th>
+      <td>0.657867</td>
+      <td>3076.752475</td>
+    </tr>
+    <tr>
+      <th>F</th>
+      <td>0.736538</td>
+      <td>3724.886397</td>
+    </tr>
+    <tr>
+      <th>G</th>
+      <td>0.771190</td>
+      <td>3999.135671</td>
+    </tr>
+    <tr>
+      <th>H</th>
+      <td>0.911799</td>
+      <td>4486.669196</td>
+    </tr>
+    <tr>
+      <th>I</th>
+      <td>1.026927</td>
+      <td>5091.874954</td>
+    </tr>
+    <tr>
+      <th>J</th>
+      <td>1.162137</td>
+      <td>5323.818020</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># draw relplot 1</span>
+<span class="c1"># Use relplot() to combine scatterplot() and FacetGrid</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;price&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c01f0ac0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_5_1.png" src="../../_images/sb_5_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%% add title </span>
+<span class="c1"># 그래픽 객체를 저장한 후에 axes 값을 변경하여 </span>
+<span class="c1"># 속성을 변경하면 된다. </span>
+<span class="n">diamond_plot</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;price&#39;</span><span class="p">)</span>
+<span class="n">diamond_plot</span><span class="o">.</span><span class="n">fig</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s2">&quot;diamonds plot: carat and price&quot;</span><span class="p">)</span>
+<span class="c1"># axes 객체확인 하기</span>
+<span class="n">diamond_plot</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()</span>
+<span class="c1"># 저장하여 필요한 부분을 고친다. 수정할 때 여러가지 method를 활용</span>
+<span class="c1"># set_xlabel, set_ylabel</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">diamond_plot</span><span class="o">.</span><span class="n">axes</span><span class="o">.</span><span class="n">flatten</span><span class="p">()[</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">a</span><span class="o">.</span><span class="n">set_ylabel</span><span class="p">(</span><span class="s2">&quot;Price of D&quot;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">set_xlabel</span><span class="p">(</span><span class="s2">&quot;--Carat--&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 6.79999999999999, &#39;--Carat--&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/sb_6_1.png" src="../../_images/sb_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
+<span class="c1"># 위 그림에서 시각화 결과물의 문제점이 있음 (겹쳐보이는 point)</span>
+<span class="c1"># 이를 해결하기 위해 alpha값을 조정</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;price&#39;</span><span class="p">,</span> 
+            <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.01</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c00b4d90&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_7_1.png" src="../../_images/sb_7_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s1">&#39;carat&#39;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s1">&#39;price&#39;</span><span class="p">,</span> 
+            <span class="n">col</span> <span class="o">=</span> <span class="s1">&#39;color&#39;</span><span class="p">,</span> <span class="n">col_wrap</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.1</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c24486a0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_8_1.png" src="../../_images/sb_8_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%</span>
+<span class="c1"># line 결과물을 보여주는 plot</span>
+<span class="c1"># align 변수로 구분되고, </span>
+<span class="n">rdata_dots</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;dots&quot;</span><span class="p">)</span>
+<span class="n">rdata_dots</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="c1"># dots 데이터에 대한 설명</span>
+<span class="c1">#%%</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span>
+    <span class="n">data</span><span class="o">=</span><span class="n">rdata_dots</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;line&quot;</span><span class="p">,</span>
+    <span class="n">x</span><span class="o">=</span><span class="s2">&quot;time&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;firing_rate&quot;</span><span class="p">,</span> <span class="n">col</span><span class="o">=</span><span class="s2">&quot;align&quot;</span><span class="p">,</span>
+    <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;choice&quot;</span><span class="p">,</span> <span class="n">size</span><span class="o">=</span><span class="s2">&quot;coherence&quot;</span><span class="p">,</span> <span class="n">style</span><span class="o">=</span><span class="s2">&quot;choice&quot;</span><span class="p">,</span>
+    <span class="n">facet_kws</span><span class="o">=</span><span class="nb">dict</span><span class="p">(</span><span class="n">sharex</span><span class="o">=</span><span class="kc">False</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c0306d30&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_9_1.png" src="../../_images/sb_9_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rdata_fmri</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;fmri&quot;</span><span class="p">)</span>
+<span class="c1"># %%</span>
+<span class="c1"># relplot 에서 kind를 line으로 설정하면 자동으로 statistical inference를 실행한다. </span>
+<span class="c1"># local polynomial regression ?</span>
+<span class="n">rdata_fmri</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rdata_fmri</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       s13
+1        s5
+2       s12
+3       s11
+4       s10
+       ... 
+1059     s0
+1060    s13
+1061    s12
+1062    s11
+1063     s0
+Name: subject, Length: 1064, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rdata_fmri</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span>
+<span class="c1"># %%</span>
+<span class="nb">print</span> <span class="p">(</span><span class="s2">&quot;subject 13 is filetered? &quot;</span><span class="p">,</span> <span class="nb">any</span><span class="p">(</span><span class="n">rdata_fmri</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;s13&#39;</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>subject 13 is filetered?  True
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">idx</span> <span class="o">=</span> <span class="n">rdata_fmri</span><span class="p">[</span><span class="s2">&quot;subject&quot;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;s13&#39;</span> 
+<span class="n">rdata_fmri_13</span> <span class="o">=</span> <span class="n">rdata_fmri</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">idx</span><span class="p">,:]</span> 
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%</span>
+<span class="c1"># CI를 출력</span>
+<span class="c1">#If True, use statsmodels to estimate a nonparametric lowess model</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata_fmri_13</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;signal&quot;</span><span class="p">,</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;line&#39;</span> <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c10ea160&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_13_1.png" src="../../_images/sb_13_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># CI 없이</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">relplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata_fmri_13</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;signal&quot;</span><span class="p">,</span>
+            <span class="n">kind</span> <span class="o">=</span> <span class="s1">&#39;line&#39;</span><span class="p">,</span> <span class="n">ci</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span>
+<span class="c1"># 위 결과는 각 timepoint 마다 bootstrap (1만회) 으로 mean을 구한 후에</span>
+<span class="c1"># 95% CI (2.5%~97.5% 구간) 을 report 함</span>
+<span class="c1"># 여기에 회귀모형적합은 없음</span>
+<span class="c1"># loess 회귀모형의 CI와는 다름</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>c:\Users\User\anaconda3\envs\tf2\lib\site-packages\seaborn\axisgrid.py:848: FutureWarning: 
+
+The `ci` parameter is deprecated. Use `errorbar=None` for the same effect.
+
+  func(*plot_args, **plot_kwargs)
+</pre></div>
+</div>
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c11975b0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_14_2.png" src="../../_images/sb_14_2.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># %%</span>
+<span class="c1"># statsmodels 패키지 설치 필요</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata_fmri_13</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;signal&quot;</span><span class="p">,</span>
+           <span class="n">lowess</span> <span class="o">=</span> <span class="kc">True</span><span class="p">)</span>
+<span class="c1"># statsmodels 패키지 설치 필요</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lineplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">rdata_fmri_13</span><span class="p">,</span> <span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;timepoint&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;signal&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;timepoint&#39;, ylabel=&#39;signal&#39;&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_15_1.png" src="../../_images/sb_15_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mf">0.0</span><span class="p">,</span><span class="mf">1.0</span><span class="p">,</span> <span class="mi">10</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">y</span><span class="o">.</span><span class="n">reshape</span><span class="p">((</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">))</span>
+<span class="n">xy</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">concatenate</span><span class="p">((</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">),</span> <span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">tmp</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">(</span><span class="n">xy</span><span class="p">,</span> <span class="n">columns</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">,</span> <span class="s1">&#39;y&#39;</span><span class="p">])</span>
+<span class="n">sns</span><span class="o">.</span><span class="n">lmplot</span><span class="p">(</span><span class="n">data</span> <span class="o">=</span> <span class="n">tmp</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;x&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;y&quot;</span><span class="p">)</span>
+<span class="c1"># %%</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c02adfa0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/sb_16_1.png" src="../../_images/sb_16_1.png" />
 </div>
 </div>
 </section>
