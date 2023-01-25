@@ -2207,7 +2207,26 @@ NaN is included in sex: #11
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## Categorical estimate plots</span>
 <span class="n">titanic</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;titanic&quot;</span><span class="p">)</span>
-<span class="c1">### pointplot</span>
+<span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
+<span class="nn">c:\Users\jjjeo\Documents\GitHub\visualization\chapters\06\image_obj.ipynb Cell 58</span> in <span class="ni">&lt;cell line: 2&gt;</span><span class="nt">()</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/c%3A/Users/jjjeo/Documents/GitHub/visualization/chapters/06/image_obj.ipynb#Y111sZmlsZQ%3D%3D?line=0&#39;</span><span class="o">&gt;</span><span class="mi">1</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="c1">## Categorical estimate plots</span>
+<span class="o">----&gt;</span> <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/c%3A/Users/jjjeo/Documents/GitHub/visualization/chapters/06/image_obj.ipynb#Y111sZmlsZQ%3D%3D?line=1&#39;</span><span class="o">&gt;</span><span class="mi">2</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">titanic</span> <span class="o">=</span> <span class="n">sns</span><span class="o">.</span><span class="n">load_dataset</span><span class="p">(</span><span class="s2">&quot;titanic&quot;</span><span class="p">)</span>
+      <span class="o">&lt;</span><span class="n">a</span> <span class="n">href</span><span class="o">=</span><span class="s1">&#39;vscode-notebook-cell:/c%3A/Users/jjjeo/Documents/GitHub/visualization/chapters/06/image_obj.ipynb#Y111sZmlsZQ%3D%3D?line=2&#39;</span><span class="o">&gt;</span><span class="mi">3</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span> <span class="n">titanic</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+<span class="ne">NameError</span>: name &#39;sns&#39; is not defined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">### pointplot</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span><span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;survived&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">kind</span><span class="o">=</span><span class="s2">&quot;point&quot;</span><span class="p">)</span>
 <span class="n">sns</span><span class="o">.</span><span class="n">catplot</span><span class="p">(</span>
     <span class="n">data</span><span class="o">=</span><span class="n">titanic</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="s2">&quot;class&quot;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s2">&quot;survived&quot;</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;sex&quot;</span><span class="p">,</span>
@@ -2217,13 +2236,6 @@ NaN is included in sex: #11
 <span class="p">)</span>
 </pre></div>
 </div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c1409af40&gt;
-</pre></div>
-</div>
-<img alt="../../_images/image_obj_57_1.png" src="../../_images/image_obj_57_1.png" />
-<img alt="../../_images/image_obj_57_2.png" src="../../_images/image_obj_57_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2238,8 +2250,8 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c148a6340&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_58_1.png" src="../../_images/image_obj_58_1.png" />
-<img alt="../../_images/image_obj_58_2.png" src="../../_images/image_obj_58_2.png" />
+<img alt="../../_images/image_obj_59_1.png" src="../../_images/image_obj_59_1.png" />
+<img alt="../../_images/image_obj_59_2.png" src="../../_images/image_obj_59_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2258,7 +2270,7 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c14b29100&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_59_1.png" src="../../_images/image_obj_59_1.png" />
+<img alt="../../_images/image_obj_60_1.png" src="../../_images/image_obj_60_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2273,8 +2285,8 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c14bbb040&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_60_1.png" src="../../_images/image_obj_60_1.png" />
-<img alt="../../_images/image_obj_60_2.png" src="../../_images/image_obj_60_2.png" />
+<img alt="../../_images/image_obj_61_1.png" src="../../_images/image_obj_61_1.png" />
+<img alt="../../_images/image_obj_61_2.png" src="../../_images/image_obj_61_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2307,7 +2319,7 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c18bdf940&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_63_1.png" src="../../_images/image_obj_63_1.png" />
+<img alt="../../_images/image_obj_64_1.png" src="../../_images/image_obj_64_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2322,8 +2334,8 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c18c699a0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_64_1.png" src="../../_images/image_obj_64_1.png" />
-<img alt="../../_images/image_obj_64_2.png" src="../../_images/image_obj_64_2.png" />
+<img alt="../../_images/image_obj_65_1.png" src="../../_images/image_obj_65_1.png" />
+<img alt="../../_images/image_obj_65_2.png" src="../../_images/image_obj_65_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2339,9 +2351,9 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c18f15310&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_65_1.png" src="../../_images/image_obj_65_1.png" />
-<img alt="../../_images/image_obj_65_2.png" src="../../_images/image_obj_65_2.png" />
-<img alt="../../_images/image_obj_65_3.png" src="../../_images/image_obj_65_3.png" />
+<img alt="../../_images/image_obj_66_1.png" src="../../_images/image_obj_66_1.png" />
+<img alt="../../_images/image_obj_66_2.png" src="../../_images/image_obj_66_2.png" />
+<img alt="../../_images/image_obj_66_3.png" src="../../_images/image_obj_66_3.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2355,7 +2367,7 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c190d9910&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_66_1.png" src="../../_images/image_obj_66_1.png" />
+<img alt="../../_images/image_obj_67_1.png" src="../../_images/image_obj_67_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2368,7 +2380,7 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x27c197c1d30&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_67_1.png" src="../../_images/image_obj_67_1.png" />
+<img alt="../../_images/image_obj_68_1.png" src="../../_images/image_obj_68_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -2383,34 +2395,7 @@ NaN is included in sex: #11
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;bill_length_mm&#39;, ylabel=&#39;bill_depth_mm&#39;&gt;
 </pre></div>
 </div>
-<img alt="../../_images/image_obj_68_1.png" src="../../_images/image_obj_68_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span><span class="o">=</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="mi">7</span><span class="p">))</span>
-
-<span class="n">widths</span> <span class="o">=</span> <span class="p">[</span><span class="mi">4</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span>
-<span class="n">heights</span> <span class="o">=</span> <span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">4</span><span class="p">]</span>
-
-<span class="c1"># 1. gridspec preparation</span>
-<span class="n">spec</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_gridspec</span><span class="p">(</span><span class="n">ncols</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span> <span class="n">nrows</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">width_ratios</span><span class="o">=</span><span class="n">widths</span><span class="p">,</span> <span class="n">height_ratios</span><span class="o">=</span><span class="n">heights</span><span class="p">)</span>
-<span class="c1"># 2. setting axes</span>
-<span class="n">axs</span> <span class="o">=</span> <span class="p">{}</span>
-<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">heights</span><span class="p">)</span><span class="o">*</span><span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">)):</span>
-    <span class="n">axs</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">fig</span><span class="o">.</span><span class="n">add_subplot</span><span class="p">(</span><span class="n">spec</span><span class="p">[</span><span class="n">i</span><span class="o">//</span><span class="nb">len</span><span class="p">(</span><span class="n">widths</span><span class="p">),</span> <span class="n">i</span><span class="o">%</span><span class="k">len</span>(widths)])
-<span class="c1"># 3. bill_length_mm vs bill_depth_mm</span>
-<span class="c1"># 3.1. kdeplot</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">kdeplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;bill_length_mm&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;bill_depth_mm&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.3</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-<span class="c1"># 3.2. scatterplot</span>
-<span class="n">sns</span><span class="o">.</span><span class="n">scatterplot</span><span class="p">(</span><span class="n">x</span> <span class="o">=</span> <span class="s2">&quot;bill_length_mm&quot;</span><span class="p">,</span> <span class="n">y</span> <span class="o">=</span> <span class="s2">&quot;bill_depth_mm&quot;</span><span class="p">,</span> <span class="n">data</span><span class="o">=</span><span class="n">penguins</span><span class="p">,</span> <span class="n">hue</span><span class="o">=</span><span class="s2">&quot;species&quot;</span><span class="p">,</span> <span class="n">ax</span><span class="o">=</span><span class="n">axs</span><span class="p">[</span><span class="mi">3</span><span class="p">])</span>
-
-<span class="n">fig</span><span class="o">.</span><span class="n">tight_layout</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../../_images/image_obj_69_0.png" src="../../_images/image_obj_69_0.png" />
+<img alt="../../_images/image_obj_69_1.png" src="../../_images/image_obj_69_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
