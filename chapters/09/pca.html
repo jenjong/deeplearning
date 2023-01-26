@@ -348,6 +348,11 @@ const thebe_selector_output = ".output, .cell_output"
      9.2. SVD
     </a>
    </li>
+   <li class="toctree-l2">
+    <a class="reference internal" href="pca_exercise.html">
+     9.3. PCA 실습
+    </a>
+   </li>
   </ul>
  </li>
  <li class="toctree-l1 has-children">
@@ -640,12 +645,36 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   9.1.1. 차원 축약과 축약방법의 선택
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
@@ -657,6 +686,19 @@ title="Print to PDF"
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#id2">
+   9.1.1. 차원 축약과 축약방법의 선택
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -666,11 +708,19 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">9.1. </span>주성분 분석의 기초<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<!-- 9-1 --><div class="cell docutils container">
+<!-- 9-1 --><p>사용 패키지의 로드</p>
+<ul class="simple">
+<li><p>numpy: 행렬 및 선형대수 관련 연산 수행</p></li>
+<li><p>matplotlib, matplotlib.pyplot: 시각화 도구</p></li>
+<li><p>sklearn.preprocessing.StandardScaler: 데이터 표준화 함수</p></li>
+<li><p>sklearn.decomposition.PCA: 주성분분석 도구</p></li>
+</ul>
+<p>cf) matplotlib.rcParams: 시각화 실행시 설정 변수 (runtime configuration parameter) 변수로 값을 변경함으로써 폰트, 색상등을 조절할 수 있습니다.</p>
+<div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
 <span class="kn">import</span> <span class="nn">matplotlib</span>
-<span class="kn">from</span> <span class="nn">matplotlib</span> <span class="kn">import</span> <span class="n">pyplot</span> <span class="k">as</span> <span class="n">plt</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
 <span class="kn">from</span> <span class="nn">sklearn.preprocessing</span> <span class="kn">import</span> <span class="n">StandardScaler</span>
 <span class="kn">from</span> <span class="nn">sklearn.decomposition</span> <span class="kn">import</span> <span class="n">PCA</span>
 
@@ -683,6 +733,9 @@ title="Print to PDF"
 <ol class="simple">
 <li><p>좌표계와 벡터의 차이</p></li>
 </ol>
+<ul class="simple">
+<li><p>2차원 평면에 두개의 점(red, blue)을 표시할 것입니다. 이 점은 평면상의 위치를 나타냅니다.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">])</span>
@@ -702,9 +755,15 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_3_0.png" src="../../_images/pca_3_0.png" />
+<img alt="../../_images/pca_4_0.png" src="../../_images/pca_4_0.png" />
 </div>
 </div>
+<p>이 평면상의 점들을 벡터로 이해할 때 흔히 화살표를 사용하여 표시합니다. 이 두 점을 화살표를 이용해서 표시합니다.</p>
+<ul class="simple">
+<li><p>plt.arrow 는 첫번째 네 개의 입력값을 (출발x, 출발y, 변화량x, 변화량y)를 받습니다.</p></li>
+<li><p>아래 예제에서 첫번째 네 개의 좌표 입력값을 확인하고 값을 변경하여 시각화 결과물의 변화를 확인하세요.</p></li>
+<li><p>예제에 사용한 다른 option의 값을 변경하면서 시각화 결과물의 변화를 확인하세요.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 벡터</span>
@@ -723,13 +782,13 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_4_0.png" src="../../_images/pca_4_0.png" />
+<img alt="../../_images/pca_6_0.png" src="../../_images/pca_6_0.png" />
 </div>
 </div>
-<p>여기서 가져야할 의문점: 점을 사용한 위치좌표계와 화살표를 사용한 벡터공간의 차이점은 무엇인가?</p>
+<p>여기서 가져야할 의문점은 “점을 사용한 위치좌표계와 화살표를 사용한 벡터공간의 차이점은 무엇인가?”입니다.</p>
 <ul class="simple">
-<li><p>연산에 대한 체계가 위치만을 표시하는 집합(set)위에서 정의됨.</p></li>
-<li><p>집합만 있을 때는 위치에 대한 개념만 있었다면, 연산(addition, scalar multiplication)이 도입되면서 연산과정 혹은 연산의 결과를 잘 나타낼 수 있는 시각적인 도구가 도입됨 (화살표)</p></li>
+<li><p>연산에 대한 체계가 위치만을 표시하는 집합(set)위에서 정의됩니다.</p></li>
+<li><p>하지만 위치의 이동, 상대적인 위치, 두 개의 위치간의 거리와 같은 더 많은 유용한 개념들을 도입하기 위해서는 집합 위에 정의된 시스템이 필요하다. 예를 들어 집합만 있을 때는 위치에 대한 개념만 있어서 점(point)만 필요했는데, 연산(addition, scalar multiplication)이 시스템으로 들어오면서 연산과정 혹은 연산의 결과를 잘 나타낼 수 있는 시각적인 도구(화살표)가 도입된 것이다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -743,15 +802,71 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>위 a+b의 결과를 숫자로 표시한 경우 계산 결과만의 의미를 가지고 있지만, 좌표계에서 화살표로 연산의 과정을 표시할 때 그 과정을 체계적으로 분석할 수 있다.</p>
+<p>위 a+b의 결과를 숫자로 표시한 경우 계산 결과만의 의미를 가지고 있지만, 좌표계에서 화살표로 연산의 과정을 표시할 때 그 과정을 체계적으로 분석할 수 있습니다.</p>
+<ul class="simple">
+<li><p>오렌지색 화살표는 벡터 <span class="math notranslate nohighlight">\(a = (1,2)\)</span>, 하늘색 화살표는 벡터 <span class="math notranslate nohighlight">\(b=(3,1)\)</span>을 나타냅니다.</p></li>
+<li><p>우리는 벡터의 더하기 연산을 이용하여 <span class="math notranslate nohighlight">\(a + b\)</span>가 <span class="math notranslate nohighlight">\((4,3)\)</span>이란 것을 알고 있습니다.</p></li>
+<li><p>여기서 <span class="math notranslate nohighlight">\(c = a+b\)</span>라 놓고 빨간색 화살표로 벡터 <span class="math notranslate nohighlight">\(c\)</span>를 표시해보겠습니다.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;벡터의 합&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/pca_10_0.png" src="../../_images/pca_10_0.png" />
+</div>
+</div>
+<p>이번에는 계산의 과정을 벡터 화살표로 표시하겠습니다.
+$<span class="math notranslate nohighlight">\(c = a + b\)</span>$</p>
+<ul class="simple">
+<li><p>먼저 오렌지색 화살표는 벡터 <span class="math notranslate nohighlight">\(a\)</span>를 나타내며 원점에서 좌표 <span class="math notranslate nohighlight">\(a\)</span>까지 이동했다고 상상해봅시다.</p></li>
+<li><p>여기서 벡터 <span class="math notranslate nohighlight">\(b\)</span>를 <span class="math notranslate nohighlight">\(a\)</span>에 더한다는 것은 좌표 <span class="math notranslate nohighlight">\(a\)</span>로 부터 <span class="math notranslate nohighlight">\(b\)</span>방향으로 이동의 결과와 같을 것입니다.</p></li>
+<li><p>이 과정을 화살표로 표현한 그림을 통해서 한번 살펴보도록 하겠습니다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;벡터의 합&#39;</span><span class="p">,</span> <span class="n">fontsize</span> <span class="o">=</span> <span class="mi">20</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">xticks</span><span class="p">(</span><span class="n">ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">yticks</span><span class="p">(</span><span class="n">ticks</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span> <span class="o">=</span> <span class="mi">1</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">grid</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/pca_12_0.png" src="../../_images/pca_12_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>이번에는 계산의 과정을 벡터 더하기 연산의 교환법칙을 화살표로 확인해보겠습니다.
+$$c = a + b = b + a$$
+- 여기서 벡터 $a$를 $b$에 더한다는 것은 좌표 $b$로 부터 $a$방향으로 이동의 결과와 같을 것입니다.
+- 이 과정을 화살표로 표현한 그림을 통해서 한번 살펴보도록 하겠습니다.
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;skyblue&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;orange&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">arrow</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">a</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">a</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span> <span class="o">+</span> <span class="n">b</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span> <span class="n">head_width</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">head_length</span> <span class="o">=</span> <span class="mf">.1</span><span class="p">,</span> <span class="n">length_includes_head</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">color</span> <span class="o">=</span> <span class="s1">&#39;red&#39;</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
 <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span>
@@ -764,23 +879,14 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_8_0.png" src="../../_images/pca_8_0.png" />
+<img alt="../../_images/pca_14_0.png" src="../../_images/pca_14_0.png" />
 </div>
 </div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 벡터의 스칼라 곱</span>
-<span class="mi">2</span> <span class="o">*</span> <span class="n">a</span>
-<span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="n">a</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([-1, -2])
-</pre></div>
-</div>
-</div>
-</div>
+<p>벡터의 스칼라 곱에 대한 시각화를 연습해봅시다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(2a\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(-a\)</span></p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -801,10 +907,10 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_10_0.png" src="../../_images/pca_10_0.png" />
+<img alt="../../_images/pca_16_0.png" src="../../_images/pca_16_0.png" />
 </div>
 </div>
-<p>이차원 상의 모든 점은 기저벡터들의 선형결합으로 표현할 수 있다. 아래는 특별한 기저 벡터 두개를 표시한 그림이다. 임의 벡터 (a,b)를 이 기저벡터로 표시해보자.</p>
+<p>이차원 상의 모든 점은 기저벡터들의 선형결합으로 표현할 수 있습니다. 아래는 특별한 기저 벡터 두 개를 표시한 그림입니다. 임의 벡터 (a,b)를 이 기저벡터로 표시해봅시다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">figure</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="mi">8</span><span class="p">))</span>
@@ -822,23 +928,24 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_12_0.png" src="../../_images/pca_12_0.png" />
+<img alt="../../_images/pca_18_0.png" src="../../_images/pca_18_0.png" />
 </div>
 </div>
-<p>여기서는 데이터를 벡터로 표시하고 이해하는 방법에 대해 알아본다. 임의의 데이터 행렬
-<span class="math notranslate nohighlight">\(X\in \mathbb{R}^{n \times p}\)</span> (n행 p열 데이터 행렬)이 주어져 있다고 가정하자.</p>
+<p>여기서는 데이터를 벡터로 표시하고 이해하는 방법에 대해 알아봅니다. 임의의 데이터 행렬
+<span class="math notranslate nohighlight">\(X\in \mathbb{R}^{n \times p}\)</span> (n행 p열 데이터 행렬)이 주어져 있다고 가정합시다.</p>
 <ul class="simple">
-<li><p>각 행(<span class="math notranslate nohighlight">\(x_i^\top \in \mathbb{R}^p\)</span>)은 관측치를 나타냄</p></li>
-<li><p>각 열(<span class="math notranslate nohighlight">\(X_j \in \mathbb{R}^p\)</span>)은 변수를 나타냄</p></li>
-<li><p>예) 120명의 환자를 대상으로 나이, 성별, 10가지 건강검진 결과를 기록한 데이터 행렬을 생각해보자. 이 데이터 행렬은 n=120, p=12 다.</p></li>
+<li><p>각 행(<span class="math notranslate nohighlight">\(x_i^\top \in \mathbb{R}^p\)</span>)은 관측치를 나타냅니다. <span class="math notranslate nohighlight">\(i\)</span>번째 행벡터를 가져오면 <span class="math notranslate nohighlight">\(i\)</span>번째 관측치 데이터가 됩니다. (참고: 여기서 열벡터로 통일된 표현을 위해서 <span class="math notranslate nohighlight">\(x_i^\top\)</span>와 같이 transpose 기호를 사용하였습니다)</p></li>
+<li><p>각 열(<span class="math notranslate nohighlight">\(X_j \in \mathbb{R}^n\)</span>)은 변수를 나타냅니다.</p></li>
+<li><p>예) 120명의 환자를 대상으로 나이, 성별, 10가지 건강검진 결과를 기록한 데이터 행렬을 생각해보면, 이 데이터 행렬은 n=120, p=12 로 주어져 있습니다.</p></li>
 </ul>
-<p>데이터를 벡터공간에 표시하는 방법은 세 가지다.</p>
+<p>데이터를 벡터공간에 표시하는 방법은 세 가지입니다.</p>
 <ul class="simple">
 <li><p>행 벡터를 벡터공간의 원소로 이해하는 방법 (데이터 간의 거리, 산포, 군집화에 대한 시각화)</p></li>
 <li><p>열 벡터를 벡터공간의 원소로 이해하는 방법 (변수들 간의 관계, 차원 축약에 대한 시각화)</p></li>
 <li><p>데이터를 선형변환(linear map)으로 이해하는 방법 (차원 축약)</p></li>
 </ul>
-<p>행렬을 선형변환으로 다루기 위해 세 개의 <span class="math notranslate nohighlight">\(n\times p\)</span> 행렬을 정의한다.
+<p>먼저 우리는 데이터 행렬을 선형변환으로 이해하고 시각화 하는 방법을 살펴보겠습니다.</p>
+<p>행렬을 선형변환으로 다루기 위해 세 개의 <span class="math notranslate nohighlight">\(n\times p\)</span> 행렬을 정의해보겠습니다. 이 행렬들은 데이터 행렬일 필요가 없으며 잠시 데이터 행렬에 대한 생각을 뒤로 미루도록 하겠습니다.
 $<span class="math notranslate nohighlight">\( C = A + B\)</span>$</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -852,7 +959,19 @@ $<span class="math notranslate nohighlight">\( C = A + B\)</span>$</p>
 </div>
 </div>
 </div>
-<p>아래는 선형변환으로 성질 중 <span class="math notranslate nohighlight">\(A+B\)</span>로 정의한 선형변환 <span class="math notranslate nohighlight">\(C\)</span>의 성질을 이해하기 위해 출력값을 확인하는 예다.</p>
+<p>당연하게도 우리는 <span class="math notranslate nohighlight">\(Ax\)</span>, <span class="math notranslate nohighlight">\(Bx\)</span>, <span class="math notranslate nohighlight">\(Cx\)</span>값을 행렬의 곱셈연산을 통해 계산할 수 있습니다. 여기서 행렬을 다음과 같은 map으로 간주해봅시다.
+$<span class="math notranslate nohighlight">\(A:x \in \mathbb{R}^p \mapsto Ax \in \mathbb{R}^n\)</span>$</p>
+<ul class="simple">
+<li><p>재미있는 것은 <span class="math notranslate nohighlight">\(n \times p\)</span> 행렬인 <span class="math notranslate nohighlight">\(A,B,C\)</span> 행렬 모두 입력공간이 <span class="math notranslate nohighlight">\(\mathbb{R}^p\)</span>, 출력공간이 <span class="math notranslate nohighlight">\(\mathbb{R}^n\)</span>인 map이라는 것입니다.</p></li>
+<li><p>이 map은 선형성을 만족하는 특별한 map이기도 합니다.</p>
+<ul>
+<li><p><span class="math notranslate nohighlight">\(A0 = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(A(\alpha x + \beta x') =\alpha A x + \beta A x' \)</span></p></li>
+</ul>
+</li>
+</ul>
+<p>이러한 이유로 행렬을 선형변환(linear map)이라고 부르기도 합니다.</p>
+<p>아래는 선형변환으로 성질 중 <span class="math notranslate nohighlight">\(A+B\)</span>로 정의한 선형변환 <span class="math notranslate nohighlight">\(C\)</span>의 성질을 이해하기 위해 출력값을 확인하는 예입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Ax+Bx=&quot;</span><span class="p">,</span><span class="n">A</span><span class="nd">@x</span> <span class="o">+</span> <span class="n">B</span><span class="nd">@x</span><span class="p">)</span>
@@ -885,8 +1004,9 @@ Cx= [[4.5320103 ]
 </div>
 </div>
 </div>
-<p>데이터 행렬 <span class="math notranslate nohighlight">\(X\)</span>와 계수벡터 <span class="math notranslate nohighlight">\(b\)</span>의 곱을 열벡터의 선형결합으로 이해해보자.
+<p>한편 데이터 행렬 <span class="math notranslate nohighlight">\(X\)</span>와 계수벡터 <span class="math notranslate nohighlight">\(b\)</span>의 곱 즉 행렬 <span class="math notranslate nohighlight">\(X\)</span>가 입력값 <span class="math notranslate nohighlight">\(\beta\)</span>를 받아서 출력한 값인 <span class="math notranslate nohighlight">\(X\beta\)</span>를 조금 다른 관점으로 이해할 수 있습니다. 이 출력값은 <span class="math notranslate nohighlight">\(X\)</span> 열벡터의 선형결합으로 이해할 수 있습니다. 특별히 각 열벡터의 가중치가 <span class="math notranslate nohighlight">\(\beta\)</span>의 원소값이 됩니다.
 $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</span>$</p>
+<p>이제 <span class="math notranslate nohighlight">\(n\times p\)</span>행렬 <span class="math notranslate nohighlight">\(X\)</span>를 데이터 행렬로 놓고 분석해봅시다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 행렬의 이미지</span>
@@ -900,9 +1020,9 @@ $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</spa
 </div>
 </div>
 </div>
-<p>y가 <span class="math notranslate nohighlight">\(\sum_{j=1}^p \beta_j X_j\)</span>로 표현됨을 확인해보자. 이 결과는 <span class="math notranslate nohighlight">\(y = X\beta\)</span>가 열벡터 <span class="math notranslate nohighlight">\(X_j\)</span>들의 선형결합으로 표현되며 <span class="math notranslate nohighlight">\(X\beta\)</span>가 <span class="math notranslate nohighlight">\(X\)</span> 열벡터가 속한 (혹은 생성하는) 선형공간의 원소임을 의미한다.</p>
+<p>y가 <span class="math notranslate nohighlight">\(\sum_{j=1}^p \beta_j X_j\)</span>로 표현됨을 확인할 수 있습니다. 이 결과는 <span class="math notranslate nohighlight">\(y = X\beta\)</span>가 열벡터 <span class="math notranslate nohighlight">\(X_j\)</span>들의 선형결합으로 표현되며 <span class="math notranslate nohighlight">\(X\beta\)</span>가 <span class="math notranslate nohighlight">\(X\)</span> 열벡터가 속한 (혹은 생성하는) 선형공간의 원소임을 의미합니다.</p>
 <ul class="simple">
-<li><p>위 내용을 그림으로 표현해보아라.</p></li>
+<li><p>위 내용을 그림으로 표현해봅시다. (힌트: <span class="math notranslate nohighlight">\(X\)</span> 열벡터가 화살표에 대응하며, 선형결합은 스칼라곱과 더하기로 표현할 수 있습니다)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -931,12 +1051,23 @@ $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</spa
 </div>
 </div>
 </div>
+<p>여기서 우리는 선형 회귀분석에서 다루는 모형을 추상적인 공간위에서 생각할 수 있습니다.
+$<span class="math notranslate nohighlight">\(E(Y|X) = X\beta\)</span>$
+위 식은 선형회귀모형의 모형가정을 식으로 표현한 것입니다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(E(Y|X)\)</span>는 반응변수의 평균입니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\beta\)</span>는 선형회귀모형을 나타냅니다.</p></li>
+<li><p>이 등식은 <span class="math notranslate nohighlight">\(n\)</span>차원 반응변수의 평균이 열벡터의 선형결합으로 표현됨을 의미하며 모형의 가정에 의해서 <span class="math notranslate nohighlight">\(n\)</span>차원 반응변수 평균은 기껏해야 <span class="math notranslate nohighlight">\(p\)</span>차원 공간 위에 있음을 알 수 있습니다.</p></li>
+</ul>
+<section id="id2">
+<h2><span class="section-number">9.1.1. </span>차원 축약과 축약방법의 선택<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h2>
+<p>먼저 다변량정규분포를 따르는 데이터를 생성해자.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">## 2. 차원 축약과 축약방법 선택</span>
 <span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
 <span class="n">p</span> <span class="o">=</span> <span class="mi">5</span>
-<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+<span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">seed</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span>
 <span class="n">e</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">loc</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">scale</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="n">n</span><span class="p">,</span> <span class="n">p</span><span class="p">))</span>
 <span class="n">A</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="n">size</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">5</span><span class="p">))</span>
 <span class="n">x</span> <span class="o">=</span> <span class="n">e</span><span class="nd">@A</span>
@@ -945,11 +1076,11 @@ $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-1.71939447,  0.057121  , -0.79954749, -0.2915946 , -0.25898285],
-       [ 0.1892932 , -0.56378873,  0.08968641, -0.6011568 ,  0.55607351],
-       [ 1.69380911,  0.19686978,  0.16986926, -1.16400797,  0.69336623],
-       [-0.75806733, -0.8088472 ,  0.55743945,  0.18103874,  1.10717545],
-       [ 1.44287693, -0.53968156,  0.12837699,  1.76041518,  0.96653925]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.24685751, -1.4687758 ,  1.14709994,  0.09555698, -1.10743873],
+       [-0.17628614, -0.98275567,  2.08668273, -0.34462367, -2.00207923],
+       [ 0.30323443, -0.82987484,  1.28876941,  0.13492546, -1.77860064],
+       [-0.50079149, -1.08816157, -0.75785555, -0.6437449 , -2.00878453],
+       [ 0.19626289, -0.87589637, -0.89360921,  0.75190236,  1.89693224]])
 </pre></div>
 </div>
 </div>
@@ -963,7 +1094,7 @@ $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</spa
 </div>
 </div>
 </div>
-<p>sklearn.preprocessing 에 있는  StandardScaler.fit_transform()을 이용하여 data standardization 을 수행한다.</p>
+<p>sklearn.preprocessing 에 있는  StandardScaler.fit_transform()을 이용하여 data standardization 을 수행합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;location:&quot;</span><span class="p">,</span><span class="n">scaled_x</span><span class="o">.</span><span class="n">mean</span><span class="p">(</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">0</span><span class="p">))</span>
@@ -972,21 +1103,21 @@ $<span class="math notranslate nohighlight">\(Y = X\beta \in \mathbb{R}^n\)</spa
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>location: [ 1.11022302e-17 -3.27515792e-17 -1.39888101e-16 -4.44089210e-17
-  2.22044605e-17]
-scaling: [2.81134733 0.99466762 0.93685465 2.2916709  1.62308069]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>location: [-1.16573418e-17 -9.76996262e-17  1.36002321e-16 -9.76996262e-17
+  3.31401573e-16]
+scaling: [0.70364493 2.43951371 3.06259636 1.18449753 4.27999892]
 </pre></div>
 </div>
 </div>
 </div>
-<p>먼저 완전한 데이터 행렬의 열공간에서 표현능력 (representation power)를 정의해보자.</p>
+<p>먼저 완전한 데이터 행렬의 열공간에서 표현능력 (representation power)를 정의합니다.</p>
 <ul class="simple">
-<li><p>데이터 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력은 계수행렬에 대한 반응치 <span class="math notranslate nohighlight">\(X\beta\)</span>의 변화로 정의한다. <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 <span class="math notranslate nohighlight">\(X\beta\)</span>의 값의 변화가 크게 나타날 수 있는 경우 <span class="math notranslate nohighlight">\(X\)</span>의 표현력이 크다고 하자.</p></li>
-<li><p><span class="math notranslate nohighlight">\(X\beta\)</span>는 비록 <span class="math notranslate nohighlight">\(n\)</span>차원 공간의 원소지만 실제로 <span class="math notranslate nohighlight">\(X\beta\)</span>가 속한 공간의 크기는  <span class="math notranslate nohighlight">\(p\)</span>차원보다 작거나 같다.</p></li>
-<li><p><span class="math notranslate nohighlight">\(X\beta\)</span>가 모든 <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 한점이라면 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력은 0이라고 하자.</p></li>
-<li><p>길이가 1인 벡터 <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 <span class="math notranslate nohighlight">\(\|X\beta\|\)</span>의 크기를 벡표터 <span class="math notranslate nohighlight">\(\beta\)</span>방향으로 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력이라고 할 수 있다.
+<li><p>데이터 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력은 계수행렬에 대한 반응치 <span class="math notranslate nohighlight">\(X\beta\)</span>의 변화로 정의할 수 있습니다. 다양한 <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 <span class="math notranslate nohighlight">\(X\beta\)</span>의 값의 변화가 크게 나타날 수 있는 경우 <span class="math notranslate nohighlight">\(X\)</span>의 표현력이 크다고 하겠습니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\beta\)</span>는 비록 <span class="math notranslate nohighlight">\(n\)</span>차원 공간의 원소지만 실제로 <span class="math notranslate nohighlight">\(p\)</span>개의 열벡터의 선형결합이므로 <span class="math notranslate nohighlight">\(X\beta\)</span>가 속한 공간의 크기는  <span class="math notranslate nohighlight">\(p\)</span>차원보다 작거나 같음을 알 수 있습니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(X\beta\)</span>가 모든 <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 한점이라면 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력은 0이라고 볼 수 있습니다.</p></li>
+<li><p>길이가 1인 벡터 <span class="math notranslate nohighlight">\(\beta\)</span>에 대해 <span class="math notranslate nohighlight">\(\|X\beta\|\)</span>의 크기를 벡표터 <span class="math notranslate nohighlight">\(\beta\)</span>방향으로 <span class="math notranslate nohighlight">\(X\)</span>의 표현능력이라고 할 수 있습니다. 다만, 표현능력이라는 것이 단 하나의 숫자로 나타내기는 어려운데 이는 하나의 벡터로 설명할 수 있는 방향이 오직 1차원이기 때문입니다.
 $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{\beta}\frac{\|X\beta\|}{\|\beta\|}\)</span>$</p></li>
-<li><p>표현능력이 큰 <span class="math notranslate nohighlight">\(\beta\)</span> 방향이 있을 것인데, 이는 <span class="math notranslate nohighlight">\(X\)</span>의 열벡터를 <span class="math notranslate nohighlight">\(\beta\)</span> 원소의 가중치로 선형결합해서 나온 새로운 변수가 표현능력이 크다는 것을 의미한다. (제1 주성분)</p></li>
+<li><p>표현능력이 큰 <span class="math notranslate nohighlight">\(\beta\)</span> 방향이 있을 것인데, 이는 <span class="math notranslate nohighlight">\(X\)</span>의 열벡터를 <span class="math notranslate nohighlight">\(\beta\)</span> 원소의 가중치로 선형결합해서 나온 새로운 변수가 표현능력이 크다는 것을 의미합니다. (제1 주성분라고 부릅니다)</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -997,9 +1128,10 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <ul class="simple">
-<li><p>주성분 분석은 <span class="math notranslate nohighlight">\(X\)</span>의 표현력이 큰 방향을 찾는 것이다. (X는 열평균이 0인 상황을 가정한다)</p></li>
-<li><p>sklearn의 PCA()를 이용한다.</p></li>
-<li><p>여기서는 <span class="math notranslate nohighlight">\(p=5\)</span>인 상황에서 설명력이 큰 방향 5개 모두 찾는다. (최대 개수가 <span class="math notranslate nohighlight">\(p=5\)</span>)</p></li>
+<li><p>주성분 분석은 <span class="math notranslate nohighlight">\(X\)</span>의 표현력이 큰 방향을 차례대로 찾는 방법론 입니다.(X는 열평균이 0인 상황을 가정한다)</p></li>
+<li><p>차례대로 찾는 다는 것은 먼저 찾은 표현력이 큰 방향이 있는 경우 해당 방향과 직교하는 방향들 중에 표현력이 큰 방향을 찾아가는 순차적 절차를 의미합니다.</p></li>
+<li><p>대표적으로 주성분 방향은 sklearn의 PCA()를 이용하여 찾을 수 있습니다.</p></li>
+<li><p>여기서는 <span class="math notranslate nohighlight">\(p=5\)</span>인 상황에서 설명력이 큰 방향 5개 모두 찾아보겠습니다. (최대 개수가 <span class="math notranslate nohighlight">\(p=5\)</span>)</p></li>
 </ul>
 <div class="math notranslate nohighlight">
 \[X^\top X/n = EDE^\top\]</div>
@@ -1012,11 +1144,11 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_html"><style>#sk-container-id-9 {color: black;background-color: white;}#sk-container-id-9 pre{padding: 0;}#sk-container-id-9 div.sk-toggleable {background-color: white;}#sk-container-id-9 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-9 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-9 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-9 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-9 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-9 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-9 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-9 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-9 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-9 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-9 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-9 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-9 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-9 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-9 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-9 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-9 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-9 div.sk-item {position: relative;z-index: 1;}#sk-container-id-9 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-9 div.sk-item::before, #sk-container-id-9 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-9 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-9 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-9 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-9 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-9 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-9 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-9 div.sk-label-container {text-align: center;}#sk-container-id-9 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-9 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-9" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA(n_components=5)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-9" type="checkbox" checked><label for="sk-estimator-id-9" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA(n_components=5)</pre></div></div></div></div></div></div></div>
+<div class="output text_html"><style>#sk-container-id-1 {color: black;background-color: white;}#sk-container-id-1 pre{padding: 0;}#sk-container-id-1 div.sk-toggleable {background-color: white;}#sk-container-id-1 label.sk-toggleable__label {cursor: pointer;display: block;width: 100%;margin-bottom: 0;padding: 0.3em;box-sizing: border-box;text-align: center;}#sk-container-id-1 label.sk-toggleable__label-arrow:before {content: "▸";float: left;margin-right: 0.25em;color: #696969;}#sk-container-id-1 label.sk-toggleable__label-arrow:hover:before {color: black;}#sk-container-id-1 div.sk-estimator:hover label.sk-toggleable__label-arrow:before {color: black;}#sk-container-id-1 div.sk-toggleable__content {max-height: 0;max-width: 0;overflow: hidden;text-align: left;background-color: #f0f8ff;}#sk-container-id-1 div.sk-toggleable__content pre {margin: 0.2em;color: black;border-radius: 0.25em;background-color: #f0f8ff;}#sk-container-id-1 input.sk-toggleable__control:checked~div.sk-toggleable__content {max-height: 200px;max-width: 100%;overflow: auto;}#sk-container-id-1 input.sk-toggleable__control:checked~label.sk-toggleable__label-arrow:before {content: "▾";}#sk-container-id-1 div.sk-estimator input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-label input.sk-toggleable__control:checked~label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 input.sk-hidden--visually {border: 0;clip: rect(1px 1px 1px 1px);clip: rect(1px, 1px, 1px, 1px);height: 1px;margin: -1px;overflow: hidden;padding: 0;position: absolute;width: 1px;}#sk-container-id-1 div.sk-estimator {font-family: monospace;background-color: #f0f8ff;border: 1px dotted black;border-radius: 0.25em;box-sizing: border-box;margin-bottom: 0.5em;}#sk-container-id-1 div.sk-estimator:hover {background-color: #d4ebff;}#sk-container-id-1 div.sk-parallel-item::after {content: "";width: 100%;border-bottom: 1px solid gray;flex-grow: 1;}#sk-container-id-1 div.sk-label:hover label.sk-toggleable__label {background-color: #d4ebff;}#sk-container-id-1 div.sk-serial::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: 0;}#sk-container-id-1 div.sk-serial {display: flex;flex-direction: column;align-items: center;background-color: white;padding-right: 0.2em;padding-left: 0.2em;position: relative;}#sk-container-id-1 div.sk-item {position: relative;z-index: 1;}#sk-container-id-1 div.sk-parallel {display: flex;align-items: stretch;justify-content: center;background-color: white;position: relative;}#sk-container-id-1 div.sk-item::before, #sk-container-id-1 div.sk-parallel-item::before {content: "";position: absolute;border-left: 1px solid gray;box-sizing: border-box;top: 0;bottom: 0;left: 50%;z-index: -1;}#sk-container-id-1 div.sk-parallel-item {display: flex;flex-direction: column;z-index: 1;position: relative;background-color: white;}#sk-container-id-1 div.sk-parallel-item:first-child::after {align-self: flex-end;width: 50%;}#sk-container-id-1 div.sk-parallel-item:last-child::after {align-self: flex-start;width: 50%;}#sk-container-id-1 div.sk-parallel-item:only-child::after {width: 0;}#sk-container-id-1 div.sk-dashed-wrapped {border: 1px dashed gray;margin: 0 0.4em 0.5em 0.4em;box-sizing: border-box;padding-bottom: 0.4em;background-color: white;}#sk-container-id-1 div.sk-label label {font-family: monospace;font-weight: bold;display: inline-block;line-height: 1.2em;}#sk-container-id-1 div.sk-label-container {text-align: center;}#sk-container-id-1 div.sk-container {/* jupyter's `normalize.less` sets `[hidden] { display: none; }` but bootstrap.min.css set `[hidden] { display: none !important; }` so we also need the `!important` here to be able to override the default hidden behavior on the sphinx rendered scikit-learn.org. See: https://github.com/scikit-learn/scikit-learn/issues/21755 */display: inline-block !important;position: relative;}#sk-container-id-1 div.sk-text-repr-fallback {display: none;}</style><div id="sk-container-id-1" class="sk-top-container"><div class="sk-text-repr-fallback"><pre>PCA(n_components=5)</pre><b>In a Jupyter environment, please rerun this cell to show the HTML representation or trust the notebook. <br />On GitHub, the HTML representation is unable to render, please try loading this page with nbviewer.org.</b></div><div class="sk-container" hidden><div class="sk-item"><div class="sk-estimator sk-toggleable"><input class="sk-toggleable__control sk-hidden--visually" id="sk-estimator-id-1" type="checkbox" checked><label for="sk-estimator-id-1" class="sk-toggleable__label sk-toggleable__label-arrow">PCA</label><div class="sk-toggleable__content"><pre>PCA(n_components=5)</pre></div></div></div></div></div></div></div>
 </div>
 <ul class="simple">
-<li><p>설명력이 강한 방향은 <span class="math notranslate nohighlight">\(p\)</span>개의 변수들의 선형결합으로 표현된다. 데이터 행렬이 어떤 변수의 조합들로 표현능력이 극대화되는지 확인할 수 있다.</p></li>
-<li><p>설명력이 가장 강한 방향은 <span class="math notranslate nohighlight">\(E\)</span>행렬의 첫번째 열을 확인하면 된다. PCA 결과로는  ‘pca.components_.transpose()’의 첫번째 열의 값을 확인한다.</p></li>
+<li><p>설명력이 강한 방향은 <span class="math notranslate nohighlight">\(p\)</span>개의 변수들의 선형결합으로 표현되며, 데이터 행렬이 어떤 변수의 조합들로 표현능력이 극대화되는지 확인할 수 있습니다.</p></li>
+<li><p>설명력이 가장 강한 방향은 <span class="math notranslate nohighlight">\(E\)</span>행렬의 첫번째 열을 확인하면 됩니다. PCA 결과로는  ‘pca.components_.transpose()’의 첫번째 열의 값을 확인합니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1029,11 +1161,11 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[-0.91,  0.11,  0.37,  0.03, -0.17],
-       [ 0.07,  0.02,  0.56, -0.02,  0.83],
-       [-0.16,  0.1 , -0.27, -0.93,  0.16],
-       [-0.17, -0.98, -0.08, -0.04,  0.09],
-       [-0.35,  0.16, -0.69,  0.36,  0.5 ]])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([[ 0.03, -0.25,  0.03,  0.72,  0.65],
+       [ 0.33,  0.24, -0.88,  0.21, -0.12],
+       [-0.47, -0.73, -0.43, -0.23,  0.01],
+       [ 0.14, -0.37,  0.18,  0.52, -0.74],
+       [ 0.81, -0.45,  0.07, -0.34,  0.16]])
 </pre></div>
 </div>
 </div>
@@ -1045,7 +1177,7 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>설명력이 가장 큰 변수: -0.91X1+0.07X2+-0.16X3+-0.17X4+-0.35X5
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>설명력이 가장 큰 변수: 0.03X1+0.33X2+-0.47X3+0.14X4+0.81X5
 </pre></div>
 </div>
 </div>
@@ -1058,7 +1190,7 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>17.835232869963352
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>35.90632823755281
 </pre></div>
 </div>
 </div>
@@ -1071,7 +1203,8 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5144769 , 0.29473102, 0.15985695, 0.02539647, 0.00553866])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([7.45926179e-01, 1.44032530e-01, 1.02263089e-01, 7.29642857e-03,
+       4.81773820e-04])
 </pre></div>
 </div>
 </div>
@@ -1084,15 +1217,15 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.5144769 , 0.80920792, 0.96906487, 0.99446134, 1.        ])
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([0.74592618, 0.88995871, 0.9922218 , 0.99951823, 1.        ])
 </pre></div>
 </div>
 </div>
 </div>
 <ul class="simple">
-<li><p>pca component는 데이터의 표현형을 나타내는 것으로 데이터 열벡터의 조합을 어떻게 하면 표현력이 좋아지는지 계수정보를 제공한다.</p></li>
-<li><p>한편 표현형이 우수한 조합을 이용해 데이터를 재표현할 수 있을 것이다. 예를 들어 신체의 발달상태를 나타내는 좋은 변수로 BMI 식이 데이터 표현형이라면 어떤 사람의 BMI를 계산하는 것은 데이터를 BMI로 재표현하는 것으로 이해하면 된다.</p></li>
-<li><p>데이터의 재표현 값을 PCA score 라 흔히 부르며 fit_transform() 함수를 이용하여 구할 수 있다. 아래 예시는 주요한 데이터 표현형 2개에 대해서 데이터를 재표현한 결과다.</p></li>
+<li><p>pca component는 데이터의 표현형을 나타내는 것으로 데이터 열벡터의 조합을 어떻게 하면 표현력이 좋아지는지 계수정보를 제공합니다.</p></li>
+<li><p>한편 표현형이 우수한 조합을 이용해 데이터를 재표현할 수 있을 것입니다. 예를 들어 신체의 발달상태를 나타내는 좋은 변수로 BMI 식이 데이터 표현형이라면 어떤 사람의 BMI를 계산하는 것은 데이터를 BMI로 재표현하는 것으로 이해하면 됩니다.</p></li>
+<li><p>데이터의 재표현 값을 PCA score 라 흔히 부르며 fit_transform() 함수를 이용하여 구할 수 있습니다. 아래 예시는 주요한 데이터 표현형 2개에 대해서 데이터를 재표현한 결과입니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1113,7 +1246,7 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/pca_40_0.png" src="../../_images/pca_40_0.png" />
+<img alt="../../_images/pca_48_0.png" src="../../_images/pca_48_0.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1648,6 +1781,7 @@ $<span class="math notranslate nohighlight">\(\text{representation power}=\sup_{
 </div>
 </div>
 </div>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
