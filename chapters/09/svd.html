@@ -694,7 +694,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>먼저 이차원 벡터 <span class="math notranslate nohighlight">\(v_1 = (v_{11}, \cdots, v_{1p})\)</span>, <span class="math notranslate nohighlight">\(v_2 = (v_{21}, \cdots, v_{2p})\)</span>를 만들어보자.</p>
+<p>먼저 이차원 벡터 <span class="math notranslate nohighlight">\(v_1 = (v_{11}, \cdots, v_{1p})\)</span>, <span class="math notranslate nohighlight">\(v_2 = (v_{21}, \cdots, v_{2p})\)</span>를 만들어봅시다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># --------------- 9-2 SVD --------------- #</span>
@@ -707,16 +707,16 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<p>이 두 벡터를 이용하여 벡터의 연산에 대해서 알아본다.</p>
+<p>이 두 벡터를 이용하여 벡터의 연산에 대해서 알아보겠습니다.</p>
 <ul class="simple">
 <li><p>elementwise product
 $<span class="math notranslate nohighlight">\( v_1 \circ v_2 = (v_{11}v_{21}, \cdots, v_{1p}v_{2p}) \)</span>$</p></li>
 <li><p>(<span class="math notranslate nohighlight">\(l_2\)</span>-)norm
 $<span class="math notranslate nohighlight">\(\|v_1\| = \sqrt{v_{11}^2 + \cdots v_{1p}^2}\)</span>$</p></li>
 <li><p>inner product
-$<span class="math notranslate nohighlight">\(\langle v_1, v_2 \rangle  = v_{11}v_{21} + \cdots + v_{1p}v_{2p}\)</span><span class="math notranslate nohighlight">\(
-cf)  \)</span>\langle v_1, v_2 \rangle =v_1^\top v_2$</p></li>
+$<span class="math notranslate nohighlight">\(\langle v_1, v_2 \rangle  = v_{11}v_{21} + \cdots + v_{1p}v_{2p}\)</span>$</p></li>
 </ul>
+<p>cf)  <span class="math notranslate nohighlight">\(\langle v_1, v_2 \rangle =v_1^\top v_2\)</span></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># elementwise product</span>
@@ -822,8 +822,8 @@ $<span class="math notranslate nohighlight">\(-1 \leq sim(v_1,v_2)\leq 1\)</span
 </div>
 </div>
 <p>v2의 v1위로 정사영(projection)은 다음과 같이 표시합니다.
-$<span class="math notranslate nohighlight">\(\prod_{\mathcal{C}(v_1)}v_2\)</span><span class="math notranslate nohighlight">\(
-여기서 \)</span>\prod_{\mathcal{C}(v_1)}<span class="math notranslate nohighlight">\(는 \)</span>v_1<span class="math notranslate nohighlight">\(이 생성하는 공간으로 정사영을 만들어주는 행렬(선형변환)이며 \)</span>v_2<span class="math notranslate nohighlight">\(는 이 선형변환에 대한 입력변수로 간주하면 됩니다. 즉, \)</span>v_2<span class="math notranslate nohighlight">\(을 \)</span>v_1<span class="math notranslate nohighlight">\(이 생성하는 공간으로 정사영한 결과가 \)</span>\prod_{\mathcal{C}(v_1)}v_2$입니다.</p>
+$<span class="math notranslate nohighlight">\(\prod_{\mathcal{C}(v_1)}v_2\)</span>$</p>
+<p>여기서 <span class="math notranslate nohighlight">\(\prod_{\mathcal{C}(v_1)}\)</span>는 <span class="math notranslate nohighlight">\(v_1\)</span>이 생성하는 공간으로 정사영을 만들어주는 행렬(선형변환)이며 <span class="math notranslate nohighlight">\(v_2\)</span>는 이 선형변환에 대한 입력변수로 간주하면 됩니다. 즉, <span class="math notranslate nohighlight">\(v_2\)</span>을 <span class="math notranslate nohighlight">\(v_1\)</span>이 생성하는 공간으로 정사영한 결과가 <span class="math notranslate nohighlight">\(\prod_{\mathcal{C}(v_1)}v_2\)</span>입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 정사영</span>
