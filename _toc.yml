@@ -83,7 +83,7 @@ sections:
     title: 주성분 분석의 기초
   - file: chapters/09/svd
     title: SVD
-  - file: chapters/09/pca_excercise
+  - file: chapters/09/pca_exercise
     title: PCA 실습
 - file: chapters/10/intro-hd1
   title: 고차원데이터의 시각화1
