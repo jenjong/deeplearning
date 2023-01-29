@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="3.2. 확률밀도의 시각화" href="density.html" />
@@ -669,27 +671,6 @@ title="Print to PDF"
                 
   <section id="id1">
 <h1><span class="section-number">3.1. </span>범례의 표시<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<!-- 3-1 -->
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
-<ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
-</ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 색상의 조정</span>
@@ -703,140 +684,39 @@ numpy.array
 </div>
 </div>
 </div>
+<p>빨간색 점으로 데이터를 표시합니다.</p>
+<ul class="simple">
+<li><p>maker:</p></li>
+<li><p>color:</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>UsageError: Cell magic `%%` not found.
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#FF0000&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;red points (RGB)&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00FF00&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;green points (RGB)&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#0000FF&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;blue points (RGB)&#39;</span><span class="p">)</span>
-
-<span class="c1">#%%</span>
-<span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgb</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgb</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;red points (RGB)&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;red points (RGB)&#39;)
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x12149cc0910&gt;
 </pre></div>
 </div>
 <img alt="../../_images/legend_3_1.png" src="../../_images/legend_3_1.png" />
-<img alt="../../_images/legend_3_2.png" src="../../_images/legend_3_2.png" />
-<img alt="../../_images/legend_3_3.png" src="../../_images/legend_3_3.png" />
-<img alt="../../_images/legend_3_4.png" src="../../_images/legend_3_4.png" />
-<img alt="../../_images/legend_3_5.png" src="../../_images/legend_3_5.png" />
 </div>
 </div>
+<p>색상을 변경해봅니다.</p>
+<ul class="simple">
+<li><p>color에 값으로 RGB값을 넣을 수 있습니다.</p>
+<ul>
+<li><p>각 RGB값은 16진수 값을 0~FF 범위에서 사용합니다.</p></li>
+<li><p>RGB값의 시작을 ‘#’으로 시작하며 ‘#000000’은 검은색을 나타냅니다.</p></li>
+</ul>
+</li>
+</ul>
+<p>아래 예제에서 RGB값과 실제 표시된 색상을 확인해보세요.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
-<span class="c1"># 3-1-2</span>
-<span class="c1"># 색상의 체계 </span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="s1">&#39;blue&#39;</span><span class="p">])</span>
-<span class="c1">#%%</span>
-<span class="c1"># RGB</span>
-
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">))</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="c1"># HSV</span>
-<span class="c1"># hue, saturate, value </span>
-<span class="n">mcolors</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">((</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">,</span><span class="mf">0.5</span><span class="p">))</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
-<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">)))</span>
-<span class="n">col_vec</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">col_vec</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span>
-
-<span class="c1">#%%</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span> 
-<span class="c1">#%%</span>
-<span class="n">mcolors</span><span class="o">.</span><span class="n">CSS4_COLORS</span>
-<span class="c1">#%%</span>
-<span class="c1"># 3-1-3</span>
-<span class="c1"># meshgrid 사용방법을 익히자. 결과물이 tuple로 저장되어 있어 함수에 넣으면</span>
-<span class="c1"># 2D처럼 작동함.</span>
-<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
-<span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
-<span class="n">xs</span><span class="o">.</span><span class="n">shape</span><span class="p">,</span> <span class="n">ys</span><span class="o">.</span><span class="n">shape</span>
-<span class="c1"># %%</span>
-<span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ys</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
-<span class="n">zs</span><span class="o">.</span><span class="n">shape</span>
-<span class="c1"># %%</span>
-<span class="c1"># Plot filled contour</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">zs</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x27ec5185730&gt;
-</pre></div>
-</div>
-<img alt="../../_images/legend_4_1.png" src="../../_images/legend_4_1.png" />
-<img alt="../../_images/legend_4_2.png" src="../../_images/legend_4_2.png" />
-<img alt="../../_images/legend_4_3.png" src="../../_images/legend_4_3.png" />
-<img alt="../../_images/legend_4_4.png" src="../../_images/legend_4_4.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#FF0000&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;red points (RGB)&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00FF00&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;green points (RGB)&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#0000FF&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;blue points (RGB)&#39;</span><span class="p">)</span>
-
-<span class="c1">#%%</span>
-<span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgb</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
-<span class="c1">#%%</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgb</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">))</span>
 <span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;red points (RGB)&#39;</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -846,12 +726,362 @@ numpy.array
 </pre></div>
 </div>
 <img alt="../../_images/legend_5_1.png" src="../../_images/legend_5_1.png" />
-<img alt="../../_images/legend_5_2.png" src="../../_images/legend_5_2.png" />
-<img alt="../../_images/legend_5_3.png" src="../../_images/legend_5_3.png" />
-<img alt="../../_images/legend_5_4.png" src="../../_images/legend_5_4.png" />
-<img alt="../../_images/legend_5_5.png" src="../../_images/legend_5_5.png" />
 </div>
 </div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#00FF00&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;green points (RGB)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;green points (RGB)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/legend_6_1.png" src="../../_images/legend_6_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="s1">&#39;#0000FF&#39;</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;blue points (RGB)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;blue points (RGB)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/legend_7_1.png" src="../../_images/legend_7_1.png" />
+</div>
+</div>
+<p>문자로 표시한 색상을 RGB로 나타내는 방법이 있을까요? <em><strong>matplotlib.colors</strong></em> 에 있는 to_rgba 함수를 이용하면 됩니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgba</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(1.0, 0.0, 0.0, 1.0)
+</pre></div>
+</div>
+</div>
+</div>
+<p>실수값으로 color를 입력할 수도 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="n">mcolors</span><span class="o">.</span><span class="n">to_rgb</span><span class="p">(</span><span class="s1">&#39;red&#39;</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;red points (RGB)&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;red points (RGB)&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/legend_11_1.png" src="../../_images/legend_11_1.png" />
+</div>
+</div>
+<p>color에 scatter에서 위치를 지정한 입력값과 길이가 같은 색상 문자열 벡터가 오는 경우 순서대로 색상을 시각화 객체에 할당한다.  아래 예를 살펴보자.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="nb">range</span><span class="p">(</span><span class="mi">3</span><span class="p">),</span> <span class="n">s</span> <span class="o">=</span> <span class="mi">100</span><span class="p">,</span> 
+           <span class="n">marker</span> <span class="o">=</span> <span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="n">color</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;red&#39;</span><span class="p">,</span><span class="s1">&#39;green&#39;</span><span class="p">,</span><span class="s1">&#39;blue&#39;</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1214f513fd0&gt;
+</pre></div>
+</div>
+<img alt="../../_images/legend_13_1.png" src="../../_images/legend_13_1.png" />
+</div>
+</div>
+<p>이러한 방식으로 색상을 조절 할 수 있으므로 점의 색상을 다른 정보를 변환하여 표시할 수 있다. 여기서는 <em>col_vec</em>에 빨간색 값이 증가하는 벡터(튜플)을 만들었다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span><span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">(</span><span class="n">n</span><span class="p">)</span> <span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1214f552220&gt;
+</pre></div>
+</div>
+<img alt="../../_images/legend_15_1.png" src="../../_images/legend_15_1.png" />
+</div>
+</div>
+<p>RGB 색상 체계는 다양한 색깔의 스펙트럼을 만들어 내기가 어렵다. 왜냐하면 색상의 순서를 조합하여 직관적인 색의 변화를 만들어내기가 어렵기 때문이다. 여기는 HSV색상 체계를 소개한다.</p>
+<ul class="simple">
+<li><p>hue: 0~1 사이 값으로 빨간색부터 보라색까지 스펙트럼이 짦아지는 방향으로 배열되어 있다.</p></li>
+<li><p>saturate: 채로로 0~1사이의 값을 가지고 1이 채도가 높은 값이다.</p></li>
+<li><p>value: 밝기로 0~1사이 값을 가지고 1이 밝은 값이다.</p></li>
+</ul>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 색상의 변경</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">)))</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">col_vec</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span><span class="n">ㅠ</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;hue map&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1214cce7580&gt;
+</pre></div>
+</div>
+<img alt="../../_images/legend_17_1.png" src="../../_images/legend_17_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">)))</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">col_vec</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;saturate map&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;saturate map&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/legend_18_1.png" src="../../_images/legend_18_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">n</span> <span class="o">=</span> <span class="mi">100</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="nb">tuple</span><span class="p">(</span><span class="nb">zip</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="mf">0.9</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)))</span>
+<span class="n">col_vec</span> <span class="o">=</span> <span class="n">mcolors</span><span class="o">.</span><span class="n">hsv_to_rgb</span><span class="p">(</span><span class="n">col_vec</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">),</span> <span class="n">color</span> <span class="o">=</span> <span class="n">col_vec</span><span class="p">)</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s1">&#39;value map&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;value map&#39;)
+</pre></div>
+</div>
+<img alt="../../_images/legend_19_1.png" src="../../_images/legend_19_1.png" />
+</div>
+</div>
+<p>잘 정리된 순서에 맞게 색상을 배열한 것을 색상 팔레트(palette)라고 부른다. 잘 만들어진 팔레트들이 많이 있으며 matplotlib에서는 cmap 옵션을 통해서 색상팔레트를 정할 수 있다. 아래 예는 ‘hot’의 이름을 가진 팔레트다. 이 팔레트는 검은색-붉은색-노란색-흰색으로 배열되어 있다.</p>
+<p>기본적으로 팔레트에는 색상이 순서대로 배열되어 있고 대부분의 시각화 도구는 ‘c’옵션의 값의 크기순으로 색상을 배열한다.</p>
+<p>아래 예는 c 옵션의 값으로 <span class="math notranslate nohighlight">\(x\)</span> 값을 그대로 이용했으며 x가 작은값일 때 ‘hot’팔레트의 검은색 계열로 표시, x가 큰 값을때는 노란색-흰색 계열로 표시하게 된다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">n</span><span class="p">)</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">scatter</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">x</span><span class="p">,</span> <span class="n">c</span> <span class="o">=</span> <span class="n">x</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span><span class="s1">&#39;hot&#39;</span><span class="p">)</span> 
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.collections.PathCollection at 0x1214f8a1640&gt;
+</pre></div>
+</div>
+<img alt="../../_images/legend_21_1.png" src="../../_images/legend_21_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># color text의 확인</span>
+<span class="n">mcolors</span><span class="o">.</span><span class="n">CSS4_COLORS</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;aliceblue&#39;: &#39;#F0F8FF&#39;,
+ &#39;antiquewhite&#39;: &#39;#FAEBD7&#39;,
+ &#39;aqua&#39;: &#39;#00FFFF&#39;,
+ &#39;aquamarine&#39;: &#39;#7FFFD4&#39;,
+ &#39;azure&#39;: &#39;#F0FFFF&#39;,
+ &#39;beige&#39;: &#39;#F5F5DC&#39;,
+ &#39;bisque&#39;: &#39;#FFE4C4&#39;,
+ &#39;black&#39;: &#39;#000000&#39;,
+ &#39;blanchedalmond&#39;: &#39;#FFEBCD&#39;,
+ &#39;blue&#39;: &#39;#0000FF&#39;,
+ &#39;blueviolet&#39;: &#39;#8A2BE2&#39;,
+ &#39;brown&#39;: &#39;#A52A2A&#39;,
+ &#39;burlywood&#39;: &#39;#DEB887&#39;,
+ &#39;cadetblue&#39;: &#39;#5F9EA0&#39;,
+ &#39;chartreuse&#39;: &#39;#7FFF00&#39;,
+ &#39;chocolate&#39;: &#39;#D2691E&#39;,
+ &#39;coral&#39;: &#39;#FF7F50&#39;,
+ &#39;cornflowerblue&#39;: &#39;#6495ED&#39;,
+ &#39;cornsilk&#39;: &#39;#FFF8DC&#39;,
+ &#39;crimson&#39;: &#39;#DC143C&#39;,
+ &#39;cyan&#39;: &#39;#00FFFF&#39;,
+ &#39;darkblue&#39;: &#39;#00008B&#39;,
+ &#39;darkcyan&#39;: &#39;#008B8B&#39;,
+ &#39;darkgoldenrod&#39;: &#39;#B8860B&#39;,
+ &#39;darkgray&#39;: &#39;#A9A9A9&#39;,
+ &#39;darkgreen&#39;: &#39;#006400&#39;,
+ &#39;darkgrey&#39;: &#39;#A9A9A9&#39;,
+ &#39;darkkhaki&#39;: &#39;#BDB76B&#39;,
+ &#39;darkmagenta&#39;: &#39;#8B008B&#39;,
+ &#39;darkolivegreen&#39;: &#39;#556B2F&#39;,
+ &#39;darkorange&#39;: &#39;#FF8C00&#39;,
+ &#39;darkorchid&#39;: &#39;#9932CC&#39;,
+ &#39;darkred&#39;: &#39;#8B0000&#39;,
+ &#39;darksalmon&#39;: &#39;#E9967A&#39;,
+ &#39;darkseagreen&#39;: &#39;#8FBC8F&#39;,
+ &#39;darkslateblue&#39;: &#39;#483D8B&#39;,
+ &#39;darkslategray&#39;: &#39;#2F4F4F&#39;,
+ &#39;darkslategrey&#39;: &#39;#2F4F4F&#39;,
+ &#39;darkturquoise&#39;: &#39;#00CED1&#39;,
+ &#39;darkviolet&#39;: &#39;#9400D3&#39;,
+ &#39;deeppink&#39;: &#39;#FF1493&#39;,
+ &#39;deepskyblue&#39;: &#39;#00BFFF&#39;,
+ &#39;dimgray&#39;: &#39;#696969&#39;,
+ &#39;dimgrey&#39;: &#39;#696969&#39;,
+ &#39;dodgerblue&#39;: &#39;#1E90FF&#39;,
+ &#39;firebrick&#39;: &#39;#B22222&#39;,
+ &#39;floralwhite&#39;: &#39;#FFFAF0&#39;,
+ &#39;forestgreen&#39;: &#39;#228B22&#39;,
+ &#39;fuchsia&#39;: &#39;#FF00FF&#39;,
+ &#39;gainsboro&#39;: &#39;#DCDCDC&#39;,
+ &#39;ghostwhite&#39;: &#39;#F8F8FF&#39;,
+ &#39;gold&#39;: &#39;#FFD700&#39;,
+ &#39;goldenrod&#39;: &#39;#DAA520&#39;,
+ &#39;gray&#39;: &#39;#808080&#39;,
+ &#39;green&#39;: &#39;#008000&#39;,
+ &#39;greenyellow&#39;: &#39;#ADFF2F&#39;,
+ &#39;grey&#39;: &#39;#808080&#39;,
+ &#39;honeydew&#39;: &#39;#F0FFF0&#39;,
+ &#39;hotpink&#39;: &#39;#FF69B4&#39;,
+ &#39;indianred&#39;: &#39;#CD5C5C&#39;,
+ &#39;indigo&#39;: &#39;#4B0082&#39;,
+ &#39;ivory&#39;: &#39;#FFFFF0&#39;,
+ &#39;khaki&#39;: &#39;#F0E68C&#39;,
+ &#39;lavender&#39;: &#39;#E6E6FA&#39;,
+ &#39;lavenderblush&#39;: &#39;#FFF0F5&#39;,
+ &#39;lawngreen&#39;: &#39;#7CFC00&#39;,
+ &#39;lemonchiffon&#39;: &#39;#FFFACD&#39;,
+ &#39;lightblue&#39;: &#39;#ADD8E6&#39;,
+ &#39;lightcoral&#39;: &#39;#F08080&#39;,
+ &#39;lightcyan&#39;: &#39;#E0FFFF&#39;,
+ &#39;lightgoldenrodyellow&#39;: &#39;#FAFAD2&#39;,
+ &#39;lightgray&#39;: &#39;#D3D3D3&#39;,
+ &#39;lightgreen&#39;: &#39;#90EE90&#39;,
+ &#39;lightgrey&#39;: &#39;#D3D3D3&#39;,
+ &#39;lightpink&#39;: &#39;#FFB6C1&#39;,
+ &#39;lightsalmon&#39;: &#39;#FFA07A&#39;,
+ &#39;lightseagreen&#39;: &#39;#20B2AA&#39;,
+ &#39;lightskyblue&#39;: &#39;#87CEFA&#39;,
+ &#39;lightslategray&#39;: &#39;#778899&#39;,
+ &#39;lightslategrey&#39;: &#39;#778899&#39;,
+ &#39;lightsteelblue&#39;: &#39;#B0C4DE&#39;,
+ &#39;lightyellow&#39;: &#39;#FFFFE0&#39;,
+ &#39;lime&#39;: &#39;#00FF00&#39;,
+ &#39;limegreen&#39;: &#39;#32CD32&#39;,
+ &#39;linen&#39;: &#39;#FAF0E6&#39;,
+ &#39;magenta&#39;: &#39;#FF00FF&#39;,
+ &#39;maroon&#39;: &#39;#800000&#39;,
+ &#39;mediumaquamarine&#39;: &#39;#66CDAA&#39;,
+ &#39;mediumblue&#39;: &#39;#0000CD&#39;,
+ &#39;mediumorchid&#39;: &#39;#BA55D3&#39;,
+ &#39;mediumpurple&#39;: &#39;#9370DB&#39;,
+ &#39;mediumseagreen&#39;: &#39;#3CB371&#39;,
+ &#39;mediumslateblue&#39;: &#39;#7B68EE&#39;,
+ &#39;mediumspringgreen&#39;: &#39;#00FA9A&#39;,
+ &#39;mediumturquoise&#39;: &#39;#48D1CC&#39;,
+ &#39;mediumvioletred&#39;: &#39;#C71585&#39;,
+ &#39;midnightblue&#39;: &#39;#191970&#39;,
+ &#39;mintcream&#39;: &#39;#F5FFFA&#39;,
+ &#39;mistyrose&#39;: &#39;#FFE4E1&#39;,
+ &#39;moccasin&#39;: &#39;#FFE4B5&#39;,
+ &#39;navajowhite&#39;: &#39;#FFDEAD&#39;,
+ &#39;navy&#39;: &#39;#000080&#39;,
+ &#39;oldlace&#39;: &#39;#FDF5E6&#39;,
+ &#39;olive&#39;: &#39;#808000&#39;,
+ &#39;olivedrab&#39;: &#39;#6B8E23&#39;,
+ &#39;orange&#39;: &#39;#FFA500&#39;,
+ &#39;orangered&#39;: &#39;#FF4500&#39;,
+ &#39;orchid&#39;: &#39;#DA70D6&#39;,
+ &#39;palegoldenrod&#39;: &#39;#EEE8AA&#39;,
+ &#39;palegreen&#39;: &#39;#98FB98&#39;,
+ &#39;paleturquoise&#39;: &#39;#AFEEEE&#39;,
+ &#39;palevioletred&#39;: &#39;#DB7093&#39;,
+ &#39;papayawhip&#39;: &#39;#FFEFD5&#39;,
+ &#39;peachpuff&#39;: &#39;#FFDAB9&#39;,
+ &#39;peru&#39;: &#39;#CD853F&#39;,
+ &#39;pink&#39;: &#39;#FFC0CB&#39;,
+ &#39;plum&#39;: &#39;#DDA0DD&#39;,
+ &#39;powderblue&#39;: &#39;#B0E0E6&#39;,
+ &#39;purple&#39;: &#39;#800080&#39;,
+ &#39;rebeccapurple&#39;: &#39;#663399&#39;,
+ &#39;red&#39;: &#39;#FF0000&#39;,
+ &#39;rosybrown&#39;: &#39;#BC8F8F&#39;,
+ &#39;royalblue&#39;: &#39;#4169E1&#39;,
+ &#39;saddlebrown&#39;: &#39;#8B4513&#39;,
+ &#39;salmon&#39;: &#39;#FA8072&#39;,
+ &#39;sandybrown&#39;: &#39;#F4A460&#39;,
+ &#39;seagreen&#39;: &#39;#2E8B57&#39;,
+ &#39;seashell&#39;: &#39;#FFF5EE&#39;,
+ &#39;sienna&#39;: &#39;#A0522D&#39;,
+ &#39;silver&#39;: &#39;#C0C0C0&#39;,
+ &#39;skyblue&#39;: &#39;#87CEEB&#39;,
+ &#39;slateblue&#39;: &#39;#6A5ACD&#39;,
+ &#39;slategray&#39;: &#39;#708090&#39;,
+ &#39;slategrey&#39;: &#39;#708090&#39;,
+ &#39;snow&#39;: &#39;#FFFAFA&#39;,
+ &#39;springgreen&#39;: &#39;#00FF7F&#39;,
+ &#39;steelblue&#39;: &#39;#4682B4&#39;,
+ &#39;tan&#39;: &#39;#D2B48C&#39;,
+ &#39;teal&#39;: &#39;#008080&#39;,
+ &#39;thistle&#39;: &#39;#D8BFD8&#39;,
+ &#39;tomato&#39;: &#39;#FF6347&#39;,
+ &#39;turquoise&#39;: &#39;#40E0D0&#39;,
+ &#39;violet&#39;: &#39;#EE82EE&#39;,
+ &#39;wheat&#39;: &#39;#F5DEB3&#39;,
+ &#39;white&#39;: &#39;#FFFFFF&#39;,
+ &#39;whitesmoke&#39;: &#39;#F5F5F5&#39;,
+ &#39;yellow&#39;: &#39;#FFFF00&#39;,
+ &#39;yellowgreen&#39;: &#39;#9ACD32&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<p>filled contour (contourf) 함수에서 cmap을 적용해보자.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 3-1-3</span>
+<span class="c1"># meshgrid 사용방법을 익히자. 결과물이 tuple로 저장되어 있어 함수에 넣으면</span>
+<span class="c1"># 2D처럼 작동함.</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="mi">100</span><span class="p">)</span>
+<span class="n">xs</span><span class="p">,</span> <span class="n">ys</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">meshgrid</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">)</span>
+<span class="n">zs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">sqrt</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">sin</span><span class="p">(</span><span class="n">xs</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span> <span class="o">+</span> <span class="n">np</span><span class="o">.</span><span class="n">cos</span><span class="p">(</span><span class="n">ys</span><span class="o">**</span><span class="mi">2</span><span class="p">))</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">contourf</span><span class="p">(</span><span class="n">x</span><span class="p">,</span><span class="n">y</span><span class="p">,</span> <span class="n">zs</span><span class="p">,</span> <span class="n">cmap</span> <span class="o">=</span> <span class="s1">&#39;hot&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">colorbar</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.colorbar.Colorbar at 0x1214f96fc40&gt;
+</pre></div>
+</div>
+<img alt="../../_images/legend_24_1.png" src="../../_images/legend_24_1.png" />
+</div>
+</div>
+<p>특정한 순서애</p>
 </section>
 
     <script type="text/x-thebe-config">
