@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="4.2. 확률분포의 추정" href="hist.html" />
@@ -688,12 +690,7 @@ title="Print to PDF"
 </div>
 </div>
 </div>
-<ul class="simple">
-<li><p>poison 데이터셋 load</p></li>
-<li><p>연속형 반응변수 : survival time</p></li>
-<li><p>명목형 설명변수 : treatment and poison</p></li>
-<li><p>경로를 설정하고 csv file 로드 후 dataframe 확인</p></li>
-</ul>
+<p>먼저 poison 데이터를 불러보겠습니다. poison 데이터는 아래의 url을 통해서 csv 파일의 형태로 다운로드 가능합니다. poison 데이터셋을 간단하게 살펴봅시다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">path_file</span> <span class="o">=</span> <span class="s2">&quot;http://ranking.uos.ac.kr/class/VIS/data/&quot;</span> <span class="c1"># insert poison file path</span>
@@ -761,6 +758,12 @@ title="Print to PDF"
 </table>
 </div></div></div>
 </div>
+<p>데이터 값을 확률모형의 관점에서 보면 아래와 같이 분류할 수 있을 것입니다.</p>
+<ul class="simple">
+<li><p>연속형 반응변수 : survival time</p></li>
+<li><p>명목형 설명변수 : treatment and poison</p></li>
+</ul>
+<p>이 poison 데이터는 어떤 실험의 결과를 정리한 것인지 알아보겠습니다.</p>
 <ul class="simple">
 <li><p>데이터 설명</p>
 <ul>
@@ -775,14 +778,14 @@ title="Print to PDF"
 <li><p>These data are also available from OzDASL, the Australian Data and Story Library (<a class="reference external" href="https://dasl.datadescription.com/">https://dasl.datadescription.com/</a>). (Note: The time measurements of the data at OzDASL are in units of tens of hours.)</p></li>
 </ul>
 </li>
-<li><p>데이터프레임의 기본정보 확인</p>
-<ul>
+</ul>
+<p>Poison 데이터 분석에서 관심이 있는 것은 독성의 종류, 동물의 종류에 따른 생존시간의 차이일 것입니다. 기본적인 질문은  독성의 종류에 따라 혹은 동물의 종류에 따라 생존시간의 평균에 대한 차이가 있는지에 대한 것입니다.</p>
+<p>이 질문에 대답하기 전에 먼저 데이터의 기초 통계량을 확인해봅시다. 기초통계량 및 데이터의 형식을 확인하기 위해서 아래 pandas 함수를 사용합니다.</p>
+<ul class="simple">
 <li><p>정보: info()</p></li>
 <li><p>데이터타입: dtypes</p></li>
 <li><p>요약통계량: describle(include =’all’)</p></li>
 <li><p>group_by를 활용한 기초통계량 구하기</p></li>
-</ul>
-</li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1113,11 +1116,15 @@ dtype: object
 </table>
 </div></div></div>
 </div>
+<p>주로 group_by 문을 이용하여 평균을 계산하고 비교하였습니다. 이렇게 통계량을 직접 비교하는 것은 집단의 차이를 직관적으로 이해하는데 큰 도움을 줄 수 있습니다. 하지만 지속적으로 평균의 차이를 모니터링 해야하거나 대규모 평균비교 작업을 매우 빠르게 해야하거나 혹은 평균 차이에 대한 과학적 추론 및 분석이 필요한 경우 ANOVA(Analysis of Variance)는 매우 편리한 분석도구 입니다.</p>
+<p>우리에게 주어진 데이터에서 생존시간 평균의 차이를 독성의 종류, 동물의 종류에 따라 각각 분석을 할 수 있고 두 요인을 한꺼번에 고려하여 분석할 수도 있습니다.</p>
+<p>분석도구는 아래와 같습니다</p>
 <ul class="simple">
-<li><p>statsmodels.formula.api 의 ols를 이용하여 일원분산분석 모형 적합</p></li>
-<li><p>statsmodels.stats.anova 의 anova_lm을 이용하여 분산분석 테이블 확인</p></li>
-<li><p>요인마다 제곱합(SS), 자유도(df)를 확인하고 F값과 p-value의 해석</p></li>
+<li><p>statsmodels.formula.api 의 ols를 이용하여 일원(이원)배치 분산분석 모형 적합합니다.</p></li>
+<li><p>statsmodels.stats.anova 의 anova_lm을 이용하여 분산분석 테이블 확인합니다.</p></li>
+<li><p>요인마다 제곱합(SS), 자유도(df)를 확인하고 F값과 p-value의 해석합니다.</p></li>
 </ul>
+<p>(참고) statsmodels.formula.api 의 formula는 text 로 표현된 식을 입력 변수들로 parsing 해주는 기능을 가지고 있습니다. 예를 들어 “time~poison” 은 formula 에 대응하는 text 로 반응변수를 time으로 설명변수를 상수항과 poison 으로 설정합니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">one_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
@@ -1174,13 +1181,77 @@ dtype: object
 </div></div></div>
 </div>
 <ul class="simple">
-<li><p>일원분산분석과 마찬가지로 ols, anova_lm을 이용하여 이원분산분석 모형 적합</p></li>
-<li><p>분산분석 테이블을 이용하여 각 요인인 poison, treat에 따라서 집단간 반응변수의 평균의 차이가 있는지 확인</p></li>
+<li><p>일원분산분석과 마찬가지로 ols, anova_lm을 이용하여 이원분산분석 모형 적합합니다</p></li>
+<li><p>분산분석 테이블을 이용하여 각 요인인 poison, treat에 따라서 집단간 반응변수의 평균의 차이가 있는지 확인합니다.</p></li>
 <li><p>poison * treat의 교호작용 확인</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison * treat&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison + treat&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
+<span class="n">result_twoway</span> <span class="o">=</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">two_way_anova</span><span class="p">)</span>
+<span class="n">result_twoway</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>df</th>
+      <th>sum_sq</th>
+      <th>mean_sq</th>
+      <th>F</th>
+      <th>PR(&gt;F)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>poison</th>
+      <td>2.0000</td>
+      <td>1.0330</td>
+      <td>0.5165</td>
+      <td>20.6433</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>treat</th>
+      <td>3.0000</td>
+      <td>0.9212</td>
+      <td>0.3071</td>
+      <td>12.2727</td>
+      <td>0.0000</td>
+    </tr>
+    <tr>
+      <th>Residual</th>
+      <td>42.0000</td>
+      <td>1.0509</td>
+      <td>0.0250</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<p>formula에 poison * treat 를 사용하여 교호작용을 확인할 수 있습니다.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">two_way_anova</span> <span class="o">=</span> <span class="n">ols</span><span class="p">(</span><span class="s1">&#39;time ~ poison + treat+ poison*treat&#39;</span><span class="p">,</span> <span class="n">poi</span><span class="p">)</span><span class="o">.</span><span class="n">fit</span><span class="p">()</span>
 <span class="n">result_twoway</span> <span class="o">=</span> <span class="n">anova_lm</span><span class="p">(</span><span class="n">two_way_anova</span><span class="p">)</span>
 <span class="n">result_twoway</span>
 </pre></div>
@@ -1249,13 +1320,13 @@ dtype: object
 </table>
 </div></div></div>
 </div>
+<p>ANOVA의 결과 p-value를 통해 평균의 차이 교호효과의 유무를 확인할 수 있습니다. 그렇다면 ANOVA의 결과를 어떻게 시각화할 수 있을까요? p-value를 보여주는 것이 효과적일까요?</p>
+<p>만약 평균비교를 매우 빈번하게 해야하고 평균의 차이에 대한 유무만을 확인하는 것이 목적이라면 p-value의 값을 막대그래프로 보여주는 것이 유용할 것입니다. 하지만 p-value는 평균의 차이가 있는지 그렇지 않은지를 나타낼 뿐 평균의 차이 혹은 그룹간의 평균값을 보여주지는 않습니다. 따라서 그룹의 평균을 직접 시각화하는 것이 유용한 경우가 많습니다.</p>
+<p>아래와 같이 ANOVA의 분석결과를 시각화 해봅시다.</p>
 <ul class="simple">
-<li><p>종속변수 time의 독립변수 poison에 대한 상자그림과 산점도</p></li>
-<li><p>pyplot 패키지의 활용</p></li>
-<li><p>poison에 따른 time의 평균과 분포는 어떤 차이를 보이는가?</p></li>
-</ul>
-<ul class="simple">
-<li><p>poison 변수의 값을 기준으로 데이터를 나누기 위해서 값을 확인해본다.</p></li>
+<li><p>종속변수 time의 독립변수 poison에 대한 상자그림과 산점도를 그립니다.</p></li>
+<li><p>poison에 따른 time의 평균과 분포는 어떤 차이를 확인합니다</p></li>
+<li><p>poison 변수의 값을 기준으로 데이터를 나누기 위해서 값을 확인해봅니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1273,7 +1344,7 @@ Name: poison, dtype: int64
 </div>
 </div>
 <ul class="simple">
-<li><p>확인한 poison의 값을 이용하여 데이터를 나눈다.</p></li>
+<li><p>확인한 poison의 값을 이용하여 데이터를 나눕니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1285,7 +1356,7 @@ Name: poison, dtype: int64
 </div>
 </div>
 <ul class="simple">
-<li><p>그래픽 스타일을 ‘ggplot’으로 바꾸자</p></li>
+<li><p>그래픽 스타일을 ‘ggplot’으로 변경합니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1294,6 +1365,9 @@ Name: poison, dtype: int64
 </div>
 </div>
 </div>
+<ul class="simple">
+<li><p>집단별로 상자그림을 그립니다.</p></li>
+</ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
@@ -1309,14 +1383,14 @@ Name: poison, dtype: int64
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Y: time&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/anova_23_1.png" src="../../_images/anova_23_1.png" />
+<img alt="../../_images/anova_26_1.png" src="../../_images/anova_26_1.png" />
 </div>
 </div>
 <ul class="simple">
-<li><p>분산분석을 위한 기초통계량을 계산한다</p>
+<li><p>분산분석을 위한 기초통계량을 계산합니다.</p>
 <ul>
-<li><p>groupby 를 이용하여 평균과 분산을 계산한다.</p></li>
-<li><p>계산된 결과를 합쳐서 출력한다.</p></li>
+<li><p>groupby 를 이용하여 평균과 분산을 계산합니다.</p></li>
+<li><p>계산된 결과를 합쳐서 출력합니다.</p></li>
 </ul>
 </li>
 </ul>
@@ -1430,7 +1504,7 @@ Name: poison, dtype: int64
 </div></div></div>
 </div>
 <ul class="simple">
-<li><p>agg 함수를 이용하면 간단한 표현이 가능하다.</p></li>
+<li><p>agg 함수를 이용하면 간단한 표현이 가능합니다.</p></li>
 </ul>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -1561,12 +1635,13 @@ Name: poison, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/anova_29_0.png" src="../../_images/anova_29_0.png" />
+<img alt="../../_images/anova_32_0.png" src="../../_images/anova_32_0.png" />
 </div>
 </div>
+<p>위에서 적합해 놓은 one_way_anova에 anova 분석에서 residual 이 저장되어 있습습니다. 잔차검정 (residual test)를 위해 sklearn의 statmodel.qqplot() 함수를 이용하여 Q-Q plot을 그려보겠습니다.</p>
+<p>이는 ANOVA분석 결과로 얻게 되는 p-value에 대한 모형가정 검토입니다.  잔차검정을 통해 확인해야 하는 것은 모형이 정규분포를 따르는가에 대한 것이라기 보다는 꼬리쪽 분포의 두께가 두꺼운가, 데이터 index에 대한 의존성이 있는지, 기울어진 분포인지에 대한 것입니다.</p>
 <ul class="simple">
-<li><p>위에서 적합해 놓은 one_way_anova에 anova 분석에서 residual 이 저장되어 있다. sklearn의 statmodel.qqplot() 함수를 이용하여 Q-Q plot을 그려보자.</p></li>
-<li><p>Q-Q 플롯은 표준정규분포의 이론적 분위수와 관측치의 분위수 값을 비교하여 분포의 꼬리의 두께, 분포의 대칭성등을 파악할 수 있는 시각화 도구다.</p>
+<li><p>Q-Q 플롯은 표준정규분포의 이론적 분위수와 관측치의 분위수 값을 비교하여 분포의 꼬리의 두께, 분포의 대칭성등을 파악할 수 있는 시각화 도구입니다.</p>
 <ul>
 <li><p>y축: 표준화된 잔차</p></li>
 <li><p>x축: (데이터의 분위수에 대응되는) 표준정규분포의 Z-value</p></li>
@@ -1585,12 +1660,13 @@ Name: poison, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/anova_31_0.png" src="../../_images/anova_31_0.png" />
+<img alt="../../_images/anova_34_0.png" src="../../_images/anova_34_0.png" />
 </div>
 </div>
-<ul class="simple">
-<li><p>time 변수를 1/time으로 분석하면 residual 에 대한 우리의 가정을 좀 더 신뢰할 수 있음.</p></li>
-</ul>
+<p>위 QQ-plot을 확인해보면 분포의 오른쪽 끝(x축 양끝값)에서  이론적인 분위수(x축값)보다 표준화된 분위수의 값이 훨씬 크다는 것을 알 수 있습니다.</p>
+<p>정규분포를 가정하였을 때 약 1등은 <span class="math notranslate nohighlight">\(2\)</span> 의 값을 가져야 할 것으로 보이나 실제로는  <span class="math notranslate nohighlight">\(3\)</span> 의 값을 가지는 것으로 나타났음을 의미합니다. 즉, 정규분포포다 극단적으로 더 큰값이 잘 나타난 것입니다. 반대로 하위 1등은 데이터가 정규분포를 따른다면 <span class="math notranslate nohighlight">\(-2\)</span>의 값을 가져야 하겠지만 그 보다 작은 값을 가짐을 확인할 수 있습니다.</p>
+<p>위 결론으로 분포의 꼬리가 두껍다는 것을 알 수 있습니다.</p>
+<p>여기서 반응 변수로 사용하는 time 변수를 1/time으로 분석하면 residual 에 대한 우리의 가정을 좀 더 신뢰할 수 있습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">poi</span><span class="p">[</span><span class="s2">&quot;time_inv&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="mi">1</span><span class="o">/</span><span class="n">poi</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span>
@@ -1687,7 +1763,7 @@ Name: poison, dtype: int64
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/anova_36_0.png" src="../../_images/anova_36_0.png" />
+<img alt="../../_images/anova_40_0.png" src="../../_images/anova_40_0.png" />
 </div>
 </div>
 <ul class="simple">
@@ -1706,7 +1782,7 @@ Name: poison, dtype: int64
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0, 0.5, &#39;Frequency&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/anova_38_1.png" src="../../_images/anova_38_1.png" />
+<img alt="../../_images/anova_42_1.png" src="../../_images/anova_42_1.png" />
 </div>
 </div>
 </section>
