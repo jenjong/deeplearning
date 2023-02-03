@@ -51,8 +51,6 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="2.3. 그래픽 인자 조정" href="attribute.html" />
@@ -747,7 +745,7 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x2099a5b80a0&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d625714760&gt;
 </pre></div>
 </div>
 <img alt="../../_images/axis_9_1.png" src="../../_images/axis_9_1.png" />
@@ -770,6 +768,12 @@ title="Print to PDF"
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d6256d2790&gt;
+</pre></div>
+</div>
+<img alt="../../_images/axis_11_1.png" src="../../_images/axis_11_1.png" />
+</div>
 </div>
 <p>하나의 그림(axes)에 그림으 그리는 함수를 반복해서 적용하면 결과물이 겹쳐져서 표현됨을 앞서 살펴보았습니다. 다시 한번 확인해보겠습니다.</p>
 <div class="cell docutils container">
@@ -784,28 +788,29 @@ title="Print to PDF"
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x2099a6a2970&gt;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x1d6267ab520&gt;
 </pre></div>
 </div>
 <img alt="../../_images/axis_13_1.png" src="../../_images/axis_13_1.png" />
 </div>
 </div>
-<p>히스토그램을 그려보겠습니다. 히스토그램은 연속형 자료의 확률밀도함수에 대한 시각화 결과물로 bins 옵션을 이용하여 계급구간의 개수(bin의 수)를 정하는 것이 매우 중요합니다. 일반적으로 자료의 수가 <span class="math notranslate nohighlight">\(n\)</span>일때 계급구간의 수를 <span class="math notranslate nohighlight">\(\sqrt{n}\)</span>이하인 최대자연수로 잡습니다.</p>
-<p>아래 예제에서 다음을 확인하세요. (여기서는 subplots을 사용하지 않고 plt.hist()로 바로 그렸습니다.)</p>
-<ul class="simple">
-<li><p>bins: bin의 개수</p></li>
-<li><p>density: 히스토그램의 높이를 상대도수로 계산 여부 (default는 false로 되어 있으나, 히스토그램의 높이를 확률밀도로 해석하기 위해서는 true로 설정하여야 함)</p></li>
-<li><p>facecolor: 면의 색깔</p></li>
-</ul>
+<p>히스토그램을 그려보겠습니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="n">size</span> <span class="o">=</span><span class="mi">2500</span><span class="p">)</span>
-<span class="n">n</span><span class="p">,</span> <span class="n">bins</span><span class="p">,</span> <span class="n">patches</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<img alt="../../_images/axis_15_0.png" src="../../_images/axis_15_0.png" />
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(array([  2.,  16., 105., 317., 649., 704., 483., 184.,  34.,   6.]),
+ array([-3.94347822, -3.18819379, -2.43290935, -1.67762492, -0.92234049,
+        -0.16705606,  0.58822837,  1.3435128 ,  2.09879724,  2.85408167,
+         3.6093661 ]),
+ &lt;BarContainer object of 10 artists&gt;)
+</pre></div>
+</div>
+<img alt="../../_images/axis_15_1.png" src="../../_images/axis_15_1.png" />
 </div>
 </div>
 <p>추가로 아래 그림에 여러 속성값을 정하는 절차를 확인하세요</p>
@@ -832,114 +837,6 @@ title="Print to PDF"
 <img alt="../../_images/axis_17_0.png" src="../../_images/axis_17_0.png" />
 </div>
 </div>
-<p>위 시각화 결과물은 실제로 표준정규분포를 따르는 자료의 개형을 잘 나타내고 있습니다. 하지만,
-같은 자료에 대해서 bin의 수를 너무 작게 잡거나 너무 크게 잡을때 히스토그램의 개형이 원래 자료의 분포를 잘 표현하지 못할 수 있습니다.아래 예를 확인해보세요.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;standard normal&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;standard normal&#39;)
-</pre></div>
-</div>
-<img alt="../../_images/axis_19_1.png" src="../../_images/axis_19_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">plt</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">bins</span><span class="o">=</span><span class="mi">2500</span><span class="p">,</span> <span class="n">density</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">facecolor</span><span class="o">=</span><span class="s1">&#39;tab:green&#39;</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.75</span><span class="p">)</span>
-<span class="n">plt</span><span class="o">.</span><span class="n">title</span><span class="p">(</span><span class="s1">&#39;standard normal&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;standard normal&#39;)
-</pre></div>
-</div>
-<img alt="../../_images/axis_20_1.png" src="../../_images/axis_20_1.png" />
-</div>
-</div>
-<p>여기서는 subplots을 이용하여 히스토그램을 그리는 방법을 확인해보겠습니다. 같은 axes에 두개의 히스토그램을 그리는 예제입니다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 동시비교: 2개 데이터의 표시 </span>
-<span class="n">a</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
-<span class="n">b</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">normal</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">4</span><span class="p">,</span> <span class="mi">900</span><span class="p">)</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">()</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(0,$3^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(2,$4^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;two histogramss&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;two histogramss&#39;)
-</pre></div>
-</div>
-<img alt="../../_images/axis_22_1.png" src="../../_images/axis_22_1.png" />
-</div>
-</div>
-<p>히스토그램을 수평 수직으로 따로 그릴 수 있을 것입니다. 주의할 점은 시각적으로 용이한 비교를 위해 x축의 길이를 같게 맞추어 주는 것입니다. (x축길이를 같게 설정하지 않으면 어떤 점이 불편한지 알아봅시다)</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 수평비교</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(0,$3^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(2,$4^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x2099e1daeb0&gt;
-</pre></div>
-</div>
-<img alt="../../_images/axis_24_1.png" src="../../_images/axis_24_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 수직비교1</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(0,$3^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(2,$4^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;matplotlib.legend.Legend at 0x2099e3da9d0&gt;
-</pre></div>
-</div>
-<img alt="../../_images/axis_25_1.png" src="../../_images/axis_25_1.png" />
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 수직비교2</span>
-<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span> <span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">5</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">a</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(0,$3^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">hist</span><span class="p">(</span><span class="n">b</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="n">density</span> <span class="o">=</span> <span class="kc">True</span><span class="p">,</span> <span class="n">alpha</span> <span class="o">=</span> <span class="mf">0.5</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="sa">r</span><span class="s1">&#39;N(2,$4^2$)&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">legend</span><span class="p">(</span><span class="n">loc</span><span class="o">=</span><span class="s1">&#39;upper left&#39;</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
-<span class="n">ax</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span><span class="o">.</span><span class="n">set_xlim</span><span class="p">(</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span><span class="mi">15</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>(-10.0, 15.0)
-</pre></div>
-</div>
-<img alt="../../_images/axis_26_1.png" src="../../_images/axis_26_1.png" />
-</div>
-</div>
 <p>여기서는 boxplot을 그려보겠습니다. boxplot은 연속형 변수의 기초통계량을 요약해주는 유용한 시각화 도구입니다. boxplot을 통해서 중앙값, 1분위수, 3분위수, IQR(inter quartile range), 이상치 등을 파악할 수 있습니다.</p>
 <p>boxplot은 하나의 변수에 대해서 단독으로 사용하기 보다는 여러 개의 연속형 변수 (다른 모집단의 변수)를 동시에 비교할 때 많이 사용합니다.</p>
 <p>boxplot 함수에 리스트의 형태로 자료가 들어가고 labels를 문자열로 입력함을 살펴보세요.</p>
@@ -959,7 +856,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;boxplot&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/axis_28_1.png" src="../../_images/axis_28_1.png" />
+<img alt="../../_images/axis_19_1.png" src="../../_images/axis_19_1.png" />
 </div>
 </div>
 <p>boxplot은 연속형 변수의 자료 요약값을 보여줄 수 있는 매우 유용한 도구지만 복잡한 분포의 형태를 나타낼 수는 없습니다. 특별히 혼합형 분포를 가지는 자료분석의 예를 살펴보겠습니다. 먼저 이러한 분포를 하나 만들어겠습니다.</p>
@@ -979,7 +876,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;mixture dist&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/axis_30_1.png" src="../../_images/axis_30_1.png" />
+<img alt="../../_images/axis_21_1.png" src="../../_images/axis_21_1.png" />
 </div>
 </div>
 <p>두 개의 분포가 혼합된 형태의 자료로 보입니다. 특히 솟아오른 두개의 봉우리 즉, 자료가 많이 모여 있는 곳이 두 군데가 보입니다. 이 자료를 boxplot을 통해 특성을 파악하면 어떻게 될까요?</p>
@@ -995,7 +892,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;mixture dist&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/axis_32_1.png" src="../../_images/axis_32_1.png" />
+<img alt="../../_images/axis_23_1.png" src="../../_images/axis_23_1.png" />
 </div>
 </div>
 <p>boxplot은 혼합형 분포의 특징을 잘 나타내지 못하고 있습니다. 이러한 boxplot의 단점을 보완하기 위해 만들어진 시각화 도구가 violin plot입니다.</p>
@@ -1012,7 +909,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;mixture dist&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/axis_34_1.png" src="../../_images/axis_34_1.png" />
+<img alt="../../_images/axis_25_1.png" src="../../_images/axis_25_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1027,7 +924,7 @@ title="Print to PDF"
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 1.0, &#39;violin plot&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/axis_35_1.png" src="../../_images/axis_35_1.png" />
+<img alt="../../_images/axis_26_1.png" src="../../_images/axis_26_1.png" />
 </div>
 </div>
 <p>violon plot 마다 label 값을 할당하기 위해서 set_xtickslabels 을 이용한다.</p>
@@ -1050,7 +947,7 @@ title="Print to PDF"
  Text(5, 0, &#39;d&#39;)]
 </pre></div>
 </div>
-<img alt="../../_images/axis_37_1.png" src="../../_images/axis_37_1.png" />
+<img alt="../../_images/axis_28_1.png" src="../../_images/axis_28_1.png" />
 </div>
 </div>
 </section>
