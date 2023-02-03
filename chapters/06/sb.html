@@ -670,27 +670,6 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="seaborn">
 <h1><span class="section-number">6.1. </span>Seaborn 소개<a class="headerlink" href="#seaborn" title="Permalink to this headline">#</a></h1>
 <!-- 6-1 -->
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
-<ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
-</ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">seaborn</span> <span class="k">as</span> <span class="nn">sns</span>
@@ -900,7 +879,7 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c01f0ac0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_5_1.png" src="../../_images/sb_5_1.png" />
+<img alt="../../_images/sb_4_1.png" src="../../_images/sb_4_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -924,7 +903,7 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Text(0.5, 6.79999999999999, &#39;--Carat--&#39;)
 </pre></div>
 </div>
-<img alt="../../_images/sb_6_1.png" src="../../_images/sb_6_1.png" />
+<img alt="../../_images/sb_5_1.png" src="../../_images/sb_5_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -941,7 +920,7 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c00b4d90&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_7_1.png" src="../../_images/sb_7_1.png" />
+<img alt="../../_images/sb_6_1.png" src="../../_images/sb_6_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -955,7 +934,7 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c24486a0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_8_1.png" src="../../_images/sb_8_1.png" />
+<img alt="../../_images/sb_7_1.png" src="../../_images/sb_7_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -979,7 +958,7 @@ numpy.array
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c0306d30&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_10_1.png" src="../../_images/sb_10_1.png" />
+<img alt="../../_images/sb_9_1.png" src="../../_images/sb_9_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1046,7 +1025,7 @@ Name: subject, Length: 1064, dtype: object
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c10ea160&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_14_1.png" src="../../_images/sb_14_1.png" />
+<img alt="../../_images/sb_13_1.png" src="../../_images/sb_13_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1072,7 +1051,7 @@ The `ci` parameter is deprecated. Use `errorbar=None` for the same effect.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c11975b0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_15_2.png" src="../../_images/sb_15_2.png" />
+<img alt="../../_images/sb_14_2.png" src="../../_images/sb_14_2.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1090,7 +1069,7 @@ The `ci` parameter is deprecated. Use `errorbar=None` for the same effect.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:xlabel=&#39;timepoint&#39;, ylabel=&#39;signal&#39;&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_16_1.png" src="../../_images/sb_16_1.png" />
+<img alt="../../_images/sb_15_1.png" src="../../_images/sb_15_1.png" />
 </div>
 </div>
 <div class="cell docutils container">
@@ -1112,7 +1091,7 @@ The `ci` parameter is deprecated. Use `errorbar=None` for the same effect.
 <div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;seaborn.axisgrid.FacetGrid at 0x272c02adfa0&gt;
 </pre></div>
 </div>
-<img alt="../../_images/sb_17_1.png" src="../../_images/sb_17_1.png" />
+<img alt="../../_images/sb_16_1.png" src="../../_images/sb_16_1.png" />
 </div>
 </div>
 </section>
