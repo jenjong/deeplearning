@@ -669,27 +669,206 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="id1">
 <h1><span class="section-number">13.2. </span>지리정보함수2<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
-<!-- 13-2--><ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
-<ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
-</ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
+<!-- 13-2--><div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 12-2-1 폴리곤 데이터</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">from</span> <span class="nn">shapely.geometry.polygon</span> <span class="kn">import</span> <span class="n">Polygon</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">triangle</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)])</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">plot</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;function matplotlib.pyplot.plot(*args, scalex=True, scaley=True, data=None, **kwargs)&gt;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;length:&quot;</span><span class="p">,</span> <span class="n">triangle</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;area:&quot;</span><span class="p">,</span> <span class="n">triangle</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;bounds:&quot;</span><span class="p">,</span> <span class="n">triangle</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;boundary:&quot;</span><span class="p">,</span> <span class="n">triangle</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;centroid:&quot;</span><span class="p">,</span> <span class="n">triangle</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>length: 3.414213562373095
+area: 0.5
+bounds: (0.0, 0.0, 1.0, 1.0)
+boundary: LINESTRING (0 0, 1 0, 1 1, 0 0)
+centroid: POINT (0.6666666666666666 0.3333333333333333)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">triangle</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/function2_4_0.png" src="../../_images/function2_4_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">rectangle</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">rectangle</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.414213562373096
+6.5
+(0.0, 0.0, 1.0, 7.0)
+LINESTRING (0 0, 1 0, 1 6, 0 7, 0 0)
+POINT (0.4871794871794872 3.256410256410256)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<img alt="../../_images/function2_6_0.png" src="../../_images/function2_6_0.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># 참고 : sequence 를 넣을 때 순서가 중요하다. 아래 예제로 확인!</span>
+
+<span class="n">rectangle</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">7</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">6</span><span class="p">)])</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">rectangle</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># 다양한 polygon 을 그려보자</span>
+<span class="n">shell</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">holes</span> <span class="o">=</span> <span class="p">[[(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]]</span>
+
+<span class="n">polygon</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">shell</span><span class="o">=</span><span class="n">shell</span><span class="p">,</span> <span class="n">holes</span><span class="o">=</span><span class="n">holes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">polygon</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;red&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">shell</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">holes</span> <span class="o">=</span> <span class="p">[[(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.25</span><span class="p">)],</span>
+         <span class="p">[(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.25</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mf">1.75</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.75</span><span class="p">)]]</span>
+
+<span class="n">polygon2</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">holes</span><span class="o">=</span><span class="n">holes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon2</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon2</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon2</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon2</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon2</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">polygon2</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;green&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">shell</span> <span class="o">=</span> <span class="p">[(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]</span>
+<span class="n">holes</span> <span class="o">=</span> <span class="p">[[(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mf">1.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">),</span> <span class="p">(</span><span class="mf">0.5</span><span class="p">,</span> <span class="mf">1.5</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)]]</span>
+
+<span class="n">polygon3</span> <span class="o">=</span> <span class="n">Polygon</span><span class="p">(</span><span class="n">shell</span><span class="p">,</span> <span class="n">holes</span><span class="o">=</span><span class="n">holes</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon3</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon3</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon3</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon3</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">polygon3</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">polygon3</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">)</span>
+
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="c1"># %%</span>
+
+<span class="c1"># 12-2-2 LineString 데이터</span>
+<span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="kn">from</span> <span class="nn">shapely</span> <span class="kn">import</span> <span class="n">Point</span><span class="p">,</span> <span class="n">LineString</span>
+
+<span class="n">line1</span> <span class="o">=</span> <span class="n">LineString</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">5</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line1</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line1</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line1</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line1</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line1</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">line1</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">line2</span> <span class="o">=</span> <span class="n">LineString</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="mi">17</span><span class="p">),</span> <span class="n">Point</span><span class="p">(</span><span class="mi">11</span><span class="p">,</span> <span class="mi">13</span><span class="p">)])</span>
+
+<span class="c1"># Tuple 이외에도  Point 를 넣을 수도 있다.</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line2</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line2</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line2</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line2</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line2</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">line2</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">()</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">line3</span> <span class="o">=</span> <span class="n">LineString</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line3</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line3</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line3</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line3</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line3</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">line3</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;pink&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+
+<span class="n">line4</span> <span class="o">=</span> <span class="n">LineString</span><span class="p">([(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">2</span><span class="p">),</span> <span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">)])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line4</span><span class="o">.</span><span class="n">length</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line4</span><span class="o">.</span><span class="n">area</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line4</span><span class="o">.</span><span class="n">bounds</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line4</span><span class="o">.</span><span class="n">boundary</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">line4</span><span class="o">.</span><span class="n">centroid</span><span class="p">)</span>
+
+<span class="n">gpd</span><span class="o">.</span><span class="n">GeoSeries</span><span class="p">(</span><span class="n">line4</span><span class="p">)</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;violet&#39;</span><span class="p">)</span>
+<span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>

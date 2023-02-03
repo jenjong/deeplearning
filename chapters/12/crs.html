@@ -671,13 +671,126 @@ title="Print to PDF"
 <h1><span class="section-number">12.3. </span>데이터 구조와 좌표계<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h1>
 <!-- 12-3 --><div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">os</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS of node&quot;</span><span class="p">,</span> <span class="n">k_node</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS of link&quot;</span><span class="p">,</span> <span class="n">k_link</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS of node PROJCS[&quot;ITRF2000_Central_Belt_60&quot;,GEOGCS[&quot;GCS_ITRF_2000&quot;,DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6656&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.0174532925199433],AUTHORITY[&quot;EPSG&quot;,&quot;4656&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,38],PARAMETER[&quot;central_meridian&quot;,127],PARAMETER[&quot;scale_factor&quot;,1],PARAMETER[&quot;false_easting&quot;,200000],PARAMETER[&quot;false_northing&quot;,600000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+CRS of link PROJCS[&quot;ITRF2000_Central_Belt_60&quot;,GEOGCS[&quot;GCS_ITRF_2000&quot;,DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6656&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.0174532925199433],AUTHORITY[&quot;EPSG&quot;,&quot;4656&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,38],PARAMETER[&quot;central_meridian&quot;,127],PARAMETER[&quot;scale_factor&quot;,1],PARAMETER[&quot;false_easting&quot;,200000],PARAMETER[&quot;false_northing&quot;,600000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span> <span class="o">=</span> <span class="n">k_link</span><span class="o">.</span><span class="n">crs</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">crs_</span><span class="p">)</span>
+<span class="c1">#%% </span>
+<span class="c1"># pyproj.crs.crs class </span>
+<span class="c1"># https://pyproj4.github.io/pyproj/dev/api/crs/crs.html</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crs_</span><span class="o">.</span><span class="n">area_of_use</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">coordinate_operation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Coordinate Operation: Conversion&gt;
+Name: unnamed
+Method: Transverse Mercator
+Area of Use:
+- undefined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">coordinate_system</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CS[Cartesian,2],
+    AXIS[&quot;easting&quot;,east,
+        ORDER[1],
+        LENGTHUNIT[&quot;metre&quot;,1,
+            ID[&quot;EPSG&quot;,9001]]],
+    AXIS[&quot;northing&quot;,north,
+        ORDER[2],
+        LENGTHUNIT[&quot;metre&quot;,1,
+            ID[&quot;EPSG&quot;,9001]]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># epsg: 9001, Geodesy</span>
+<span class="c1"># cs_to_cf() converts all coordinate systems (cs) </span>
+<span class="c1"># in the CRS to a list of Climate and Forecast (CF) Version 1.8 dicts.</span>
+<span class="n">crs_</span><span class="o">.</span><span class="n">cs_to_cf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;axis&#39;: &#39;X&#39;,
+  &#39;long_name&#39;: &#39;Easting&#39;,
+  &#39;standard_name&#39;: &#39;projection_x_coordinate&#39;,
+  &#39;units&#39;: &#39;metre&#39;},
+ {&#39;axis&#39;: &#39;Y&#39;,
+  &#39;long_name&#39;: &#39;Northing&#39;,
+  &#39;standard_name&#39;: &#39;projection_y_coordinate&#39;,
+  &#39;units&#39;: &#39;metre&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">datum</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,
+    ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+        LENGTHUNIT[&quot;metre&quot;,1]],
+    ID[&quot;EPSG&quot;,6656]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">ellipsoid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+    LENGTHUNIT[&quot;metre&quot;,1],
+    ID[&quot;EPSG&quot;,7019]]
 </pre></div>
 </div>
 </div>

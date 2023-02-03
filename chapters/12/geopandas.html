@@ -669,32 +669,1048 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="geopandas">
 <h1><span class="section-number">12.2. </span>Geopandas<a class="headerlink" href="#geopandas" title="Permalink to this headline">#</a></h1>
-<!-- 12-2 --><ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
-<ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
-</ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
+<!-- 12-2 --><p>Data download: 국가표준노드링크 <a class="reference external" href="https://its.go.kr/nodelink/nodelinkRef">https://its.go.kr/nodelink/nodelinkRef</a></p>
+<p>행정구역 <a class="reference external" href="http://www.gisdeveloper.co.kr/?p=2332">http://www.gisdeveloper.co.kr/?p=2332</a></p>
+<p>국가표준노드링크 부르기 # link crs: to epsg = 5186</p>
+<p>파일 확인</p>
+<p>대부분의 지리 데이터 처리는 WGS84 좌표계를 기준으로 합니다.</p>
+<p>한국 지도는 보통 TM좌표계를 사용하는데 이를 WGS84 좌표계로 변환하는 실습입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">geopandas</span> <span class="k">as</span> <span class="nn">gpd</span>
+<span class="kn">import</span> <span class="nn">os</span>
 </pre></div>
 </div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1">#web_path = &quot;http://ranking.uos.ac.kr/class/VIS/ch12/data/nodelink/&quot;</span>
+<span class="n">web_path</span><span class="o">=</span> <span class="s2">&quot;C:/Users/jjjeo/OneDrive - UOS/class/2023 Data_Vis/Data/&quot;</span>
+<span class="n">path_data</span> <span class="o">=</span> <span class="n">web_path</span><span class="o">+</span><span class="s1">&#39;MOCT_LINK.shp&#39;</span>
+<span class="n">path_data</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;C:/Users/jjjeo/OneDrive - UOS/class/2023 Data_Vis/Data/MOCT_LINK.shp&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_link</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">path_data</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;cp949&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_link</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LINK_ID</th>
+      <th>F_NODE</th>
+      <th>T_NODE</th>
+      <th>LANES</th>
+      <th>ROAD_RANK</th>
+      <th>ROAD_TYPE</th>
+      <th>ROAD_NO</th>
+      <th>ROAD_NAME</th>
+      <th>ROAD_USE</th>
+      <th>MULTI_LINK</th>
+      <th>CONNECT</th>
+      <th>MAX_SPD</th>
+      <th>REST_VEH</th>
+      <th>REST_W</th>
+      <th>REST_H</th>
+      <th>LENGTH</th>
+      <th>REMARK</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1860689001</td>
+      <td>1865963801</td>
+      <td>1865963701</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>국제과학로</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>414.856758</td>
+      <td>None</td>
+      <td>LINESTRING (232063.149 427951.664, 231856.525 ...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1860688901</td>
+      <td>1865963701</td>
+      <td>1865963801</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>국제과학로</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>414.211972</td>
+      <td>None</td>
+      <td>LINESTRING (231788.078 427642.678, 231824.456 ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3280619601</td>
+      <td>3280218301</td>
+      <td>3280218501</td>
+      <td>2</td>
+      <td>107</td>
+      <td>003</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>102.163661</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (262099.848 260188.211, 262202.057 ...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3280619701</td>
+      <td>3280218501</td>
+      <td>3280218301</td>
+      <td>2</td>
+      <td>107</td>
+      <td>003</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>102.036940</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (262201.405 260218.216, 262099.328 ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3280618801</td>
+      <td>3280218201</td>
+      <td>3280218101</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>347.266337</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (261766.168 260206.302, 261767.252 ...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">node_data</span> <span class="o">=</span> <span class="n">web_path</span> <span class="o">+</span> <span class="s2">&quot;MOCT_NODE.shp&quot;</span>
+<span class="n">k_node</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">node_data</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;cp949&#39;</span><span class="p">)</span>
+<span class="n">k_node</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NODE_ID</th>
+      <th>NODE_TYPE</th>
+      <th>NODE_NAME</th>
+      <th>TURN_P</th>
+      <th>REMARK</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3680002100</td>
+      <td>101</td>
+      <td>수성2교차로</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (306862.529 364128.758)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1865949201</td>
+      <td>101</td>
+      <td>둔곡국가산업단지</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (232175.564 428286.284)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3280218301</td>
+      <td>101</td>
+      <td>-</td>
+      <td>0</td>
+      <td>교차로명없음</td>
+      <td>POINT (262099.284 260200.964)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3280218201</td>
+      <td>101</td>
+      <td>-</td>
+      <td>1</td>
+      <td>교차로명없음</td>
+      <td>POINT (261776.797 260206.481)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3280218101</td>
+      <td>101</td>
+      <td>여수성황고가교</td>
+      <td>1</td>
+      <td>None</td>
+      <td>POINT (261777.643 259856.559)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;link data structure:&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">k_link</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>link data structure: LINESTRING (232063.149422361 427951.6643572925, 231856.5253694015 427717.4942795344, 231838.1236964817 427697.0152383912, 231832.2729439153 427691.8577327733, 231823.8039285892 427685.1860171618, 231808.8602091903 427673.103455518, 231779.5934807176 427649.8169223525)
+link data structure: LINESTRING (231788.0777558524 427642.6782842039, 231824.4561066233 427669.1280115336, 231850.9743371339 427691.9000851774, 231863.8391896943 427705.7772148797, 231873.7861101949 427716.8334482851, 232013.8950023078 427876.1270675666, 232072.0739812801 427942.8318627411)
+link data structure: LINESTRING (262099.8480852154 260188.2110035898, 262202.0568309196 260187.9557314837)
+link data structure: LINESTRING (262201.4053703347 260218.2162991541, 262099.3279284727 260217.2216529207)
+link data structure: LINESTRING (261766.1678993996 260206.3024042111, 261767.2521080472 259858.8835762343)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;node data structure:&quot;</span><span class="p">,</span><span class="nb">str</span><span class="p">(</span><span class="n">k_node</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="n">i</span><span class="p">]))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>node data structure: POINT (306862.5290999946 364128.7581999949)
+node data structure: POINT (232175.5636197628 428286.2841589035)
+node data structure: POINT (262099.2841216855 260200.9640100425)
+node data structure: POINT (261776.7968591276 260206.4805812582)
+node data structure: POINT (261777.6434585629 259856.5594204891)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS of node&quot;</span><span class="p">,</span> <span class="n">k_node</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS of link&quot;</span><span class="p">,</span> <span class="n">k_link</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS of node PROJCS[&quot;ITRF2000_Central_Belt_60&quot;,GEOGCS[&quot;GCS_ITRF_2000&quot;,DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6656&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.0174532925199433],AUTHORITY[&quot;EPSG&quot;,&quot;4656&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,38],PARAMETER[&quot;central_meridian&quot;,127],PARAMETER[&quot;scale_factor&quot;,1],PARAMETER[&quot;false_easting&quot;,200000],PARAMETER[&quot;false_northing&quot;,600000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+CRS of link PROJCS[&quot;ITRF2000_Central_Belt_60&quot;,GEOGCS[&quot;GCS_ITRF_2000&quot;,DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6656&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.0174532925199433],AUTHORITY[&quot;EPSG&quot;,&quot;4656&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,38],PARAMETER[&quot;central_meridian&quot;,127],PARAMETER[&quot;scale_factor&quot;,1],PARAMETER[&quot;false_easting&quot;,200000],PARAMETER[&quot;false_northing&quot;,600000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span> <span class="o">=</span> <span class="n">k_link</span><span class="o">.</span><span class="n">crs</span>
+<span class="nb">type</span><span class="p">(</span><span class="n">crs_</span><span class="p">)</span>
+<span class="c1">#%% </span>
+<span class="c1"># pyproj.crs.crs class </span>
+<span class="c1"># https://pyproj4.github.io/pyproj/dev/api/crs/crs.html</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">crs_</span><span class="o">.</span><span class="n">area_of_use</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>None
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">coordinate_operation</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;Coordinate Operation: Conversion&gt;
+Name: unnamed
+Method: Transverse Mercator
+Area of Use:
+- undefined
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">coordinate_system</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CS[Cartesian,2],
+    AXIS[&quot;easting&quot;,east,
+        ORDER[1],
+        LENGTHUNIT[&quot;metre&quot;,1,
+            ID[&quot;EPSG&quot;,9001]]],
+    AXIS[&quot;northing&quot;,north,
+        ORDER[2],
+        LENGTHUNIT[&quot;metre&quot;,1,
+            ID[&quot;EPSG&quot;,9001]]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># epsg: 9001, Geodesy</span>
+<span class="c1"># cs_to_cf() converts all coordinate systems (cs) </span>
+<span class="c1"># in the CRS to a list of Climate and Forecast (CF) Version 1.8 dicts.</span>
+<span class="n">crs_</span><span class="o">.</span><span class="n">cs_to_cf</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>[{&#39;axis&#39;: &#39;X&#39;,
+  &#39;long_name&#39;: &#39;Easting&#39;,
+  &#39;standard_name&#39;: &#39;projection_x_coordinate&#39;,
+  &#39;units&#39;: &#39;metre&#39;},
+ {&#39;axis&#39;: &#39;Y&#39;,
+  &#39;long_name&#39;: &#39;Northing&#39;,
+  &#39;standard_name&#39;: &#39;projection_y_coordinate&#39;,
+  &#39;units&#39;: &#39;metre&#39;}]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">datum</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,
+    ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+        LENGTHUNIT[&quot;metre&quot;,1]],
+    ID[&quot;EPSG&quot;,6656]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">crs_</span><span class="o">.</span><span class="n">ellipsoid</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>ELLIPSOID[&quot;GRS 1980&quot;,6378137,298.257222101,
+    LENGTHUNIT[&quot;metre&quot;,1],
+    ID[&quot;EPSG&quot;,7019]]
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_link_cv</span> <span class="o">=</span> <span class="n">k_link</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">epsg</span><span class="o">=</span><span class="mi">4326</span><span class="p">)</span>
+<span class="n">k_node_cv</span> <span class="o">=</span> <span class="n">k_node</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">epsg</span><span class="o">=</span><span class="mi">4326</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_node_cv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NODE_ID</th>
+      <th>NODE_TYPE</th>
+      <th>NODE_NAME</th>
+      <th>TURN_P</th>
+      <th>REMARK</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3680002100</td>
+      <td>101</td>
+      <td>수성2교차로</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (128.18322 35.86876)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1865949201</td>
+      <td>101</td>
+      <td>둔곡국가산업단지</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (127.35892 36.45224)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3280218301</td>
+      <td>101</td>
+      <td>-</td>
+      <td>0</td>
+      <td>교차로명없음</td>
+      <td>POINT (127.67972 34.93596)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3280218201</td>
+      <td>101</td>
+      <td>-</td>
+      <td>1</td>
+      <td>교차로명없음</td>
+      <td>POINT (127.67619 34.93603)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3280218101</td>
+      <td>101</td>
+      <td>여수성황고가교</td>
+      <td>1</td>
+      <td>None</td>
+      <td>POINT (127.67617 34.93287)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># crs: epsg=4326</span>
+<span class="n">sido_level_1_path</span> <span class="o">=</span> <span class="n">web_path</span><span class="o">+</span><span class="s2">&quot;ctp_rvn.shp&quot;</span>
+<span class="n">sido_data</span> <span class="o">=</span> <span class="n">gpd</span><span class="o">.</span><span class="n">read_file</span><span class="p">(</span><span class="n">sido_level_1_path</span><span class="p">,</span> <span class="n">encoding</span> <span class="o">=</span> <span class="s1">&#39;cp949&#39;</span><span class="p">)</span>
+<span class="n">sido_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CTPRVN_CD</th>
+      <th>CTP_ENG_NM</th>
+      <th>CTP_KOR_NM</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11</td>
+      <td>Seoul</td>
+      <td>서울특별시</td>
+      <td>POLYGON ((966987.226 1941110.946, 966987.119 1...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>Busan</td>
+      <td>부산광역시</td>
+      <td>MULTIPOLYGON (((1146778.390 1679623.999, 11469...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>27</td>
+      <td>Daegu</td>
+      <td>대구광역시</td>
+      <td>POLYGON ((1087859.999 1760097.461, 1087859.951...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28</td>
+      <td>Incheon</td>
+      <td>인천광역시</td>
+      <td>MULTIPOLYGON (((897904.035 1961082.190, 897886...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>Gwangju</td>
+      <td>광주광역시</td>
+      <td>POLYGON ((932712.687 1696168.692, 932781.680 1...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sido_data</span><span class="p">[</span><span class="s1">&#39;CTP_KOR_NM&#39;</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>0       서울특별시
+1       부산광역시
+2       대구광역시
+3       인천광역시
+4       광주광역시
+5       대전광역시
+6       울산광역시
+7     세종특별자치시
+8         경기도
+9         강원도
+10       충청북도
+11       충청남도
+12       전라북도
+13       전라남도
+14       경상북도
+15       경상남도
+16    제주특별자치도
+Name: CTP_KOR_NM, dtype: object
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;CRS: &quot;</span><span class="p">,</span><span class="n">sido_data</span><span class="o">.</span><span class="n">crs</span><span class="p">)</span>
+<span class="n">sido_data</span><span class="o">.</span><span class="n">to_crs</span><span class="p">(</span><span class="n">epsg</span><span class="o">=</span><span class="mi">4326</span><span class="p">,</span> <span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+<span class="n">sido_data</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>CRS:  PROJCS[&quot;PCS_ITRF2000_TM&quot;,GEOGCS[&quot;GCS_ITRF_2000&quot;,DATUM[&quot;International_Terrestrial_Reference_Frame_2000&quot;,SPHEROID[&quot;GRS 1980&quot;,6378137,298.257222101,AUTHORITY[&quot;EPSG&quot;,&quot;7019&quot;]],AUTHORITY[&quot;EPSG&quot;,&quot;6656&quot;]],PRIMEM[&quot;Greenwich&quot;,0],UNIT[&quot;Degree&quot;,0.0174532925199433],AUTHORITY[&quot;EPSG&quot;,&quot;4656&quot;]],PROJECTION[&quot;Transverse_Mercator&quot;],PARAMETER[&quot;latitude_of_origin&quot;,38],PARAMETER[&quot;central_meridian&quot;,127.5],PARAMETER[&quot;scale_factor&quot;,0.9996],PARAMETER[&quot;false_easting&quot;,1000000],PARAMETER[&quot;false_northing&quot;,2000000],UNIT[&quot;metre&quot;,1,AUTHORITY[&quot;EPSG&quot;,&quot;9001&quot;]],AXIS[&quot;Easting&quot;,EAST],AXIS[&quot;Northing&quot;,NORTH]]
+</pre></div>
+</div>
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>CTPRVN_CD</th>
+      <th>CTP_ENG_NM</th>
+      <th>CTP_KOR_NM</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>11</td>
+      <td>Seoul</td>
+      <td>서울특별시</td>
+      <td>POLYGON ((127.12667 37.46863, 127.12667 37.468...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>26</td>
+      <td>Busan</td>
+      <td>부산광역시</td>
+      <td>MULTIPOLYGON (((129.11041 35.10108, 129.11196 ...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>27</td>
+      <td>Daegu</td>
+      <td>대구광역시</td>
+      <td>POLYGON ((128.47278 35.83345, 128.47278 35.833...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>28</td>
+      <td>Incheon</td>
+      <td>인천광역시</td>
+      <td>MULTIPOLYGON (((126.34274 37.64355, 126.34254 ...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>29</td>
+      <td>Gwangju</td>
+      <td>광주광역시</td>
+      <td>POLYGON ((126.76029 35.25870, 126.76105 35.258...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">sido_name</span> <span class="o">=</span> <span class="s1">&#39;서울특별시&#39;</span>
+<span class="c1">#%%</span>
+<span class="n">sido_data</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">k_node_cv</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">f</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">sido_data</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">contains</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+<span class="n">f</span><span class="p">(</span><span class="n">k_node_cv</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">])</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>False
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span> <span class="o">=</span> <span class="n">k_node_cv</span><span class="p">[</span><span class="s1">&#39;geometry&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">f</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_node_cv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>NODE_ID</th>
+      <th>NODE_TYPE</th>
+      <th>NODE_NAME</th>
+      <th>TURN_P</th>
+      <th>REMARK</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>3680002100</td>
+      <td>101</td>
+      <td>수성2교차로</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (128.18322 35.86876)</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1865949201</td>
+      <td>101</td>
+      <td>둔곡국가산업단지</td>
+      <td>0</td>
+      <td>None</td>
+      <td>POINT (127.35892 36.45224)</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3280218301</td>
+      <td>101</td>
+      <td>-</td>
+      <td>0</td>
+      <td>교차로명없음</td>
+      <td>POINT (127.67972 34.93596)</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3280218201</td>
+      <td>101</td>
+      <td>-</td>
+      <td>1</td>
+      <td>교차로명없음</td>
+      <td>POINT (127.67619 34.93603)</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3280218101</td>
+      <td>101</td>
+      <td>여수성황고가교</td>
+      <td>1</td>
+      <td>None</td>
+      <td>POINT (127.67617 34.93287)</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">result</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>8918
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="n">k_node_cv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">result</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Seoul&quot;</span><span class="p">)</span>
+<span class="n">a</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span> <span class="o">=</span> <span class="n">ax</span><span class="p">,</span> <span class="n">markersize</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">alpha</span><span class="o">=</span><span class="mf">0.5</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:title={&#39;center&#39;:&#39;Seoul&#39;}&gt;
+</pre></div>
+</div>
+<img alt="../../_images/geopandas_27_1.png" src="../../_images/geopandas_27_1.png" />
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">k_link_cv</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_html"><div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>LINK_ID</th>
+      <th>F_NODE</th>
+      <th>T_NODE</th>
+      <th>LANES</th>
+      <th>ROAD_RANK</th>
+      <th>ROAD_TYPE</th>
+      <th>ROAD_NO</th>
+      <th>ROAD_NAME</th>
+      <th>ROAD_USE</th>
+      <th>MULTI_LINK</th>
+      <th>CONNECT</th>
+      <th>MAX_SPD</th>
+      <th>REST_VEH</th>
+      <th>REST_W</th>
+      <th>REST_H</th>
+      <th>LENGTH</th>
+      <th>REMARK</th>
+      <th>geometry</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>1860689001</td>
+      <td>1865963801</td>
+      <td>1865963701</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>국제과학로</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>414.856758</td>
+      <td>None</td>
+      <td>LINESTRING (127.35765 36.44923, 127.35533 36.4...</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>1860688901</td>
+      <td>1865963701</td>
+      <td>1865963801</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>국제과학로</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>414.211972</td>
+      <td>None</td>
+      <td>LINESTRING (127.35457 36.44645, 127.35498 36.4...</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>3280619601</td>
+      <td>3280218301</td>
+      <td>3280218501</td>
+      <td>2</td>
+      <td>107</td>
+      <td>003</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>102.163661</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (127.67973 34.93584, 127.68084 34.9...</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>3280619701</td>
+      <td>3280218501</td>
+      <td>3280218301</td>
+      <td>2</td>
+      <td>107</td>
+      <td>003</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>102.036940</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (127.68084 34.93611, 127.67972 34.9...</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>3280618801</td>
+      <td>3280218201</td>
+      <td>3280218101</td>
+      <td>2</td>
+      <td>107</td>
+      <td>000</td>
+      <td>-</td>
+      <td>-</td>
+      <td>0</td>
+      <td>0</td>
+      <td>000</td>
+      <td>30</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>347.266337</td>
+      <td>도로명없음</td>
+      <td>LINESTRING (127.67608 34.93603, 127.67606 34.9...</td>
+    </tr>
+  </tbody>
+</table>
+</div></div></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">v1</span> <span class="o">=</span> <span class="n">k_link_cv</span><span class="p">[</span><span class="s2">&quot;F_NODE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;NODE_ID&quot;</span><span class="p">])</span>
+<span class="n">v2</span> <span class="o">=</span> <span class="n">k_link_cv</span><span class="p">[</span><span class="s2">&quot;T_NODE&quot;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">a</span><span class="p">[</span><span class="s2">&quot;NODE_ID&quot;</span><span class="p">])</span>
+<span class="n">v</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">|</span> <span class="n">v2</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;# of total links: &quot;</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;# of the links in Seoul: &quot;</span><span class="p">,</span> <span class="nb">sum</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span># of total links:  540325
+# of the links in Seoul:  23995
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">b</span> <span class="o">=</span> <span class="n">k_link_cv</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="n">v</span><span class="p">,:]</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">fig</span><span class="p">,</span> <span class="n">ax</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">subplots</span><span class="p">(</span><span class="n">figsize</span> <span class="o">=</span> <span class="p">(</span><span class="mi">10</span><span class="p">,</span><span class="mi">10</span><span class="p">))</span>
+<span class="n">ax</span><span class="o">.</span><span class="n">set_title</span><span class="p">(</span><span class="s2">&quot;Seoul&quot;</span><span class="p">)</span>
+<span class="n">b</span><span class="o">.</span><span class="n">plot</span><span class="p">(</span><span class="n">ax</span><span class="o">=</span><span class="n">ax</span><span class="p">,</span> <span class="n">linewidth</span><span class="o">=</span><span class="mf">0.2</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;AxesSubplot:title={&#39;center&#39;:&#39;Seoul&#39;}&gt;
+</pre></div>
+</div>
+<img alt="../../_images/geopandas_31_1.png" src="../../_images/geopandas_31_1.png" />
 </div>
 </div>
 </section>
