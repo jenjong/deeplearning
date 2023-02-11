@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="11.3. Stochastic Neighborhood Embedding" href="sne.html" />
@@ -670,34 +672,52 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="multi-dimensional-scaling">
 <h1><span class="section-number">11.2. </span>Multi Dimensional Scaling<a class="headerlink" href="#multi-dimensional-scaling" title="Permalink to this headline">#</a></h1>
 <!-- 11-2 -->
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
+<p><em><strong>Idea of Multi Dimensional Scaling</strong></em></p>
+<p>두 원소 <span class="math notranslate nohighlight">\(x, y\)</span>가 있다고 합시다. 두 원소 <span class="math notranslate nohighlight">\(x,y\)</span>의 거리를 <span class="math notranslate nohighlight">\(d(x,y)\)</span>라고 합시다.</p>
+<p><span class="math notranslate nohighlight">\(d(x,y)\)</span>를 함수로 보면 거리함수는 두 원소를 입력으로 받아서 실수값을 출력으로 합니다. 이를 좀 더 자세히 표현해볼까요?</p>
 <ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathcal{X}\)</span>: 데이터의 입력공간</p></li>
+<li><p><span class="math notranslate nohighlight">\(d:\mathcal{X} \times \mathcal{X} \mapsto \mathbb{R}\)</span>: 거리함수, 두 데이터를 받아서 실수 값을 출력으로 함.</p></li>
 </ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
-</pre></div>
-</div>
-</div>
-</div>
+<p>여기서 <span class="math notranslate nohighlight">\(d(\cdot, \cdot)\)</span>가 거리함수라면 어떤 함수도 거리함수가 될까요? 거리함수는 아래의 성질을 만족해야 합니다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(d(x,y) \geq 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(d(x,x) = 0\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(d(x,y) = d(y,x)\)</span> (대칭성)</p></li>
+<li><p><span class="math notranslate nohighlight">\(d(x,z) \leq d(x,y) + d(y,z)\)</span>  (삼각부등식)</p></li>
+</ul>
+<p>함수 <span class="math notranslate nohighlight">\(d\)</span>가 위 조건을 만족한다면 모두 거리함수가 됩니다. 그래서 거리는 종류가 매우 많습니다.</p>
+<p>우리는 고전적인 거리함수를 실생활에서 사용합니다. 바로 유클리디안 거리입니다. 우리가 사용할 유클리디안 거리는 다음과 같습니다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(\mathcal{X}\)</span>를 <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>로 놓습니다.</p></li>
+<li><p><span class="math notranslate nohighlight">\(x = (x_1, \cdots, x_d), y= (y_1, \cdots, y_d)\)</span>로 <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>의 원소로 놓습니다.</p></li>
+<li><p>유클리디안 거리
+$<span class="math notranslate nohighlight">\(d(x,y) = \sqrt{\sum_{j=1}^d (x_i - y_j)^2} \)</span>$</p></li>
+</ul>
+<p>이제 <span class="math notranslate nohighlight">\(d\)</span>차원 데이터 <span class="math notranslate nohighlight">\(n\)</span>개를 생각해봅시다. 각각의 데이터를 <span class="math notranslate nohighlight">\(x_1, \cdots, x_n \in \mathbb{R}^d\)</span>라고 합시다. 여기서 <span class="math notranslate nohighlight">\(x_i\)</span>를 아래와 같이 표시합니다.</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(x_i = (x_{i1}, \cdots, x_{id})\)</span></p></li>
+</ul>
+<p>여기서 두 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>와 <span class="math notranslate nohighlight">\(x_j\)</span>에 대해서 거리를 <span class="math notranslate nohighlight">\(d_{ij}\)</span>라고 합시다. <span class="math notranslate nohighlight">\(d_{ij}^2\)</span>은 아래와 같이 쓸 수 있습니다.
+$<span class="math notranslate nohighlight">\(d_{ij}^2 = \sum_{k=1}^d(x_{ik}-x_{jk})^2\)</span>$</p>
+<p>우리가 데이터들의 거리에만 관심이 있다면 데이터들의 중심에 무관하게 거리의 값이 계산됩니다. 예를 들어 모든 데이터의 중심을 <span class="math notranslate nohighlight">\(c=(c_1, \cdots, c_d)\)</span>로 옮기더라고 새로운 데이터 <span class="math notranslate nohighlight">\(x_i+c\)</span>와 <span class="math notranslate nohighlight">\(x_j+c\)</span>의 거리는 동일합니다. 그래서 우리가 데이터들의 거리를 구할때는 평균이 0이 되도록 표준화를 하고 구해도 됩니다. (scaling을 하지 않습니다) 그래서 다음과 같이 가정을 해도 거리만들 생각하는데는 문제가 없겠지요.</p>
+<ul class="simple">
+<li><p>가정: <span class="math notranslate nohighlight">\(\sum_{i=1}^n x_i = 0 \in \mathbb{R}^d\)</span></p></li>
+</ul>
+<p>데이터들의 거리를 계산할 수 있으니 데이터들의 거리를 확인하기 위해서 시각화를 할 수 있을까요? 만약 고차원 자료라면 데이터간의 거리를 확인하기 위한 시각화 결과물을 그릴 수 없을 것입니다. 여기서 우리는 차원 축소를 생각합니다.
+<span class="math notranslate nohighlight">\(d\)</span>차원 데이터를 <span class="math notranslate nohighlight">\(q\)</span>차원 데이터로 축약하는 선형변환은 무엇일까요?</p>
+<div class="math notranslate nohighlight">
+\[A:\mathbb{R}^d \mapsto \mathbb{R}^q\]</div>
+<p><span class="math notranslate nohighlight">\(q\times d\)</span> 행렬입니다. 데이터 <span class="math notranslate nohighlight">\(x\)</span>를 <span class="math notranslate nohighlight">\(q\)</span>차원으로 축약한 데이터는
+$<span class="math notranslate nohighlight">\(\hat x = Ax\)</span><span class="math notranslate nohighlight">\(
+가 되겠지요? 그러면 어떤 차원축소 방법 다시 말해 어떤 \)</span>A$를 선택해야 할까요? 우리는 애초에 데이터간의 거리를 확인하기 위해서 차원 축소를 하였습니다. 따라서 원래 축약되기 이전에서의 데이터의 거리가 축약된 이후에도 잘 보존되기를 원할 것입니다. 즉 고차원에서 가까운 두 데이터가 저차원 공간에서 여전히 가깝기를 원하겠지요. 우리의 이런 바램을 식으로 표현하면 어떻게 될까요?</p>
+<p>먼저 축약된 두 데이터 <span class="math notranslate nohighlight">\(\hat x_i:= Ax_i\)</span>, <span class="math notranslate nohighlight">\(\hat x_j:= Ax_j\)</span> 를 생각하고 유클리디안 거리를 생각해봅시다.</p>
+<div class="math notranslate nohighlight">
+\[\hat d_{ij} = \sqrt{\sum_{k=1}^q (\hat x_{ik}- \hat x_{jk})^2}\]</div>
+<p>그러면 우리는 <span class="math notranslate nohighlight">\(\hat d_{ij} \simeq \hat d_{ij}\)</span> 가 되도록 <span class="math notranslate nohighlight">\(\hat d_{ij}\)</span>를 만들어야 할 것입니다. 즉, 차원축소 함수인 <span class="math notranslate nohighlight">\(A\)</span>를 잘 선택해서 <span class="math notranslate nohighlight">\(\hat d_{ij} \simeq \hat d_{ij}\)</span>이 되도록 만들어야 할 것입니다. 이를 위해 다음 목적함수를 정의하고 아래 식을 최소화 하는  <span class="math notranslate nohighlight">\(A\)</span>를 찾으면 될 것입니다.</p>
+<div class="math notranslate nohighlight">
+\[\sum_{i,j}\| \hat d_{ij} - d_{ij}\|^2 \]</div>
+<p>이렇게 <span class="math notranslate nohighlight">\(A\)</span>를 구하는 방법을 metric Multi Dimensional Scaling (mMDS)라 부릅니다. 여기서 원래 공간에서 distance와 축약된 공간에서 distance의 차이를 제곱거리(<span class="math notranslate nohighlight">\(l_2\)</span>-distance)를 사용하여 목적함수를 정의했지만, 다른 함수를 사용할 수도 있습니다.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -712,7 +732,7 @@ numpy.array
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./chapters/11"
         },
         predefinedOutput: true

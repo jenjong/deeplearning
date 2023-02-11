@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="11.2. Multi Dimensional Scaling" href="mds.html" />
@@ -669,19 +671,15 @@ title="Print to PDF"
                 
   <section class="tex2jax_ignore mathjax_ignore" id="auto-encoder">
 <h1><span class="section-number">11.1. </span>Auto Encoder<a class="headerlink" href="#auto-encoder" title="Permalink to this headline">#</a></h1>
-<!-- 11-1 --><div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>array([1, 2, 3])
-</pre></div>
-</div>
-</div>
-</div>
+<!-- 11-1 --><p><em><strong>Classical Multi Dimensional Scaling</strong></em></p>
+<p>MDS의 아이디어는 데이터간 거리를 보존하는 map을 학습하는 것임을 살펴보았습니다. 고전적인 MDS는 차원축소를 이용하여 거리를 보존하는 방법을 제안하였습니다. 차원축소를 이용한다는 것은 거리행렬 <span class="math notranslate nohighlight">\(D^2\)</span>과 <span class="math notranslate nohighlight">\(\hat D^2\)</span>의 차이를 operator norm (일종의 행렬의 길이를 재는 방법)으로 정의하고 적절한 <span class="math notranslate nohighlight">\(\hat D^2\)</span>를 찾는 방법입니다.</p>
+<p>이제 <span class="math notranslate nohighlight">\(\mathbb{R}^d\)</span>위에 있는 원본 데이터 <span class="math notranslate nohighlight">\(x_i\)</span>와 <span class="math notranslate nohighlight">\(x_j\)</span>의 거리 <span class="math notranslate nohighlight">\(d_{ij}\)</span>를 데이터로 표현하는 방법을 살펴보겠습니다.</p>
+<div class="math notranslate nohighlight">
+\[d_{ij}^2 = \|x_i-x_j\|^2 = x_i^\top x_i + x_j^\top x_j -2x_i^\top x_j\]</div>
+<p>여기서 데이터 행렬 <span class="math notranslate nohighlight">\(X \in \mathbb{R}^{n\times d}\)</span>에 대해
+$<span class="math notranslate nohighlight">\(B = XX^\top\)</span><span class="math notranslate nohighlight">\(
+정의하겠습니다. 행렬 \)</span>B<span class="math notranslate nohighlight">\(의 \)</span>i<span class="math notranslate nohighlight">\(행 \)</span>j<span class="math notranslate nohighlight">\(열 원소를 \)</span>b_{ij}$라 한다면</p>
+<p>이 방법은 데이터의 missing 있는 경우에 작동하지 않습니다. 그리고 계산량이 <span class="math notranslate nohighlight">\(O(n^3)\)</span>으로 알려져 있어 이를 개선하기 위한 방법론들이 제안되었습니다.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -696,7 +694,7 @@ title="Print to PDF"
             mode: "python"
         },
         kernelOptions: {
-            kernelName: "python3",
+            name: "python3",
             path: "./chapters/11"
         },
         predefinedOutput: true
