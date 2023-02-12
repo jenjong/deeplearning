@@ -699,8 +699,8 @@ $<span class="math notranslate nohighlight">\(KL(P||Q)\)</span><span class="math
 계산은 이산형분포를 가정할 때 같은 결과값에 대해 \)</span>P<span class="math notranslate nohighlight">\(와 \)</span>Q<span class="math notranslate nohighlight">\(의 확률을 \)</span>p_i<span class="math notranslate nohighlight">\(와 \)</span>q_i<span class="math notranslate nohighlight">\(로 표시한다면
 \)</span><span class="math notranslate nohighlight">\(KL(P||Q) = \sum_{i} p_i \log \frac{ p_i}{q_i}\)</span>$
 로 계산합니다.</p>
-<p>우리의 문제로 돌아가서, 조건부 분포  <span class="math notranslate nohighlight">\(q_{\cdot|i}\)</span>로 부터 p_{\cdot|i}<span class="math notranslate nohighlight">\(의 KL-divergence는 
-\)</span><span class="math notranslate nohighlight">\(KL(p_{\cdot|i}||q_{\cdot|i}) = \sum_{j} p_{j|i} \log \frac{ p_{j|i}}{q_{j|i}}\)</span>$
+<p>우리의 문제로 돌아가서, 조건부 분포  <span class="math notranslate nohighlight">\(q_{\cdot|i}\)</span>로 부터 <span class="math notranslate nohighlight">\(p_{\cdot|i}\)</span>의 KL-divergence는
+$<span class="math notranslate nohighlight">\(KL(p_{\cdot|i}||q_{\cdot|i}) = \sum_{j} p_{j|i} \log \frac{ p_{j|i}}{q_{j|i}}\)</span>$
 로 주어집니다.</p>
 <p>즉 우리는 데이터 전체에서 KL-divergence를 줄이려면
 $<span class="math notranslate nohighlight">\(KL(P||Q) = \sum_{i=1}^bKL(p_{\cdot|i}||q_{\cdot|i})\)</span>$
@@ -716,13 +716,6 @@ KL(P||Q) &amp;=&amp; \sum_{i=1}^n \sum_{j=1}^n p_{j|i}\log p_{j|i} - p_{j|i}\log
 &amp;=&amp; - \sum_{i=1}^n \sum_{j=1}^n p_{j|i}\log g_{j|i}(y) + \text{Constant}
 \end{aligned}</p>
 <p>이 함수를 최소화하는 <span class="math notranslate nohighlight">\(y\)</span>를 찾는 것이 SNE입니다.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
-</pre></div>
-</div>
-</div>
-</div>
 </section>
 
     <script type="text/x-thebe-config">
