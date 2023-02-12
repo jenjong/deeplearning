@@ -51,6 +51,8 @@ const thebe_selector_input = "pre"
 const thebe_selector_output = ".output, .cell_output"
 </script>
     <script async="async" src="../../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
     <link rel="next" title="12. 지도 위에 시각화1" href="../12/intro-map1.html" />
@@ -670,27 +672,50 @@ title="Print to PDF"
   <section class="tex2jax_ignore mathjax_ignore" id="stochastic-neighborhood-embedding">
 <h1><span class="section-number">11.3. </span>Stochastic Neighborhood Embedding<a class="headerlink" href="#stochastic-neighborhood-embedding" title="Permalink to this headline">#</a></h1>
 <!-- 11-3 -->
-<ol class="simple">
-<li><p>numpy의 설치</p></li>
-</ol>
+<p><em><strong>Introduction</strong></em></p>
+<p>확률적 근방 임베딩 (Stochastic Neighborhood Embedding) 방법은 MDS와 거의 유사한 idea인 원래공간의 거리를 축소된 공간에서 보존하는 방법을 제안하고 있습니다.</p>
+<p>MDS와 SNE의 차이점은 다음과 같습니다.</p>
 <ul class="simple">
-<li><p>가상환경의 선택</p></li>
-<li><p>conda install numpy
-Anaconda 설치 경로의 확인:</p></li>
+<li><p>원본 공간, 축소된 공간에서 데이터간의 거리를 정의하는 방법이 다릅니다. 사실 SNE에서는 비유사도로 볼 수 있는 거리 대신 확률로 정의한 유사도 측도를 활용합니다.</p></li>
+<li><p>원본공간에서 만들어진 유사도행렬과 축소된 공간에서 만들어진 유사도행렬간의 차이를 Frobenius norm이 아니라 KL-divergence로 정의합니다.</p></li>
+<li><p>축소된 공간의 데이터 표현형 직접 찾습니다.</p></li>
 </ul>
-<ol class="simple">
-<li><p>벡터와 행렬의 생성
-numpy.array
-(1) 리스트를 이용한 벡터의 생성
-(2) numpy.zeros(), numpy.ones()
-(3) numpy.repeat()
-(4) 리스트를 이용한 행렬의 생성
-(5) 대각행렬 생성하기 (numpy.diag())</p></li>
-<li><p>벡터와 행렬의 형태 변환
-(1) shape 이해하기
-(2) reshape 이해하기 (order = ‘C’ or ‘F’)</p></li>
-</ol>
-<hr class="docutils" />
+<p><em><strong>conditinoal probablity and similarity</strong></em></p>
+<p>원본 데이터 <span class="math notranslate nohighlight">\(x_i\in \mathbb{R}^d\)</span> for <span class="math notranslate nohighlight">\(i = 1, \cdots, n \)</span>이  있다고 가정해보겠습니다. 우리는 데이터 <span class="math notranslate nohighlight">\(i\)</span>를 기준으로 나머지 데이터들의 유사도를 데이터간의 유클리디안 거리에 기반하여 정하려고 합니다. 다음 식을 보겠습니다.</p>
+<div class="math notranslate nohighlight">
+\[p_{j|i} = \frac{\exp( - \|x_i- x_j\|^2/\sigma_i^2)}{\sum_{k \neq i} \exp( - \|x_i- x_k\|^2/\sigma_i^2) }\]</div>
+<p><span class="math notranslate nohighlight">\(p_{j|i}\)</span>값은 <span class="math notranslate nohighlight">\(d(x_i, x_j) = \|x_i- x_j\|\)</span>의 크기가 커질 수록 작어지게 됩니다. 반대로 데이터간의 유클리디안 거리가 가까워질 수록  <span class="math notranslate nohighlight">\(p_{j|i}\)</span>값은 커질 것입니다. 그래서 <span class="math notranslate nohighlight">\(p_{j|i}\)</span>는 원본 공간에서 데이터의 거리에 기반한 유사도측도라고 볼 수 있습니다.</p>
+<p>그러면 축소된 공간에서 같은 데이터 <span class="math notranslate nohighlight">\(y_i\in \mathbb{R}^q\)</span> for <span class="math notranslate nohighlight">\(i = 1, \cdots,n\)</span> 를 생각해봅시다.  이 데이터들 역시 축소된 공간에서 유클리디안 거리에 기반하여 유사도를 정의할 수 있을 것입니다. 이를 <span class="math notranslate nohighlight">\(q_{j|i} \)</span>라고 하겠습니다.</p>
+<div class="math notranslate nohighlight">
+\[q_{j|i} = \frac{\exp( - \|y_i- y_j\|^2)}{\sum_{k \neq i} \exp( - \|y_i- y_k\|^2) }\]</div>
+<p>(차원 축소가 잘 되서 축소된 데이터의 산포가 유사하게 맞춰짐을 가정하여 조건부확률에 <span class="math notranslate nohighlight">\(\sigma_i^2\)</span>항이 없습니다. 결국 이런 방법으로 데이터가 잘 임베딩 된 <span class="math notranslate nohighlight">\(y_i\)</span>들을 찾고자 하기 때문에 <span class="math notranslate nohighlight">\(\sigma_i^2\)</span>항을 모두 동일하게 두었다고 이해해도 됩니다. )</p>
+<p>그러면 우리는 다음과 같은 것을 기대할 것입니다. 원본 데이터 공간에서 <span class="math notranslate nohighlight">\(p_{j|i}\)</span>와 <span class="math notranslate nohighlight">\(q_{j|i}\)</span>가 유사하기를 원하겠지요. 이것은 MDS에서 원본 공간에 거리행렬과 축소된 공간에서 거리행렬이 유사하기를 기대하는 것과 동일한 아이디어네요.</p>
+<p><em><strong>Loss function of <span class="math notranslate nohighlight">\(q\)</span> for a given <span class="math notranslate nohighlight">\(p\)</span></strong></em></p>
+<p>만약 <span class="math notranslate nohighlight">\(q_{j|i}\)</span>가 <span class="math notranslate nohighlight">\(p_{j|i}\)</span> for all <span class="math notranslate nohighlight">\(j\)</span> and for all <span class="math notranslate nohighlight">\(i\)</span>에 대해서 유사하다면 어떤 결론을 내릴 수 있을까요? “<span class="math notranslate nohighlight">\(q_{j|i}\)</span>들을 만들어주는 <span class="math notranslate nohighlight">\(y_i\)</span>들이 <span class="math notranslate nohighlight">\(\mathbb{R}^q\)</span>위에서 잘 임베딩되었구나”는 결론을 내릴 수 있겠지요?</p>
+<p>그러면 우리의 원하는 바 <span class="math notranslate nohighlight">\(q_{j|i}\)</span>와 <span class="math notranslate nohighlight">\(p_{j|i}\)</span>가 유사하게 만들기 위한 <span class="math notranslate nohighlight">\(y_i\)</span>를 찾는 이 목적을 어떻게 달성할 수 있을까요? 여기서 <strong>KL-divergence</strong>라는  개념을 도입합니다.  <strong>KL-divergence</strong>는 두 분포간의 비유사도를 재는 측도입니다. 어떤 분포 <span class="math notranslate nohighlight">\(P\)</span>와 어떤 분포 <span class="math notranslate nohighlight">\(Q\)</span>가 있다고 합시다. 이 두 분포가 얼마나 비슷하지 않은지를 재는 것으로
+아래와 같이 표시합니다.
+$<span class="math notranslate nohighlight">\(KL(P||Q)\)</span><span class="math notranslate nohighlight">\( 
+의미는 분포 \)</span>P<span class="math notranslate nohighlight">\(가 \)</span>Q<span class="math notranslate nohighlight">\(로 부터 떨어진 정도에 해당하며 \)</span>P=Q<span class="math notranslate nohighlight">\( (분포의 의미에서 )일때 \)</span>KL(P||Q) = 0<span class="math notranslate nohighlight">\(입니다. 
+계산은 이산형분포를 가정할 때 같은 결과값에 대해 \)</span>P<span class="math notranslate nohighlight">\(와 \)</span>Q<span class="math notranslate nohighlight">\(의 확률을 \)</span>p_i<span class="math notranslate nohighlight">\(와 \)</span>q_i<span class="math notranslate nohighlight">\(로 표시한다면
+\)</span><span class="math notranslate nohighlight">\(KL(P||Q) = \sum_{i} p_i \log \frac{ p_i}{q_i}\)</span>$
+로 계산합니다.</p>
+<p>우리의 문제로 돌아가서, 조건부 분포  <span class="math notranslate nohighlight">\(q_{\cdot|i}\)</span>로 부터 p_{\cdot|i}<span class="math notranslate nohighlight">\(의 KL-divergence는 
+\)</span><span class="math notranslate nohighlight">\(KL(p_{\cdot|i}||q_{\cdot|i}) = \sum_{j} p_{j|i} \log \frac{ p_{j|i}}{q_{j|i}}\)</span>$
+로 주어집니다.</p>
+<p>즉 우리는 데이터 전체에서 KL-divergence를 줄이려면
+$<span class="math notranslate nohighlight">\(KL(P||Q) = \sum_{i=1}^bKL(p_{\cdot|i}||q_{\cdot|i})\)</span>$
+를 최소화하면 될 것입니다.</p>
+<p><em><strong>finding <span class="math notranslate nohighlight">\(Q\)</span> via <span class="math notranslate nohighlight">\(y\)</span></strong></em></p>
+<p><span class="math notranslate nohighlight">\(p_{\cdot|i}\)</span>들이 주어져 있다고 가정하고 <span class="math notranslate nohighlight">\(\sum_{i=1}^bKL(p_{\cdot|i}||q_{\cdot|i})\)</span>를 함수로 본다면 입력값이 무엇인지 확인해봅시다.</p>
+<div class="math notranslate nohighlight">
+\[q_{j|i} = \frac{\exp( - \|y_i- y_j\|^2)}{\sum_{k \neq i} \exp( - \|y_i- y_k\|^2) }\]</div>
+<p>정의에 의해서 <span class="math notranslate nohighlight">\(q_{j|i}\)</span>는 사실 <span class="math notranslate nohighlight">\(y_1, \cdots, y_n\)</span>의 함수입니다. 이를 조금 명확하게 하기 위해서</p>
+<p><span class="math notranslate nohighlight">\(q_{j|i}\)</span>를 <span class="math notranslate nohighlight">\(g_{j|i}(y)\)</span>라고 표시하겠습니다. 그러면,</p>
+<p>\begin{aligned}
+KL(P||Q) &amp;=&amp; \sum_{i=1}^n \sum_{j=1}^n p_{j|i}\log p_{j|i} - p_{j|i}\log q_{j|i}\
+&amp;=&amp; - \sum_{i=1}^n \sum_{j=1}^n p_{j|i}\log g_{j|i}(y) + \text{Constant}
+\end{aligned}</p>
+<p>이 함수를 최소화하는 <span class="math notranslate nohighlight">\(y\)</span>를 찾는 것이 SNE입니다.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">a</span> <span class="o">=</span> <span class="mi">1</span>
