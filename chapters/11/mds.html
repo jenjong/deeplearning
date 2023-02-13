@@ -722,15 +722,26 @@ $<span class="math notranslate nohighlight">\(d_{ij}^2 = \sum_{k=1}^d(x_{ik}-x_{
 <div class="math notranslate nohighlight">
 \[A:\mathbb{R}^d \mapsto \mathbb{R}^q\]</div>
 <p><span class="math notranslate nohighlight">\(q\times d\)</span> 행렬입니다. 데이터 <span class="math notranslate nohighlight">\(x\)</span>를 <span class="math notranslate nohighlight">\(q\)</span>차원으로 축약한 데이터는
-$<span class="math notranslate nohighlight">\(\hat x = Ax\)</span><span class="math notranslate nohighlight">\(
+$<span class="math notranslate nohighlight">\(z = Ax\)</span><span class="math notranslate nohighlight">\(
 가 되겠지요? 그러면 어떤 차원축소 방법 다시 말해 어떤 \)</span>A$를 선택해야 할까요? 우리는 애초에 데이터간의 거리를 확인하기 위해서 차원 축소를 하였습니다. 따라서 원래 축약되기 이전에서의 데이터의 거리가 축약된 이후에도 잘 보존되기를 원할 것입니다. 즉 고차원에서 가까운 두 데이터가 저차원 공간에서 여전히 가깝기를 원하겠지요. 우리의 이런 바램을 식으로 표현하면 어떻게 될까요?</p>
-<p>먼저 축약된 두 데이터 <span class="math notranslate nohighlight">\(\hat x_i:= Ax_i\)</span>, <span class="math notranslate nohighlight">\(\hat x_j:= Ax_j\)</span> 를 생각하고 유클리디안 거리를 생각해봅시다.</p>
+<p>먼저 축약된 두 데이터 <span class="math notranslate nohighlight">\(z_i:= Ax_i\)</span>, <span class="math notranslate nohighlight">\(z_j:= Ax_j\)</span> 를 생각하고 유클리디안 거리를 생각해봅시다.</p>
 <div class="math notranslate nohighlight">
-\[\hat d_{ij} = \sqrt{\sum_{k=1}^q (\hat x_{ik}- \hat x_{jk})^2}\]</div>
+\[\hat d_{ij} = \sqrt{\sum_{k=1}^q (z_{ik}- z_{jk})^2}\]</div>
 <p>그러면 우리는 <span class="math notranslate nohighlight">\(\hat d_{ij} \simeq \hat d_{ij}\)</span> 가 되도록 <span class="math notranslate nohighlight">\(\hat d_{ij}\)</span>를 만들어야 할 것입니다. 즉, 차원축소 함수인 <span class="math notranslate nohighlight">\(A\)</span>를 잘 선택해서 <span class="math notranslate nohighlight">\(\hat d_{ij} \simeq \hat d_{ij}\)</span>이 되도록 만들어야 할 것입니다. 이를 위해 다음 목적함수를 정의하고 아래 식을 최소화 하는  <span class="math notranslate nohighlight">\(A\)</span>를 찾으면 될 것입니다.</p>
 <div class="math notranslate nohighlight">
 \[\sum_{i,j}\| \hat d_{ij} - d_{ij}\|^2 \]</div>
 <p>이렇게 <span class="math notranslate nohighlight">\(A\)</span>를 구하는 방법을 metric Multi Dimensional Scaling (mMDS)라 부릅니다. 여기서 원래 공간에서 distance와 축약된 공간에서 distance의 차이를 제곱거리(<span class="math notranslate nohighlight">\(l_2\)</span>-distance)를 사용하여 목적함수를 정의했지만, 다른 함수를 사용할 수도 있습니다.</p>
+<p><em><strong>stress function</strong></em></p>
+<p>앞서 살펴본 고차원에서 정의한 거리에 저차원 거리를 근사하는 함수는 stress function 이라는 이름을 가지고 있습니다.</p>
+<p><u>Kruskal-Shephard scaling </u>
+\begin{aligned}
+S(z_1,\cdots, z_n) = \sum_{i\neq j}(d_{ij}-|z_i - z_j|)^2
+\end{aligned}</p>
+<p>이 stress function은 다른 변형을 가지고 있습니다.</p>
+<p><u>Sammon mapping </u>
+\begin{aligned}
+S(z_1,\cdots, z_n) = \sum_{i\neq j}\frac{(d_{ij}-|z_i - z_j|)^2}{d_{ij}}
+\end{aligned}</p>
 <p><em><strong>참고</strong></em></p>
 <p><span class="math notranslate nohighlight">\(d_{ij}^2\)</span> 을 <span class="math notranslate nohighlight">\(i\)</span>행 <span class="math notranslate nohighlight">\(j\)</span>열의 원소로 가지는 행렬 <span class="math notranslate nohighlight">\(D^2\)</span>을 생각해봅시다. 같은 방법으로 <span class="math notranslate nohighlight">\(\hat d^2_{ij}\)</span>에 대응하는 <span class="math notranslate nohighlight">\(\hat D^2\)</span>을 생각합니다. 행렬이론에서는 행렬에 대한 길이(norm)라는 개념이 있습니다. <span class="math notranslate nohighlight">\(D^2-\hat D^2\)</span>의 길이로 행렬 <span class="math notranslate nohighlight">\(D^2\)</span>과 <span class="math notranslate nohighlight">\(\hat D^2\)</span>의 차이를 정의합니다.</p>
 <p>어떤 정방행렬 <span class="math notranslate nohighlight">\(A\)</span>의 Frobeneous norm 은 <span class="math notranslate nohighlight">\(\|A\|_F\)</span>이라 표기하고 <span class="math notranslate nohighlight">\(\|A\|_F = \sqrt{\sum_{i,j} a_{ij}^2}\)</span>으로 정의합니다.
