@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>11.2. Multi Dimensional Scaling &#8212; 데이터시각화</title>
+    <title>11.2. Multidimensional Scaling &#8212; 데이터시각화</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -657,7 +657,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Multi Dimensional Scaling</h1>
+                <h1>Multidimensional Scaling</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -669,9 +669,22 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="multi-dimensional-scaling">
-<h1><span class="section-number">11.2. </span>Multi Dimensional Scaling<a class="headerlink" href="#multi-dimensional-scaling" title="Permalink to this headline">#</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="multidimensional-scaling">
+<h1><span class="section-number">11.2. </span>Multidimensional Scaling<a class="headerlink" href="#multidimensional-scaling" title="Permalink to this headline">#</a></h1>
 <!-- 11-2 -->
+<p><em><strong>Why we use the Multidimensional Scaling</strong></em></p>
+<p>온라인 상점에서 고객의 정보를 처리하는 부서에서 고차원의 데이터의 데이터를 분석하는 상황을 생각해봅시다. 고객 한 명은 인구통계학적 정보와 구매 기록정보, 온라인 상점의 서비스센터와의 상담정보등 수많은 데이터를 가지고 있습니다. 이는 고객 한 명을 표현하는데 이러한 수많은 정보들이 사용되고 고객의 한 명의 표현에 이 정보가 사용된다는 뜻입니다. 데이터 수집 비용이 감소하고 더 많은 데이터를 축적하고 관리할 수 있는 기회가 늘어나면서 많은 회사들은 한 고객에 대한 더 풍부한 표현형에 대해 고민하게 되었습니다.</p>
+<p>이렇게 고차원의 정보로 고객을 표현할 수 있게 되면서 다양한 분석을 시도할 수 있게 되었지만, 그 고객들을 비슷한 사람들끼리 묶거나 분류하기 위한 작업은 점점 어려워집니다. 만약 한 고객이 두 가지 종류의 정보로 표현할 수 있다면 우리는 2차원 평면상의 시각화된 산점도로서 고객 집단의 패턴을 식별해낼 수 있을 것입니다. 고차원 데이터로 표현된 고객 정보는 2차원 상에서 구현된 시각적인 도구를 활용하여 파악하기가 어려울 것입니다. 특히 고객간의 유사성에 대한 전체적인 패턴을 파악하기는 거의 불가능 할 것입니다. 이는 우리가 가진 인지적 한계로 부터 오는 문제이겠지요.</p>
+<p>Multidimensional Scaling(MDS)은 이러한 문제의식으로 부터 출발합니다. MDS가 개발된 본질적인 물음은 다음과 같습니다.</p>
+<center>
+고차원에서 표현된 데이터들을 저차원에서 어떻게 효과적으로 볼 수 있을까?
+</center>
+<p>이 물음에 답하기 위해서 MDS는 다음과 같은 방법으로 구현된 방법론입니다.</p>
+<ul class="simple">
+<li><p>고차원에서 각 데이터 쌍들의 거리를 저차원에서도 최대한 유지시킬 수 있는 저차원 표현형이 무엇일까?</p></li>
+<li><p>저차원 표현형을 잘 계산하기 위해서 어떠한 방법을 사용하면 될까?</p></li>
+</ul>
+<p>먼저 MDS를 이해하기 위해서 거리에 대한 개념부터 확인해보겠습니다.</p>
 <p><em><strong>Idea of Multi Dimensional Scaling</strong></em></p>
 <p>두 원소 <span class="math notranslate nohighlight">\(x, y\)</span>가 있다고 합시다. 두 원소 <span class="math notranslate nohighlight">\(x,y\)</span>의 거리를 <span class="math notranslate nohighlight">\(d(x,y)\)</span>라고 합시다.</p>
 <p><span class="math notranslate nohighlight">\(d(x,y)\)</span>를 함수로 보면 거리함수는 두 원소를 입력으로 받아서 실수값을 출력으로 합니다. 이를 좀 더 자세히 표현해볼까요?</p>
