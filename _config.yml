@@ -1,7 +1,7 @@
 # Book settings
 # Learn more at https://jupyterbook.org/customize/config.html
 
-title: 데이터시각화
+title: 기계학습
 author: 서울시립대학교
 logo: logo.png
 
@@ -29,7 +29,7 @@ repository:
 # Add GitHub buttons to your book
 # See https://jupyterbook.org/customize/config.html#add-a-link-to-your-repository
 html:
-  navbar_number_sections    : True
+  navbar_number_sections    : true
   use_repository_button     : true
   use_edit_page_button      : false
   use_issues_button         : false
